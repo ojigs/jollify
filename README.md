@@ -1,4 +1,4 @@
-# Jollify
+# Jollify *(...in progress)*
 
 Jollify is a web application that allows users to listen to, upload, and share music online. Users can create playlists, follow other users, like and comment on songs, etc.
 
