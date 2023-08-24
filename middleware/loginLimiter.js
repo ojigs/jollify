@@ -8,6 +8,9 @@ const loginLimiter = rateLimit({
     message:
       "Too many login attempts from this IP. Please ttry again after one minute",
   },
+  handler: (req, res, next, options) => {
+    res.status(options.statusCode).send(options.message);
+  },
   standardHeaders: true,
   legacyHeaders: false,
 });
