@@ -5,13 +5,13 @@ const {
   loginUser,
   logOutUser,
   refresh,
-} = require("../controller/userController");
+} = require("../controller/authController");
 const { loginLimiter } = require("../middleware/loginLimiter");
 const { verifyToken } = require("../middleware/authMiddleware");
 
 router.post("/register", registerUser);
 router.post("/login", loginLimiter, loginUser);
 router.post("/logout", logOutUser);
-router.post("/refresh", refresh);
+router.post("/refresh", loginLimiter, refresh);
 
 module.exports = router;

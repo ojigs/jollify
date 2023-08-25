@@ -5,7 +5,7 @@ const cookieParser = require("cookie-parser");
 require("dotenv").config({ path: "./config/.env" });
 const PORT = process.env.PORT;
 const connectDB = require("./config/database");
-const userRoutes = require("./routes/userRoutes");
+const authRoutes = require("./routes/authRoutes");
 const { errorHandler } = require("./middleware/errorHandler");
 
 connectDB();
@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
   res.send("MERN music app");
 });
 
-app.use("/user", userRoutes);
+app.use("/auth", authRoutes);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
