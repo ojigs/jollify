@@ -37,7 +37,7 @@ const registerUser = asyncHandler(async (req, res) => {
   if (newUser) {
     const { accessToken } = generateAccessToken({
       id: newUser._id,
-      email: newUser.email,
+      username: newUser.username,
     });
     const { refreshToken } = generateRefreshToken({
       id: newUser._id,
@@ -47,11 +47,13 @@ const registerUser = asyncHandler(async (req, res) => {
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: true,
+      sameSite: "none",
       maxAge: 15 * 60 * 1000,
     });
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
       secure: true,
+      sameSite: "none",
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
@@ -91,7 +93,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
   const { accessToken } = generateAccessToken({
     id: user._id,
-    email: user.email,
+    username: user.username,
   });
   const { refreshToken } = generateRefreshToken({
     id: user._id,
@@ -101,12 +103,14 @@ const loginUser = asyncHandler(async (req, res) => {
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
     secure: true,
-    maxAge: 15 * 60 * 1000,
+    sameSite: "none",
+    maxAge: 15 * 60 * 1000, // 15 minutes (match accessToken expiration)
   });
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
     secure: true,
-    maxAge: 30 * 24 * 60 * 60 * 1000,
+    sameSite: "none",
+    maxAge: 30 * 24 * 60 * 60 * 1000, //30 days (match refreshToken expiration)
   });
 
   res.status(200).json({
@@ -120,24 +124,44 @@ const loginUser = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc  Log out user
+// @desc  Refresh token
 // @route POST /user/refresh
-// @access Private
+// @access Public
 const refresh = asyncHandler(async (req, res) => {
   const { refreshToken } = req.cookies;
-  console.log(req.cookies);
+
+  if (!refreshToken) {
+    return res
+      .status(401)
+      .json({ message: "Unauthorized! Invalid or expired refresh token" });
+  }
 
   const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
+  if (!decoded) {
+    return res
+      .status(401)
+      .json({ message: "Invalid or expired refresh token" });
+  }
+  // generate new access token
+  const { accessToken } = generateAccessToken({
+    id: decoded.id,
+    username: decoded.username,
+  });
 
-  console.log(decoded);
+  res.cookie("accessToken", accessToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    maxAge: 15 * 60 * 1000, // 15 minutes (match accessToken expiration)
+  });
+
+  res.status(200).json({ accessToken });
 });
 
 // @desc  Log out user
 // @route POST /user/logout
 // @access Public
 const logOutUser = asyncHandler(async (req, res) => {
-  const { refreshToken } = req.cookies;
-
   res.clearCookie("accessToken");
   res.clearCookie("refreshToken");
 
