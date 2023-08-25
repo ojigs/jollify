@@ -57,7 +57,7 @@ const registerUser = asyncHandler(async (req, res) => {
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
-    res.status(200).json({
+    res.status(201).json({
       user: {
         id: newUser._id,
         username: newUser.username,
@@ -165,7 +165,7 @@ const logOutUser = asyncHandler(async (req, res) => {
   res.clearCookie("accessToken");
   res.clearCookie("refreshToken");
 
-  res.json({ message: "LogOut successful" });
+  res.status(204).json({ message: "LogOut successful" });
 });
 
 module.exports = { registerUser, loginUser, logOutUser, refresh };
