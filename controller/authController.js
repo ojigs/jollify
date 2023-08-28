@@ -165,7 +165,7 @@ const logOutUser = asyncHandler(async (req, res) => {
   res.clearCookie("accessToken");
   res.clearCookie("refreshToken");
 
-  res.status(204).json({ message: "LogOut successful" });
+  res.status(200).json({ message: "Log out successful" });
 });
 
 module.exports = { registerUser, loginUser, logOutUser, refresh };
