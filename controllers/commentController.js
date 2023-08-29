@@ -1,8 +1,9 @@
 const Comment = require("../models/Comment");
 const Song = require("../models/Song");
+const asyncHandler = require("express-async-handler");
 
 // @desc  Add comment to song
-// @route POST api/songs/:songId/comment
+// @route POST api/songs/:songId/comments
 // @access Private
 const addComment = asyncHandler(async (req, res) => {
   const { text } = req.body;
@@ -27,4 +28,15 @@ const addComment = asyncHandler(async (req, res) => {
   res.status(201).json(newComment);
 });
 
-module.exports = { addComment };
+// @desc  Get all comments for a specific song
+// @route GET api/songs/:songId/comments
+// @access Private
+const getComments = asyncHandler(async (req, res) => {
+  const { songId } = req.params;
+  const comments = await Comment.find({ song: songId })
+    .populate("user", "username")
+    .sort("-timestamps");
+  res.json(comments);
+});
+
+module.exports = { addComment, getComments };
