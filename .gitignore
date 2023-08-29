@@ -8,6 +8,7 @@ bin-release/
 .settings/
 node_modules
 sandbox
+seedScript
 
 # Executables
 *.swf

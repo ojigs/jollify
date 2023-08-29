@@ -6,6 +6,8 @@ require("dotenv").config({ path: "./config/.env" });
 const PORT = process.env.PORT;
 const connectDB = require("./config/database");
 const authRoutes = require("./routes/authRoutes");
+const songRoutes = require("./routes/songRoutes");
+const commentRoutes = require("./routes/commentRoutes");
 const { errorHandler } = require("./middleware/errorHandler");
 
 connectDB();
@@ -20,6 +22,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRoutes);
+app.use("/api/songs", songRoutes);
+app.use("/api/songs/:songId/comments", commentRoutes);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
