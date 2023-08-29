@@ -19,6 +19,11 @@ const addComment = asyncHandler(async (req, res) => {
     song: songId,
   });
   await newComment.save();
+
+  // update songs comment field
+  song.comments.push(newComment._id);
+  await song.save();
+
   res.status(201).json(newComment);
 });
 
