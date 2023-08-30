@@ -6,7 +6,13 @@ const asyncHandler = require("express-async-handler");
 // @route GET api/songs
 // @access Public
 const getAllSongs = asyncHandler(async (req, res) => {
-  const songs = await Song.find();
+  const page = parseInt(req.query.page || 1);
+  const limit = parseInt(req.query.limit || 10);
+  const startIndex = (page - 1) * limit;
+  const songs = await Song.find()
+    .skip(startIndex)
+    .limit(limit)
+    .sort({ createdAt: -1 });
   if (!songs.length) {
     return res.status(404).json({ message: "No songs found" });
   }
