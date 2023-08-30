@@ -20,8 +20,11 @@ const getAllSongs = asyncHandler(async (req, res) => {
 const getSongDetails = asyncHandler(async (req, res) => {
   const songId = req.params.songId;
   // find song by id and populate the artiste and album field with the name and title; the comments field with its document as well as the username of the user
-  const song = await Song.findById(songId)
-    .lean()
+  const song = await Song.findById(songId);
+  if (!song) {
+    return res.status(404).json({ message: "Song not found" });
+  }
+  const populatedSong = await song
     .populate("artiste", "name")
     .populate("album", "title")
     .populate({
@@ -29,11 +32,9 @@ const getSongDetails = asyncHandler(async (req, res) => {
       options: { sort: { createdAt: -1 } },
       populate: { path: "user", select: "username" },
     })
+    .lean()
     .exec();
-  if (!song) {
-    return res.status(404).json({ message: "Song not found" });
-  }
-  res.status(200).json(song);
+  res.status(200).json(populatedSong);
 });
 
 // @desc  Like a song
