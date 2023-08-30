@@ -19,7 +19,17 @@ const getAllSongs = asyncHandler(async (req, res) => {
 // @access Public
 const getSongDetails = asyncHandler(async (req, res) => {
   const songId = req.params.songId;
-  const song = await Song.findById(songId);
+  // find song by id and populate the artiste and album field with the name and title; the comments field with its document as well as the username of the user
+  const song = await Song.findById(songId)
+    .lean()
+    .populate("artiste", "name")
+    .populate("album", "title")
+    .populate({
+      path: "comments",
+      options: { sort: { createdAt: -1 } },
+      populate: { path: "user", select: "username" },
+    })
+    .exec();
   if (!song) {
     return res.status(404).json({ message: "Song not found" });
   }
@@ -33,6 +43,7 @@ const likeSong = asyncHandler(async (req, res) => {
   const songId = req.params.songId;
   const userId = req.user.id;
   const song = await Song.findById(songId);
+  const user = await User.findById(userId);
   if (!song) {
     return res.status(404).json({ message: "Song not found" });
   }
@@ -40,10 +51,11 @@ const likeSong = asyncHandler(async (req, res) => {
   const toogled = await song.toogleLike(userId);
   //   update user favorite if like was toogled
   if (toogled) {
-    const user = await User.findById(userId);
     user.favorites.push(songId);
-    await user.save();
+  } else {
+    user.favorites.pull(songId);
   }
+  await user.save();
   res.status(200).json({ message: "Like status toogled" });
 });
 

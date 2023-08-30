@@ -5,11 +5,7 @@ const SongSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  artist: {
-    type: String,
-    required: true,
-  },
-  artistId: {
+  artiste: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Artiste",
     required: true,

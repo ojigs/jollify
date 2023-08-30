@@ -12,7 +12,7 @@ const verifyToken = asyncHandler((req, res, next) => {
     if (err) {
       return res.status(401).send("Not Authorized, invalid token");
     }
-    const foundUser = await User.findOne({ id: decodedUser.id });
+    const foundUser = await User.findOne({ _id: decodedUser.id });
     if (!foundUser) {
       return res.status(401).send("Unauthorized! User not found");
     }

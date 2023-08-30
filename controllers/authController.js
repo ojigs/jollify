@@ -1,6 +1,5 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
 const asyncHandler = require("express-async-handler");
 const {
   generateAccessToken,
@@ -86,7 +85,7 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 
   // compare password
-  const comparePassword = await bcrypt.compare(password, user.password);
+  const comparePassword = await user.comparePassword(password);
   if (!comparePassword) {
     return res.status(400).json({ message: "Incorrect username or password" });
   }
