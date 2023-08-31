@@ -17,7 +17,7 @@ const getAllSongs = asyncHandler(async (req, res) => {
     return res.status(404).json({ message: "No songs found" });
   }
   const shuffledArray = shuffleArray(songs);
-  res.status(200).json(shuffleArray);
+  res.status(200).json(shuffledArray);
 });
 
 // @desc  Get specific song
@@ -26,11 +26,7 @@ const getAllSongs = asyncHandler(async (req, res) => {
 const getSongDetails = asyncHandler(async (req, res) => {
   const songId = req.params.songId;
   // find song by id and populate the artiste and album field with the name and title; the comments field with its document as well as the username of the user
-  const song = await Song.findById(songId);
-  if (!song) {
-    return res.status(404).json({ message: "Song not found" });
-  }
-  const populatedSong = await song
+  const song = await Song.findById(songId)
     .populate("artiste", "name")
     .populate("album", "title")
     .populate({
@@ -40,11 +36,15 @@ const getSongDetails = asyncHandler(async (req, res) => {
     })
     .lean()
     .exec();
-  res.status(200).json(populatedSong);
+  if (!song) {
+    return res.status(404).json({ message: "Song not found" });
+  }
+
+  res.status(200).json(song);
 });
 
 // @desc  Like a song
-// @route GET api/songs/:songId/like
+// @route POST api/songs/:songId/like
 // @access Private
 const likeSong = asyncHandler(async (req, res) => {
   const songId = req.params.songId;
@@ -56,11 +56,11 @@ const likeSong = asyncHandler(async (req, res) => {
   }
   //   check if user already liked song
   const toogled = await song.toogleLike(userId);
-  //   update user favorite if like was toogled
+  //   update user favorite songs if like was toogled
   if (toogled) {
-    user.favorites.push(songId);
+    user.favoriteSongs.push(songId);
   } else {
-    user.favorites.pull(songId);
+    user.favoriteSongs.pull(songId);
   }
   await user.save();
   res.status(200).json({ message: "Like status toogled" });
@@ -70,9 +70,8 @@ const likeSong = asyncHandler(async (req, res) => {
 function shuffleArray(array) {
   const shuffledArray = [...array];
   for (let i = shuffledArray.length - 1; i > 0; i--) {
-    const j = (Math.floor(Math.random() * (i + 1))[
-      (shuffledArray[i], shuffledArray[j])
-    ] = [shuffledArray[j], shuffledArray[i]]);
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
   }
   return shuffledArray;
 }

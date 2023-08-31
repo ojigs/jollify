@@ -17,10 +17,30 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    favorites: {
-      type: Array,
-      default: [],
+    bio: String,
+    image: {
+      type: String,
+      default:
+        "https://res.cloudinary.com/ojigs/image/upload/v1686067806/images_-_2022-09-26T080853.354_it1tgl.jpg",
     },
+    favoriteSongs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Song",
+      },
+    ],
+    favoriteAlbums: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Album",
+      },
+    ],
+    favoritePlaylists: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Playlist",
+      },
+    ],
   },
   {
     timestamps: true,

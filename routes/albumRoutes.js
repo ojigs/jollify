@@ -3,9 +3,11 @@ const router = express.Router();
 const {
   getAllAlbums,
   getAlbumDetails,
+  likeAlbum,
 } = require("../controllers/albumController");
 
 router.get("/", getAllAlbums);
-router.get("/:songId", getAlbumDetails);
+router.get("/:albumId", getAlbumDetails);
+router.post("/:albumId/like", likeAlbum);
 
 module.exports = router;

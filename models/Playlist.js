@@ -24,4 +24,4 @@ const PlaylistSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Album", PlaylistSchema);
+module.exports = mongoose.model("Playlist", PlaylistSchema);

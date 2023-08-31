@@ -10,6 +10,7 @@ const songRoutes = require("./routes/songRoutes");
 const commentRoutes = require("./routes/commentRoutes");
 const artisteRoutes = require("./routes/artisteRoutes");
 const albumRoutes = require("./routes/albumRoutes");
+const playlistRoutes = require("./routes/playlistRoutes");
 const { errorHandler } = require("./middleware/errorHandler");
 
 connectDB();
@@ -27,7 +28,8 @@ app.use("/auth", authRoutes);
 app.use("/api/songs", songRoutes);
 app.use("/api/artistes", artisteRoutes);
 app.use("/api/albums", albumRoutes);
-app.use("/api/songs/:songId/comments", commentRoutes);
+app.use("/api/playlists", playlistRoutes);
+app.use("/api/comments", commentRoutes);
 app.use(errorHandler);
 
 app.listen(PORT, () => {

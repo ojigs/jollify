@@ -30,12 +30,12 @@ const addComment = asyncHandler(async (req, res) => {
 
 // @desc  Get all comments for a specific song
 // @route GET api/songs/:songId/comments
-// @access Private
+// @access Public
 const getComments = asyncHandler(async (req, res) => {
   const { songId } = req.params;
   const comments = await Comment.find({ song: songId })
     .populate("user", "username")
-    .sort("-timestamps");
+    .sort({ createdAt: -1 });
   res.json(comments);
 });
 

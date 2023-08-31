@@ -20,6 +20,23 @@ const AlbumSchema = new mongoose.Schema({
       ref: "Song",
     },
   ],
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 });
+
+AlbumSchema.methods.toogleLike = async function (userId) {
+  const isLiked = this.likes.includes(userId);
+  if (isLiked) {
+    this.likes.pull(userId);
+  } else {
+    this.likes.addToSet(userId);
+  }
+  await this.save();
+  return !isLiked;
+};
 
 module.exports = mongoose.model("Album", AlbumSchema);
