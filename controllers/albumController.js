@@ -6,8 +6,11 @@ const asyncHandler = require("express-async-handler");
 // @route GET api/albums
 // @access Public
 const getAllAlbums = asyncHandler(async (req, res) => {
-  const albums = await Album.find().lean().populate("artiste", "name");
-  if (!albums) {
+  const albums = await Album.find({})
+    .sort({ createdAt: -1 })
+    .lean()
+    .populate("artiste", "name");
+  if (!albums.length) {
     return res.status(404).json({ message: "No albums found" });
   }
   res.status(200).json(albums);
@@ -22,13 +25,13 @@ const getAlbumDetails = asyncHandler(async (req, res) => {
     .populate("artiste", "name")
     .populate("song");
   if (!album) {
-    return res.status(404).json({ message: "album not found" });
+    return res.status(404).json({ message: "Album not found" });
   }
   res.status(200).json(album);
 });
 
 // @desc  Like an Albums
-// @route GET api/albums/:albumId/like
+// @route POST api/albums/:albumId/like
 // @access Private
 const likeAlbum = asyncHandler(async (req, res) => {
   const albumId = req.params.albumId;

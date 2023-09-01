@@ -37,6 +37,7 @@ const SongSchema = new mongoose.Schema(
     ],
     releaseDate: Date,
     genre: String,
+    lyrics: String,
   },
   { timestamps: true }
 );

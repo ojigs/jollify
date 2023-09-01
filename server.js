@@ -6,6 +6,7 @@ require("dotenv").config({ path: "./config/.env" });
 const PORT = process.env.PORT;
 const connectDB = require("./config/database");
 const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
 const songRoutes = require("./routes/songRoutes");
 const commentRoutes = require("./routes/commentRoutes");
 const artisteRoutes = require("./routes/artisteRoutes");
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRoutes);
+app.use("/api/users", userRoutes);
 app.use("/api/songs", songRoutes);
 app.use("/api/artistes", artisteRoutes);
 app.use("/api/albums", albumRoutes);

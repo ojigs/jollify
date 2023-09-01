@@ -9,7 +9,7 @@ const getAllSongs = asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page || 1);
   const limit = parseInt(req.query.limit || 10);
   const startIndex = (page - 1) * limit;
-  const songs = await Song.find()
+  const songs = await Song.find({})
     .skip(startIndex)
     .limit(limit)
     .sort({ createdAt: -1 });
