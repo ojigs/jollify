@@ -1,45 +1,41 @@
-import backgroundImage from "../../assets/images/hero-image.jpg";
+import heroBackground from "../../assets/images/hero-image.jpg";
+import bannerImage from "../../assets/images/jollify_banner.png";
 
 const HomeBanner = () => {
   const overlayStyle = {
     background: "linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6))",
-    backdropFilter: "blur(5px)", // Adjust the blur amount as needed
+    backdropFilter: "blur(5px)",
   };
   return (
-    <section
-      className=" relative bg-accent bg-center bg-no-repeat h-[400px] flex flex-col justify-center items-center text-white"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
-    >
-      <div
-        className="absolute inset-0 flex flex-col justify-center items-center text-white"
-        style={overlayStyle}
+    <>
+      <section
+        className=" relative bg-accent bg-center bg-no-repeat h-[400px] rounded-md flex flex-col justify-center items-center text-white"
+        style={{ backgroundImage: `url(${heroBackground})` }}
       >
-        <h1 className="text-5xl font-bold mb-4">Discover Great Music</h1>
-        <p className="text-lg mb-6">
-          Explore the latest songs, albums, and playlists
-        </p>
-        <button className="bg-accent text-white hover:bg-primary-dark py-2 px-6 rounded-full text-lg font-semibold transition duration-300">
-          Get Started
-        </button>
-      </div>
-    </section>
-    // <div
-    //   className="h-[400px] flex items-center justify-center bg-cover bg-center bg-no-repeat"
-    //   style={{ backgroundImage: `url(${backgroundImage})` }}
-    // >
-    //   {/* Add your content here */}
-    //   <div className="text-center">
-    //     <h1 className="text-6xl lg:text-8xl text-white font-bold drop-shadow-xl">
-    //       Music App
-    //     </h1>
-    //     <p className="text-xl lg:text-2xl text-gray-200 mt-4">
-    //       The best app for listening to your favorite music.
-    //     </p>
-    //     <button className="bg-primary-700 text-white px-6 py-3 rounded-lg mt-8 hover:bg-primary-800 focus:outline-none focus:ring-primary-300">
-    //       Get started
-    //     </button>
-    //   </div>
-    // </div>
+        <div
+          className="absolute inset-0 rounded-md flex flex-col justify-center items-start p-6 text-white"
+          style={overlayStyle}
+        >
+          <h1 className="text-3xl md:text-5xl font-bold mb-4">
+            Discover Great Music
+          </h1>
+          <p className="text-lg mb-10 text-gray-300">
+            Explore the latest songs, albums, and playlists
+          </p>
+          <button className="bg-accent text-white hover:bg-accent-50 py-2 px-6 rounded-full text-lg font-semibold transition duration-300">
+            Start listening
+          </button>
+        </div>
+        <div
+          className="hidden lg:block absolute right-0 bottom-0 w-[295px] h-[inherit]"
+          style={{
+            backgroundImage: `url(${bannerImage})`,
+            backgroundPosition: "bottom-right",
+            backgroundSize: "cover",
+          }}
+        ></div>
+      </section>
+    </>
   );
 };
 

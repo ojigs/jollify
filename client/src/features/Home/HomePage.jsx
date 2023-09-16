@@ -1,13 +1,13 @@
 import HomeBanner from "./HomeBanner";
+import Recommend from "../../components/Recommend";
 
 const HomePage = () => {
   return (
-    <section className="p-8">
-      {/* <h1 className="text-3xl text-white font-bold">
-        Jollify - Free music streaming platform
-      </h1> */}
+    <>
       <HomeBanner />
-    </section>
+      <Recommend type={"albums"} />
+      <Recommend type={"playlists"} />
+    </>
   );
 };
 
