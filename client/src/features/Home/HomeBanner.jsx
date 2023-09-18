@@ -1,5 +1,5 @@
-import heroBackground from "../../assets/images/hero-image.jpg";
-import bannerImage from "../../assets/images/jollify_banner.png";
+import heroBackground from "../../assets/images/jollify_banner.jpg";
+import bannerImage from "../../assets/images/hero-image.png";
 
 const HomeBanner = () => {
   const overlayStyle = {

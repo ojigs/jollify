@@ -25,7 +25,7 @@ const NavBar = () => {
           </li>
           <li>
             <NavLink
-              to="/music"
+              to="/explore"
               className={({ isActive }) =>
                 `flex items-center justify-center w-full hover:text-accent ${
                   isActive ? "text-accent border-r-4 border-accent" : ""
@@ -33,7 +33,7 @@ const NavBar = () => {
               }
             >
               <FaMusic className="text-base" />
-              <span className="ml-4">Music</span>
+              <span className="ml-4">Explore</span>
             </NavLink>
           </li>
           <li>
