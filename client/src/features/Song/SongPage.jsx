@@ -1,18 +1,19 @@
 import SongDetail from "./SongDetail";
-import LikeButton from "./LikeButton";
-import Lyrics from "./Lyrics";
-import CommentsSection from "./CommentsSection";
+// import { useParams } from "react-router-dom";
+import LikeButton from "../../components/LikeButton";
+// import Lyrics from "./Lyrics";
+// import CommentsSection from "./CommentsSection";
 
-const SongPage = ({ songData }) => {
+const SongPage = () => {
+  // const { id } = useParams();
+  const songs = { _id: 23453, artiste: "Ruger", title: "Blue" };
   return (
-    <div className="bg-primary text-gray-200 p-4">
-      <div className="flex gap-4">
-        <SongDetail song={songData} />
-        <LikeButton />
-      </div>
-      <Lyrics song={songData} />
-      <CommentsSection song={songData} />
-    </div>
+    <section className=" text-gray-200">
+      <SongDetail song={songs} />
+      <LikeButton />
+      {/* <Lyrics song={songData} /> */}
+      {/* <CommentsSection song={songData} /> */}
+    </section>
   );
 };
 

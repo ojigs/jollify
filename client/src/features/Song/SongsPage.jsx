@@ -1,7 +1,7 @@
 import SongCard from "./SongCard";
 
 const SongsPage = () => {
-  const songs = [{}];
+  const songs = [{ _id: 23453, artiste: "Ruger", title: "Blue" }];
 
   return (
     <section className="container text-gray-100">

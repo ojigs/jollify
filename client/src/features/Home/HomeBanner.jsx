@@ -9,7 +9,7 @@ const HomeBanner = () => {
   return (
     <>
       <section
-        className=" relative bg-accent bg-center bg-no-repeat h-[400px] rounded-md flex flex-col justify-center items-center text-white"
+        className=" relative bg-accent-50 bg-center bg-no-repeat h-[400px] rounded-md flex flex-col justify-center items-center text-white"
         style={{ backgroundImage: `url(${heroBackground})` }}
       >
         <div

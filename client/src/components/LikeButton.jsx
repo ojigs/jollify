@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BiHeart, BiHeartOutline } from "react-icons/bi";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const LikeButton = ({ isLiked, onToggleLike }) => {
   const [liked, setLiked] = useState(isLiked);
@@ -12,14 +12,14 @@ const LikeButton = ({ isLiked, onToggleLike }) => {
   return (
     <button
       className={`${
-        liked ? "text-red-500" : "text-gray-400"
+        liked ? "text-accent" : "text-gray-400"
       } transition-colors duration-300 ease-in-out focus:outline-none`}
       onClick={handleLikeClick}
     >
       {liked ? (
-        <BiHeart className="text-2xl" />
+        <FaHeart className="text-2xl" />
       ) : (
-        <BiHeartOutline className="text-2xl" />
+        <FaRegHeart className="text-2xl" />
       )}
     </button>
   );
