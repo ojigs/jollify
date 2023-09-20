@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
-const LikeButton = ({ isLiked, onToggleLike }) => {
+const LikeButton = ({ likes, isLiked, onToggleLike }) => {
   const [liked, setLiked] = useState(isLiked);
 
   const handleLikeClick = () => {
@@ -11,16 +11,15 @@ const LikeButton = ({ isLiked, onToggleLike }) => {
 
   return (
     <button
-      className={`${
-        liked ? "text-accent" : "text-gray-400"
-      } transition-colors duration-300 ease-in-out focus:outline-none`}
+      className={`text-gray-400 inset-0 flex flex-row items-center justify-center bg-secondary-200 hover:bg-secondary-100 active:bg-opacity-50 rounded-lg transition duration-300 ease-in-out py-1 px-6`}
       onClick={handleLikeClick}
     >
       {liked ? (
-        <FaHeart className="text-2xl" />
+        <FaHeart className="text-red-500 text-xl" />
       ) : (
-        <FaRegHeart className="text-2xl" />
+        <FaRegHeart className="text-xl" />
       )}
+      <span className="ml-2 text-xl">{likes.length}</span>
     </button>
   );
 };

@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { FaUser, FaHome, FaMusic } from "react-icons/fa";
+import { FaHome, FaCompactDisc, FaHeadphones } from "react-icons/fa";
 
 const NavBar = () => {
   return (
@@ -32,21 +32,21 @@ const NavBar = () => {
                 }`
               }
             >
-              <FaMusic className="text-base" />
+              <FaCompactDisc className="text-base" />
               <span className="ml-4">Explore</span>
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="/profile"
+              to="/playlists"
               className={({ isActive }) =>
                 `flex items-center justify-center w-full hover:text-accent ${
                   isActive ? "text-accent border-r-4 border-accent" : ""
                 }`
               }
             >
-              <FaUser className="text-base" />
-              <span className="ml-4">Profile</span>
+              <FaHeadphones className="text-base" />
+              <span className="ml-4">Playlists</span>
             </NavLink>
           </li>
         </ul>

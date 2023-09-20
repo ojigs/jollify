@@ -1,7 +1,15 @@
 import SongCard from "./SongCard";
 
 const SongsPage = () => {
-  const songs = [{ _id: 23453, artiste: "Ruger", title: "Blue" }];
+  const songs = [
+    { _id: 23453, artiste: "Ruger", title: "Blue" },
+    { _id: 23454, artiste: "Ruger", title: "Blue" },
+    { _id: 23455, artiste: "Ruger", title: "Blue" },
+    { _id: 23456, artiste: "Ruger", title: "Blue" },
+    { _id: 23457, artiste: "Ruger", title: "Blue" },
+    { _id: 23458, artiste: "Ruger", title: "Blue" },
+    { _id: 23459, artiste: "Ruger", title: "Blue" },
+  ];
 
   return (
     <section className="container text-gray-100">
