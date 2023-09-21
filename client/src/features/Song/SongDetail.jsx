@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { BsPlay } from "react-icons/bs";
 import artisteImage from "../../assets/images/ruger.png";
 import bgImage from "../../assets/images/jollifybg.jpg";
@@ -5,6 +6,7 @@ import LikeButton from "../../components/LikeButton";
 
 const SongDetail = ({ song }) => {
   const { title, artiste, album, genre, likes } = song;
+  const selectedTheme = useSelector((state) => state.theme);
 
   return (
     <article
@@ -23,18 +25,22 @@ const SongDetail = ({ song }) => {
           />
         </div>
         <article className="flex-grow">
-          <h2 className="text-2xl text-accent-50 font-bold mb-4">
+          <h2 className={`text-2xl text-${selectedTheme}-50 font-bold mb-4`}>
             {title.toUpperCase()}
           </h2>
-          <p className="text-gray-200 hover:text-accent-50 mt-2">{artiste}</p>
-          <p className="text-gray-200 hover:text-accent-50 mt-2">
+          <p className={`text-gray-200 hover:text-${selectedTheme}-50 mt-2`}>
+            {artiste}
+          </p>
+          <p className={`text-gray-200 hover:text-${selectedTheme}-50 mt-2`}>
             Album: {album}
           </p>
-          <p className="text-gray-200 hover:text-accent-50 mt-2">
+          <p className={`text-gray-200 hover:text-${selectedTheme}-50 mt-2`}>
             Genre: {genre}
           </p>
           <div className="flex flex-row gap-4 mt-6">
-            <button className="inset-0 flex items-center justify-center bg-accent-50 bg-opacity-80 active:bg-opacity-100 rounded-lg transition duration-300 ease-in-out py-1 px-2 md:px-6">
+            <button
+              className={`inset-0 flex items-center justify-center bg-${selectedTheme}-50 bg-opacity-80 active:bg-opacity-100 rounded-lg transition duration-300 ease-in-out py-1 px-2 md:px-6`}
+            >
               <span className="mr-2">Play</span>
               <BsPlay className="text-white text-2xl md:text-4xl" />
             </button>

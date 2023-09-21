@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { FaHeadphones } from "react-icons/fa";
 
 const PlaylistCard = ({ playlist }) => {
+  const selectedTheme = useSelector((state) => state.theme);
   return (
     <article className="group bg-secondary-100 rounded-lg shadow-lg p-4 transition transform hover:scale-105">
       <div className="relative bg-secondary-200">
@@ -18,7 +20,7 @@ const PlaylistCard = ({ playlist }) => {
       <div className="p-4">
         <Link
           to={`/playlists/${playlist._id}`}
-          className="text-lg font-semibold mb-1 hover:border-b-2 hover:border-b-accent"
+          className={`text-lg font-semibold mb-1 hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme}`}
         >
           {playlist.title}
         </Link>

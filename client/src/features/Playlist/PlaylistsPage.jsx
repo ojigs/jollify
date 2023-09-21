@@ -1,7 +1,9 @@
+import { useSelector } from "react-redux";
 import { FaPlus } from "react-icons/fa";
 import PlaylistCard from "./PlaylistCard";
 
 const PlaylistsPage = () => {
+  const selectedTheme = useSelector((state) => state.theme);
   const playlists = [
     {
       _id: 23453,
@@ -20,7 +22,7 @@ const PlaylistsPage = () => {
       <div className="flex justify-between items-center">
         <h1 className="text-xl md:text-3xl font-semibold mb-2">Playlists</h1>
         <button
-          className="bg-accent flex justify-center items-center mb-2 hover:bg-accent-50 active:bg-opacity-90 py-2 px-4 rounded-lg"
+          className={`bg-${selectedTheme} flex justify-center items-center mb-2 hover:bg-${selectedTheme}-50 active:bg-opacity-90 py-2 px-4 rounded-lg`}
           onClick={handleCreatePlaylist}
         >
           <FaPlus className="text-xs mr-2" />

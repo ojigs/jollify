@@ -1,7 +1,9 @@
+import { useSelector } from "react-redux";
 import heroBackground from "../../assets/images/jollify_banner.jpg";
 import bannerImage from "../../assets/images/hero-image.png";
 
 const HomeBanner = () => {
+  const selectedTheme = useSelector((state) => state.theme);
   const overlayStyle = {
     background: "linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6))",
     backdropFilter: "blur(5px)",
@@ -9,7 +11,7 @@ const HomeBanner = () => {
   return (
     <>
       <section
-        className=" relative bg-accent-50 bg-center bg-no-repeat h-[400px] rounded-md flex flex-col justify-center items-center text-white"
+        className={`relative bg-${selectedTheme}-50 bg-center bg-no-repeat h-[400px] rounded-md flex flex-col justify-center items-center text-white`}
         style={{ backgroundImage: `url(${heroBackground})` }}
       >
         <div
@@ -22,7 +24,9 @@ const HomeBanner = () => {
           <p className="text-lg mb-10 text-gray-300">
             Explore the latest songs, albums, and playlists
           </p>
-          <button className="bg-accent text-white hover:bg-accent-50 py-2 px-6 rounded-full text-lg font-semibold transition duration-300">
+          <button
+            className={`bg-${selectedTheme} text-white hover:bg-${selectedTheme}-50 py-2 px-6 rounded-full text-lg font-semibold transition duration-300`}
+          >
             Start listening
           </button>
         </div>

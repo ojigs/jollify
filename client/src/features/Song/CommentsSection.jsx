@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
 
 const CommentsSection = ({ comments }) => {
   const [newComment, setNewComment] = useState("");
+  const selectedTheme = useSelector((state) => state.theme);
 
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
@@ -23,7 +25,7 @@ const CommentsSection = ({ comments }) => {
           onChange={handleCommentChange}
         />
         <button
-          className="bg-accent hover:bg-accent-50 active:bg-opacity-90 py-2 px-4 rounded-lg mt-4"
+          className={`bg-${selectedTheme} hover:bg-${selectedTheme}-50 active:bg-opacity-90 py-2 px-4 rounded-lg mt-4`}
           onClick={handleAddComment}
         >
           Add Comment

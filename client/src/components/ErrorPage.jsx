@@ -1,6 +1,8 @@
 import { Link, useRouteError } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ErrorPage = () => {
+  const selectedTheme = useSelector((state) => state.theme);
   const error = useRouteError();
   if (error) {
     console.log(error);
@@ -22,7 +24,7 @@ const ErrorPage = () => {
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Link
               to="/home"
-              className="rounded-md bg-accent px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-pink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink"
+              className={`rounded-md bg-${selectedTheme} px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-pink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink`}
             >
               Go back home
             </Link>
