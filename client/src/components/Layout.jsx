@@ -9,7 +9,7 @@ const Layout = () => {
         <NavBar />
       </aside>
       <main className="col-span-4 grid grid-rows-[1fr,auto]">
-        <div className="bg-secondary-200 row-span-1 overflow-y-auto p-8">
+        <div className="bg-secondary-200 row-span-1 overflow-y-auto p-4 md:p-8">
           <Outlet />
         </div>
         <Footer />

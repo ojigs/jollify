@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
     <>
-      <footer className="flex items-center justify-between h-16 px-4 bg-secondary-100 text-white">
+      <footer className="flex flex-col items-between justify-center gap-4 md:flex-row md:items-center md:justify-between h-16 px-4 bg-secondary-100 text-white">
         <p>© 2023 Jollify. All rights reserved.</p>
         <nav className="flex space-x-4">
           <a href="/about" className="hover:text-primary">

@@ -13,7 +13,7 @@ const SongsPage = () => {
 
   return (
     <section className="container text-gray-100">
-      <h1 className="text-3xl font-semibold mb-2">Explore</h1>
+      <h1 className="text-xl md:text-3xl font-semibold mb-2">Explore</h1>
       <p className="mb-8 text-gray-200">
         Browse amazing collection of songs on Jollify
       </p>

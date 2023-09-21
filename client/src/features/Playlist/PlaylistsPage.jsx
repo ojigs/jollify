@@ -17,8 +17,8 @@ const PlaylistsPage = () => {
 
   return (
     <section className="container text-gray-100">
-      <div className="flex justify-between">
-        <h1 className="text-3xl font-semibold mb-2">Playlists</h1>
+      <div className="flex justify-between items-center">
+        <h1 className="text-xl md:text-3xl font-semibold mb-2">Playlists</h1>
         <button
           className="bg-accent flex justify-center items-center mb-2 hover:bg-accent-50 active:bg-opacity-90 py-2 px-4 rounded-lg"
           onClick={handleCreatePlaylist}

@@ -34,9 +34,9 @@ const SongDetail = ({ song }) => {
             Genre: {genre}
           </p>
           <div className="flex flex-row gap-4 mt-6">
-            <button className="inset-0 flex items-center justify-center bg-accent-50 bg-opacity-80 active:bg-opacity-100 rounded-lg transition duration-300 ease-in-out py-1 px-6">
+            <button className="inset-0 flex items-center justify-center bg-accent-50 bg-opacity-80 active:bg-opacity-100 rounded-lg transition duration-300 ease-in-out py-1 px-2 md:px-6">
               <span className="mr-2">Play</span>
-              <BsPlay className="text-white text-4xl" />
+              <BsPlay className="text-white text-2xl md:text-4xl" />
             </button>
             <LikeButton likes={likes} />
           </div>

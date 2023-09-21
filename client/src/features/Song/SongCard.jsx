@@ -23,7 +23,7 @@ const SongCard = ({ song }) => {
       <div className="p-4">
         <Link
           to={`/songs/${song._id}`}
-          className="text-lg font-semibold mb-1 hover:border-b-2 hover:border-b-accent"
+          className="text-lg font-semibold mb-1 hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-accent"
         >
           {song.title}
         </Link>
