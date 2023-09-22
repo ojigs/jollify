@@ -7,8 +7,8 @@ const PlaylistsPage = () => {
   const playlists = [
     {
       _id: 23453,
-      createdBy: "Ruger",
-      title: "Blue",
+      createdBy: { _id: 23453, username: "Jollify" },
+      title: "Party Time",
       description: "Afro Beats",
     },
   ];

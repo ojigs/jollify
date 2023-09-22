@@ -19,7 +19,7 @@ const LikeButton = ({ likes, isLiked, onToggleLike }) => {
       ) : (
         <FaRegHeart className="text-base md:text-xl" />
       )}
-      <span className="ml-2 text-xl">{likes.length}</span>
+      {likes && <span className="ml-2 text-xl">{likes.length}</span>}
     </button>
   );
 };

@@ -1,6 +1,12 @@
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { FaHome, FaCompactDisc, FaHeadphones } from "react-icons/fa";
+import {
+  FaHome,
+  FaCompactDisc,
+  FaHeadphones,
+  FaFolderOpen,
+  FaUserAstronaut,
+} from "react-icons/fa";
 import { useEffect } from "react";
 
 const NavBar = () => {
@@ -59,6 +65,36 @@ const NavBar = () => {
             >
               <FaHeadphones className="text-base" />
               <span className="ml-4">Playlists</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/albums"
+              className={({ isActive }) =>
+                `flex items-center justify-center w-full hover:text-${selectedTheme} ${
+                  isActive
+                    ? `text-${selectedTheme} border-r-4 border-${selectedTheme}`
+                    : ""
+                }`
+              }
+            >
+              <FaFolderOpen className="text-base" />
+              <span className="ml-4">Albums</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/artistes"
+              className={({ isActive }) =>
+                `flex items-center justify-center w-full hover:text-${selectedTheme} ${
+                  isActive
+                    ? `text-${selectedTheme} border-r-4 border-${selectedTheme}`
+                    : ""
+                }`
+              }
+            >
+              <FaUserAstronaut className="text-base" />
+              <span className="ml-4">Artistes</span>
             </NavLink>
           </li>
         </ul>
