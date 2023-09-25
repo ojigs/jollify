@@ -1,9 +1,17 @@
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import heroBackground from "../../assets/images/jollify_banner.jpg";
 import bannerImage from "../../assets/images/hero-image.png";
 
 const HomeBanner = () => {
   const selectedTheme = useSelector((state) => state.theme);
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/explore");
+  };
+
   const overlayStyle = {
     background: "linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6))",
     backdropFilter: "blur(5px)",
@@ -25,7 +33,8 @@ const HomeBanner = () => {
             Explore the latest songs, albums, and playlists
           </p>
           <button
-            className={`bg-${selectedTheme} text-white hover:bg-${selectedTheme}-50 py-2 px-6 rounded-full text-lg font-semibold transition duration-300`}
+            className={`bg-${selectedTheme} text-white hover:bg-${selectedTheme}-50 active:bg-opacity-90 py-2 px-6 rounded-full text-lg font-semibold transition duration-300`}
+            onClick={handleClick}
           >
             Start listening
           </button>

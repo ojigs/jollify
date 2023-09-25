@@ -6,7 +6,9 @@ import {
   FaHeadphones,
   FaFolderOpen,
   FaUserAstronaut,
+  FaRegHeart,
 } from "react-icons/fa";
+import { MdQueue } from "react-icons/md";
 import { useEffect } from "react";
 
 const NavBar = () => {
@@ -16,8 +18,8 @@ const NavBar = () => {
   }, [selectedTheme]);
   return (
     <>
-      <h1>Jollify</h1>
-      <nav className="flex flex-col h-screen text-white">
+      <nav className="flex flex-col text-white py-4">
+        <h1>Jollify</h1>
         <div className="flex items-center justify-center h-16">
           <img src="logo.svg" alt="logo" className="h-16" />
         </div>
@@ -98,6 +100,44 @@ const NavBar = () => {
             </NavLink>
           </li>
         </ul>
+        <div className="mt-8">
+          <div className="mx-4 mb-4 flex items-center">
+            <h2 className="text-xs font-mono tracking-widest">STUDIO</h2>
+            <span className="mx-2 flex-grow h-[1px] bg-gray-500"></span>
+          </div>
+          <ul className="flex flex-col flex-1 gap-8">
+            <li>
+              <NavLink
+                to="/favorites"
+                className={({ isActive }) =>
+                  `flex items-center justify-center w-full  hover:text-${selectedTheme} ${
+                    isActive
+                      ? `text-${selectedTheme} border-r-4 border-${selectedTheme}`
+                      : ""
+                  }`
+                }
+              >
+                <FaRegHeart className="text-base" />
+                <span className="ml-4">Favorites</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/myPlaylist"
+                className={({ isActive }) =>
+                  `flex items-center justify-center w-full  hover:text-${selectedTheme} ${
+                    isActive
+                      ? `text-${selectedTheme} border-r-4 border-${selectedTheme}`
+                      : ""
+                  }`
+                }
+              >
+                <MdQueue className="text-base" />
+                <span className="ml-4">My Playlists</span>
+              </NavLink>
+            </li>
+          </ul>
+        </div>
       </nav>
     </>
   );

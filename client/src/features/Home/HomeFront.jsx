@@ -1,8 +1,22 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { trimText } from "../../utils";
 
 const HomeFront = ({ songs }) => {
+  // const songRefs = songs.map(() => useRef());
+  const [likedSongs, setLikedSongs] = useState([]);
+
+  const handleLikeClick = (songId) => {
+    if (likedSongs.includes(songId)) {
+      setLikedSongs(likedSongs.filter((id) => id !== songId));
+    } else {
+      setLikedSongs([...likedSongs, songId]);
+    }
+  };
+
+  const isSongLiked = (songId) => likedSongs.includes(songId);
   const selectedTheme = useSelector((state) => state.theme);
   return (
     <>
@@ -29,7 +43,8 @@ const HomeFront = ({ songs }) => {
       <div className="">
         {songs.map((song, index) => (
           <article
-            className="grid grid-cols-6 md:grid-cols-12 gap-4"
+            // ref={songRefs[index]}
+            className={`grid grid-cols-6 md:grid-cols-12 gap-4 bg-opacity-50`}
             key={song._id}
           >
             <div className="col-span-1 md:col-span-1 text-center">
@@ -64,7 +79,13 @@ const HomeFront = ({ songs }) => {
               <div>{song.duration}</div>
             </div>
             <div className="col-span-1 md:col-span-1 text-center">
-              <div>{song.favorite}</div>
+              <button onClick={() => handleLikeClick(song._id)}>
+                {isSongLiked(song._id) ? (
+                  <FaHeart className="text-red-500 text-base md:text-xl" />
+                ) : (
+                  <FaRegHeart className="text-base md:text-xl" />
+                )}
+              </button>
             </div>
           </article>
         ))}

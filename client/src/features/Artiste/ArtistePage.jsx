@@ -1,8 +1,24 @@
+// import { useState, useEffect } from "react";
 import ResourceDetail from "../../components/ResourceDetail";
 import SongList from "../../components/SongList";
-import HomeFront from "../Home/HomeFront";
+// import HomeFront from "../Home/HomeFront";
 
 const ArtistePage = () => {
+  // const [highlightedSong, setHighlightedSong] = useState(0);
+  // useEffect(() => {
+  //   const handleKeyDown = (event) => {
+  //     if (event.key === "ArrowDown") {
+  //       // Scroll to the next song row
+  //       setHighlightedSong((prevSong) => prevSong + 1, { behavior: "smooth" });
+  //     }
+  //   };
+
+  //   window.addEventListener("keydown", handleKeyDown);
+
+  //   return () => {
+  //     window.removeEventListener("keydown", handleKeyDown);
+  //   };
+  // }, []);
   const artiste = {
     _id: 23453,
     name: "Ruger",
@@ -12,15 +28,15 @@ const ArtistePage = () => {
   const songs = [
     {
       _id: 23453,
-      artiste: { _id: 23453, name: "Ruger" },
-      title: "Blue",
+      artiste: { _id: 23453, name: "Burna Boy" },
+      title: "Peru",
       album: { _id: 23453, title: "Ru da World" },
       duration: "3:29",
     },
     {
       _id: 23454,
-      artiste: { _id: 23454, name: "Ruger" },
-      title: "Blue",
+      artiste: { _id: 23454, name: "Fireboy" },
+      title: "Airplane mode",
       album: { _id: 23454, title: "Ru da World" },
       duration: "3:29",
     },
@@ -69,7 +85,7 @@ const ArtistePage = () => {
         <h2 className="text-2xl font-semibold mb-4">Songs</h2>
         <SongList songs={songs} listType={"artiste"} />
       </section>
-      <HomeFront songs={songs} />
+      {/* <HomeFront songs={songs} highlightedSong={highlightedSong} /> */}
     </section>
   );
 };

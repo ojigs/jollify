@@ -10,6 +10,8 @@ import AlbumsPage from "../features/Album/AlbumsPage";
 import AlbumPage from "../features/Album/AlbumPage";
 import ArtistesPage from "../features/Artiste/ArtistesPage";
 import ArtistePage from "../features/Artiste/ArtistePage";
+import FavoritesPage from "../features/Studio/Favorites/FavoritesPage";
+import MyPlaylistPage from "../features/Studio/MyPlaylists/MyPlaylistPage";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +28,8 @@ const router = createBrowserRouter([
       { path: "albums/:id", element: <AlbumPage /> },
       { path: "artistes", element: <ArtistesPage /> },
       { path: "artistes/:id", element: <ArtistePage /> },
+      { path: "favorites", element: <FavoritesPage /> },
+      { path: "myPlaylist", element: <MyPlaylistPage /> },
       { path: "*", element: <ErrorPage /> },
     ],
   },
