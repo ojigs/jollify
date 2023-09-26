@@ -12,6 +12,7 @@ import ArtistesPage from "../features/Artiste/ArtistesPage";
 import ArtistePage from "../features/Artiste/ArtistePage";
 import FavoritesPage from "../features/Studio/Favorites/FavoritesPage";
 import MyPlaylistPage from "../features/Studio/MyPlaylists/MyPlaylistPage";
+import UserProfile from "../features/Users/UsersPage";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
       { path: "artistes/:id", element: <ArtistePage /> },
       { path: "favorites", element: <FavoritesPage /> },
       { path: "myPlaylist", element: <MyPlaylistPage /> },
+      { path: "users/:id", element: <UserProfile /> },
       { path: "*", element: <ErrorPage /> },
     ],
   },

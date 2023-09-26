@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { MdQueueMusic } from "react-icons/md";
 
 const CreatePlaylistModal = ({ closeModal, isModalOpen, children }) => {
   const selectedTheme = useSelector((state) => state.theme);
@@ -7,7 +8,7 @@ const CreatePlaylistModal = ({ closeModal, isModalOpen, children }) => {
       {children}
 
       {isModalOpen && (
-        <div className="fixed z-10 inset-0 overflow-y-auto">
+        <div className="fixed z-10 inset-0 overflow-y-auto backdrop-blur-sm">
           <div className="flex items-center justify-center min-h-screen">
             <div className="relative bg-gray-200 w-96 rounded-lg shadow-lg">
               <div className="absolute top-0 right-0 pt-2 pr-4">
@@ -32,18 +33,25 @@ const CreatePlaylistModal = ({ closeModal, isModalOpen, children }) => {
                 </button>
               </div>
               <div className="p-8">
-                <h2
-                  className={`text-2xl text-${selectedTheme} font-semibold mb-4`}
-                >
-                  Create Playlist
-                </h2>
+                <div className="flex items-center gap-4 mb-4">
+                  <span
+                    className={`p-2 rounded-full bg-${selectedTheme} bg-opacity-20`}
+                  >
+                    <MdQueueMusic
+                      className={`text-4xl text-${selectedTheme}`}
+                    />
+                  </span>
+                  <h2 className={`text-2xl text-gray-800 font-semibold`}>
+                    Create Playlist
+                  </h2>
+                </div>
                 <form>
                   <div className="mb-4">
                     <label className="block text-gray-700  mb-1">Title</label>
                     <input
                       type="text"
                       placeholder="Enter playlist title"
-                      className="w-full border border-gray-300 bg-gray-200 rounded-md focus:outline-none p-2  text-gray-800"
+                      className="w-full border border-gray-400 bg-gray-200 rounded-md focus:outline-none p-2  text-gray-800"
                     />
                   </div>
                   <div className="mb-4">
@@ -53,7 +61,7 @@ const CreatePlaylistModal = ({ closeModal, isModalOpen, children }) => {
                     <textarea
                       rows="3"
                       placeholder="Add playlist description"
-                      className="w-full border border-gray-300 bg-gray-200 resize-none focus:outline-none rounded-md p-2  text-gray-800"
+                      className="w-full border border-gray-400 bg-gray-200 resize-none focus:outline-none rounded-md p-2  text-gray-800"
                     />
                   </div>
                   <div className="flex justify-end">

@@ -3,8 +3,16 @@ import { MdQueue } from "react-icons/md";
 import PlaylistCard from "../../Playlist/PlaylistCard";
 import CreatePlaylistModal from "./CreatePlaylistModal";
 
-const MyPlaylistPage = ({ playlists }) => {
+const MyPlaylistPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const playlists = [
+    {
+      _id: 23453,
+      createdBy: { _id: 23453, username: "Jollify" },
+      title: "Party Time",
+      description: "Afro Beats",
+    },
+  ];
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -24,14 +32,16 @@ const MyPlaylistPage = ({ playlists }) => {
         >
           <button
             onClick={openModal}
-            className="w-full h-56 flex flex-col justify-center items-center rounded-lg shadow-lg bg-secondary-100 hover:text-gray-400 active:text-opacity-80 cursor-pointer"
+            className="w-full h-72 flex flex-col justify-center items-center rounded-lg shadow-lg bg-secondary-100 hover:text-gray-400 active:text-opacity-80 cursor-pointer"
           >
             <MdQueue className="w-20 h-20" />
             <span>Create Playlist</span>
           </button>
         </CreatePlaylistModal>
         {playlists &&
-          playlists.map((playlist) => <PlaylistCard key={playlist._id} />)}
+          playlists.map((playlist) => (
+            <PlaylistCard key={playlist._id} playlist={playlist} />
+          ))}
       </div>
     </section>
   );
