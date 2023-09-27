@@ -16,7 +16,7 @@ const CommentsSection = ({ comments }) => {
 
   return (
     <section className="mt-6">
-      <h2 className="text-2xl md:text-3xl mb-4 md:font-semibold">Comments</h2>
+      <h2 className="text-xl md:text-2xl mb-4 md:font-semibold">Comments</h2>
       <div className="mb-8 flex flex-col justify-center items-start">
         <textarea
           className="w-full lg:h-40 lg:w-3/4 p-2 border bg-secondary-100 bg-opacity-80 focus:outline-none border-gray-500 rounded-lg resize-none"

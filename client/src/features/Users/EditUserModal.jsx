@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
-import { MdQueueMusic } from "react-icons/md";
 
-const CreatePlaylistModal = ({ closeModal, isModalOpen, children }) => {
+const EditUserModal = ({ closeModal, isModalOpen, user, children }) => {
   const selectedTheme = useSelector((state) => state.theme);
   return (
     <div>
@@ -34,37 +33,48 @@ const CreatePlaylistModal = ({ closeModal, isModalOpen, children }) => {
               </div>
               <div className="p-8">
                 <div className="flex items-center gap-4 mb-4">
-                  <span
-                    className={`p-2 rounded-full bg-${selectedTheme} bg-opacity-20`}
-                  >
-                    <MdQueueMusic
-                      className={`text-4xl text-${selectedTheme}`}
-                    />
-                  </span>
                   <h2 className={`text-2xl text-gray-800 font-semibold`}>
-                    Create Playlist
+                    Edit Profile
                   </h2>
                 </div>
                 <form>
                   <div className="mb-4">
-                    <label className="block text-gray-700  mb-1">Title</label>
+                    <label className="block text-gray-700  mb-1">
+                      Username
+                    </label>
                     <input
                       type="text"
-                      name="title"
-                      placeholder="Enter playlist title"
+                      placeholder="john"
+                      name="username"
+                      value={user.username}
                       className="w-full border border-gray-400 bg-gray-200 rounded-md focus:outline-none p-2  text-gray-800"
                       required
                     />
                   </div>
                   <div className="mb-4">
-                    <label className="block text-gray-700  mb-1">
-                      Description
-                    </label>
-                    <textarea
-                      name="description"
-                      rows="3"
-                      placeholder="Add playlist description"
-                      className="w-full border border-gray-400 bg-gray-200 resize-none focus:outline-none rounded-md p-2  text-gray-800"
+                    <label className="block text-gray-700  mb-1">Bio</label>
+                    <input
+                      type="text"
+                      placeholder="I love Jollify"
+                      name="bio"
+                      className="w-full border border-gray-400 bg-gray-200 rounded-md focus:outline-none p-2  text-gray-800"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-gray-700  mb-1">Photo</label>
+                    <input
+                      type="file"
+                      name="image"
+                      className="w-full border border-gray-400 bg-gray-200 rounded-md focus:outline-none p-2  text-gray-800"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label className="block text-gray-700  mb-1">Country</label>
+                    <input
+                      type="text"
+                      placeholder="Nigeria"
+                      name="country"
+                      className="w-full border border-gray-400 bg-gray-200 rounded-md focus:outline-none p-2  text-gray-800"
                     />
                   </div>
                   <div className="flex justify-end">
@@ -79,7 +89,7 @@ const CreatePlaylistModal = ({ closeModal, isModalOpen, children }) => {
                       type="submit"
                       className={`bg-${selectedTheme} hover:bg-${selectedTheme} text-white font-bold py-2 px-4 rounded`}
                     >
-                      Create
+                      Done
                     </button>
                   </div>
                 </form>
@@ -92,4 +102,4 @@ const CreatePlaylistModal = ({ closeModal, isModalOpen, children }) => {
   );
 };
 
-export default CreatePlaylistModal;
+export default EditUserModal;

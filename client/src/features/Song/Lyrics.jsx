@@ -5,7 +5,7 @@ const Lyrics = ({ lyrics }) => {
 
   return (
     <section className="mt-6">
-      <h1 className="text-2xl md:text-3xl mb-4 md:font-semibold">Lyrics</h1>
+      <h1 className="text-xl md:text-2xl mb-4 md:font-semibold">Lyrics</h1>
       {lyrics ? (
         <article dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
       ) : (
