@@ -22,27 +22,29 @@ const NavContent = () => {
   const handleLoginClick = () => {
     navigate("/login");
   };
-  let user;
+  // let user;
 
-  // const user = {
-  //   id: 23453,
-  //   username: "Ojigs",
-  //   email: "ojigs@jollify.com",
-  //   bio: "Music lover and web developer",
-  //   profileImage: "https://jollify.com/user-profile.png",
-  // };
+  const user = {
+    id: 23453,
+    username: "Ojigs",
+    email: "ojigs@jollify.com",
+    bio: "Music lover and web developer",
+    profileImage: "https://jollify.com/user-profile.png",
+  };
 
   return (
     <>
       {user ? (
         <div className="mt-4 mb-8">
           <div className="flex justify-center items-center gap-2 m-auto">
-            <div className="w-10 h-10 overflow-hidden bg-gray-400 rounded-full">
+            <div
+              className={`w-10 h-10  bg-${selectedTheme} rounded-full overflow-hidden`}
+            >
               <Link to={`/users/${user.id}`}>
                 {user.image ? (
                   <img
-                    src="logo.svg"
-                    alt="logo"
+                    src={user.image}
+                    alt={user.username}
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -187,21 +189,21 @@ const NavContent = () => {
 };
 
 const MobileNav = () => {
-  const [navBarOpen, setNavBarOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const selectedTheme = useSelector((state) => state.theme);
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  let user;
-  // const user = {
-  //   id: 23453,
-  //   username: "Ojigs",
-  //   email: "ojigs@jollify.com",
-  //   bio: "Music lover and web developer",
-  //   profileImage: "https://jollify.com/user-profile.png",
-  // };
+  // let user;
+  const user = {
+    id: 23453,
+    username: "Ojigs",
+    email: "ojigs@jollify.com",
+    bio: "Music lover and web developer",
+    profileImage: "https://jollify.com/user-profile.png",
+  };
 
   const handleToggleNav = () => {
-    setNavBarOpen(!navBarOpen);
+    setIsMenuOpen(!isMenuOpen);
   };
 
   const handleLoginClick = () => {
@@ -209,15 +211,28 @@ const MobileNav = () => {
   };
 
   useEffect(() => {
-    setNavBarOpen(false);
+    const handleResize = () => {
+      const screenWidth = window.innerWidth;
+      if (isMenuOpen && screenWidth >= 768) {
+        setIsMenuOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    setIsMenuOpen(false);
   }, [pathname]);
 
   return (
-    <div className="fixed top-0 left-0 z-30">
-      <div className="flex justify-between">
-        <div className="flex items-center gap-2">
+    <div className="fixed top-0 left-0 p-3 z-30 w-full bg-primary">
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-4">
           <button onClick={handleToggleNav}>
-            <BiMenuAltLeft />
+            <BiMenuAltLeft className="text-2xl" />
           </button>
           <h1
             className={`text-2xl flex gap-4 items-center tracking-widest drop-shadow-md font-bold contrast-100`}
@@ -227,13 +242,17 @@ const MobileNav = () => {
             </span>
             <span className="saturate-200">Jollify</span>
           </h1>
+        </div>
+        <div>
           {user ? (
-            <div className="w-6 h-6 overflow-hidden bg-gray-400 rounded-full">
+            <div
+              className={`w-8 h-8 overflow-hidden bg-${selectedTheme} rounded-full`}
+            >
               <Link to={`/users/${user.id}`}>
                 {user.image ? (
                   <img
-                    src="logo.svg"
-                    alt="logo"
+                    src={user.image}
+                    alt={user.username}
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -250,17 +269,17 @@ const MobileNav = () => {
             </button>
           )}
         </div>
-        {navBarOpen && (
-          <div className="absolute top-0 left-0 z-50 bg-primary w-screen">
-            <div className="flex justify-end">
-              <button onClick={handleToggleNav}>
-                <AiOutlineClose />
-              </button>
-            </div>
-            <NavContent />
-          </div>
-        )}
       </div>
+      {isMenuOpen && (
+        <div className="fixed top-0 left-0 z-50 bg-primary w-full h-full">
+          <div className="flex justify-end mt-2 me-4">
+            <button onClick={handleToggleNav}>
+              <AiOutlineClose className="text-2xl" />
+            </button>
+          </div>
+          <NavContent />
+        </div>
+      )}
     </div>
   );
 };
@@ -285,7 +304,7 @@ const DesktopNav = () => {
 const NavBar = () => {
   return (
     <>
-      <nav className="text-white py-4">
+      <nav className="text-white py-7">
         <div className="md:hidden">
           <MobileNav />
         </div>
