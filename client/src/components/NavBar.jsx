@@ -18,19 +18,37 @@ import { useEffect, useState } from "react";
 const NavContent = () => {
   const selectedTheme = useSelector((state) => state.theme);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const [path, setPath] = useState(pathname);
+
+  useEffect(() => {
+    setPath(pathname);
+  }, [pathname, path]);
 
   const handleLoginClick = () => {
-    navigate("/login");
-  };
-  // let user;
+    switch (path) {
+      case "/login":
+        navigate("/signup");
+        break;
+      case "/signup":
+        navigate("/login");
+        break;
 
-  const user = {
-    id: 23453,
-    username: "Ojigs",
-    email: "ojigs@jollify.com",
-    bio: "Music lover and web developer",
-    profileImage: "https://jollify.com/user-profile.png",
+      default:
+        navigate("/login");
+        break;
+    }
   };
+
+  let user;
+
+  // const user = {
+  //   id: 23453,
+  //   username: "Ojigs",
+  //   email: "ojigs@jollify.com",
+  //   bio: "Music lover and web developer",
+  //   profileImage: "https://jollify.com/user-profile.png",
+  // };
 
   return (
     <>
@@ -61,7 +79,7 @@ const NavContent = () => {
             onClick={handleLoginClick}
             className={`bg-${selectedTheme} hover:bg-${selectedTheme} w-full text-white font-bold py-2 px-4 rounded`}
           >
-            Login
+            {path === "/login" ? "Sign up" : "Login"}
           </button>
         </div>
       )}
@@ -192,22 +210,35 @@ const MobileNav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const selectedTheme = useSelector((state) => state.theme);
   const { pathname } = useLocation();
+  const [path, setPath] = useState(pathname);
   const navigate = useNavigate();
-  // let user;
-  const user = {
-    id: 23453,
-    username: "Ojigs",
-    email: "ojigs@jollify.com",
-    bio: "Music lover and web developer",
-    profileImage: "https://jollify.com/user-profile.png",
-  };
+
+  let user;
+  // const user = {
+  //   id: 23453,
+  //   username: "Ojigs",
+  //   email: "ojigs@jollify.com",
+  //   bio: "Music lover and web developer",
+  //   profileImage: "https://jollify.com/user-profile.png",
+  // };
 
   const handleToggleNav = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const handleLoginClick = () => {
-    navigate("/login");
+    switch (path) {
+      case "/login":
+        navigate("/signup");
+        break;
+      case "/signup":
+        navigate("/login");
+        break;
+
+      default:
+        navigate("/login");
+        break;
+    }
   };
 
   useEffect(() => {
@@ -225,6 +256,7 @@ const MobileNav = () => {
 
   useEffect(() => {
     setIsMenuOpen(false);
+    setPath(pathname);
   }, [pathname]);
 
   return (
@@ -265,7 +297,7 @@ const MobileNav = () => {
               onClick={handleLoginClick}
               className={`bg-${selectedTheme} hover:bg-${selectedTheme} w-full text-white font-bold py-2 px-4 rounded`}
             >
-              Login
+              {path === "/login" ? "Sign up" : "Login"}
             </button>
           )}
         </div>

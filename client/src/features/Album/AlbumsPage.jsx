@@ -11,7 +11,7 @@ const AlbumsPage = () => {
   ];
 
   return (
-    <section className="container text-gray-100">
+    <section className="text-gray-100">
       <div className="flex justify-between items-center">
         <h1 className="text-xl md:text-3xl font-semibold mb-2">Albums</h1>
       </div>
