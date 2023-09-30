@@ -12,13 +12,14 @@ import ArtistesPage from "../features/Artiste/ArtistesPage";
 import ArtistePage from "../features/Artiste/ArtistePage";
 import FavoritesPage from "../features/Studio/Favorites/FavoritesPage";
 import MyPlaylistPage from "../features/Studio/MyPlaylists/MyPlaylistPage";
-import UserProfile from "../features/Users/UsersPage";
+import UsersPage from "../features/Users/UsersPage";
 import LoginPage from "../components/LoginPage";
 import SignupPage from "../components/SignupPage";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    // path: "/",
     element: <Layout />,
     errorElement: <ErrorPage />,
     children: [
@@ -31,12 +32,21 @@ const router = createBrowserRouter([
       { path: "albums/:id", element: <AlbumPage /> },
       { path: "artistes", element: <ArtistesPage /> },
       { path: "artistes/:id", element: <ArtistePage /> },
-      { path: "favorites", element: <FavoritesPage /> },
-      { path: "myPlaylist", element: <MyPlaylistPage /> },
-      { path: "users/:id", element: <UserProfile /> },
+      {
+        path: "favorites",
+        element: <PrivateRoute component={FavoritesPage} />,
+      },
+      {
+        path: "myPlaylist",
+        element: <PrivateRoute component={MyPlaylistPage} />,
+      },
+      {
+        path: "users/:id",
+        element: <PrivateRoute component={UsersPage} />,
+      },
       { path: "login", element: <LoginPage /> },
       { path: "signup", element: <SignupPage /> },
-      { path: "*", element: <ErrorPage /> },
+      // { path: "*", element: <ErrorPage /> },
     ],
   },
 ]);

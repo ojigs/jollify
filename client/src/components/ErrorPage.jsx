@@ -1,18 +1,17 @@
 import { Link, useRouteError } from "react-router-dom";
 import { useSelector } from "react-redux";
-
 const ErrorPage = () => {
   const selectedTheme = useSelector((state) => state.theme);
   const error = useRouteError();
   if (error) {
-    console.log(error);
+    console.error(error.error);
   }
 
   return (
     <>
-      <main className="grid min-h-full place-items-center bg-secondary-200 text-white px-6 py-24 sm:py-32 lg:px-8">
+      <main className="grid min-h-screen place-items-center bg-secondary-200 text-white px-6 py-24 sm:py-32 lg:px-8">
         <div className="text-center">
-          <p className="text-base font-semibold ">404</p>
+          <p className="text-base font-semibold ">{error.status}</p>
           <h1 className="mt-4 text-3xl font-bold tracking-tight  sm:text-5xl">
             Page not found
           </h1>
@@ -23,7 +22,7 @@ const ErrorPage = () => {
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Link
-              to="/home"
+              to="/"
               className={`rounded-md bg-${selectedTheme} px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-pink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink`}
             >
               Go back home
