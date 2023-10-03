@@ -31,11 +31,11 @@ const NavContent = () => {
         navigate("/signup");
         break;
       case "/signup":
-        navigate("/login");
+        navigate("/login", { state: { from: path } });
         break;
 
       default:
-        navigate("/login");
+        navigate("/login", { state: { from: path } });
         break;
     }
   };
@@ -234,11 +234,11 @@ const MobileNav = () => {
         navigate("/signup");
         break;
       case "/signup":
-        navigate("/login");
+        navigate("/login", { state: { from: path } });
         break;
 
       default:
-        navigate("/login");
+        navigate("/login", { state: { from: path } });
         break;
     }
   };

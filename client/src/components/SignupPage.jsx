@@ -3,13 +3,14 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { FaMusic } from "react-icons/fa";
 import { signUpSchema } from "../utils/schema";
+
 const SignupPage = () => {
+  const selectedTheme = useSelector((state) => state.theme);
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
-  const selectedTheme = useSelector((state) => state.theme);
   const [errors, setErrors] = useState({});
 
   const handleSubmit = (event) => {
@@ -58,7 +59,7 @@ const SignupPage = () => {
                   className="w-full bg-gray-200 rounded-md focus:outline-none focus:outline-gray-600 focus:-outline-offset-1 p-2  text-primary"
                 />
                 {errors.username && (
-                  <span className="block mt-2 saturate-100 text-red-500">
+                  <span className="block text-sm mt-2 saturate-100 text-red-500">
                     {errors.username}
                   </span>
                 )}
@@ -74,7 +75,7 @@ const SignupPage = () => {
                   className="w-full bg-gray-200 rounded-md focus:outline-none focus:outline-gray-600 focus:-outline-offset-1 p-2  text-primary"
                 />
                 {errors.email && (
-                  <span className="block mt-2 saturate-100 text-red-500">
+                  <span className="block text-sm mt-2 saturate-100 text-red-500">
                     {errors.email}
                   </span>
                 )}
@@ -90,7 +91,7 @@ const SignupPage = () => {
                   className="w-full bg-gray-200 rounded-md focus:outline-none focus:outline-gray-600 focus:-outline-offset-1 p-2  text-primary"
                 />
                 {errors.password && (
-                  <span className="block mt-2 saturate-100 text-red-500">
+                  <span className="block text-sm mt-2 saturate-100 text-red-500">
                     {errors.password}
                   </span>
                 )}

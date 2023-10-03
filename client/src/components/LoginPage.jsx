@@ -8,6 +8,11 @@ const LoginPage = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
   const selectedTheme = useSelector((state) => state.theme);
   const [errors, setErrors] = useState({});
+  // const location = useLocation();
+
+  // Redirect user to page they were before request for authentication
+  // const from = location?.state?.from;
+  // console.log(from);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -79,7 +84,7 @@ const LoginPage = () => {
                   required
                 />
                 {errors.username && (
-                  <span className="block mt-2 saturate-100 text-red-500">
+                  <span className="block text-sm mt-2 saturate-100 text-red-500">
                     {errors.username}
                   </span>
                 )}
@@ -96,7 +101,7 @@ const LoginPage = () => {
                   required
                 />
                 {errors.password && (
-                  <span className="block mt-2 saturate-100 text-red-500">
+                  <span className="block text-sm mt-2 saturate-100 text-red-500">
                     {errors.password}
                   </span>
                 )}
