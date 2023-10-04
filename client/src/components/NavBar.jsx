@@ -17,13 +17,15 @@ import { useEffect, useState } from "react";
 
 const NavContent = () => {
   const selectedTheme = useSelector((state) => state.theme);
+  const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [path, setPath] = useState(pathname);
 
   useEffect(() => {
     setPath(pathname);
-  }, [pathname, path]);
+    console.log(selectedTheme);
+  }, [pathname, path, selectedTheme]);
 
   const handleLoginClick = () => {
     switch (path) {
@@ -39,16 +41,6 @@ const NavContent = () => {
         break;
     }
   };
-
-  let user;
-
-  // const user = {
-  //   id: 23453,
-  //   username: "Ojigs",
-  //   email: "ojigs@jollify.com",
-  //   bio: "Music lover and web developer",
-  //   profileImage: "https://jollify.com/user-profile.png",
-  // };
 
   return (
     <>
@@ -211,18 +203,10 @@ const NavContent = () => {
 const MobileNav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const selectedTheme = useSelector((state) => state.theme);
+  const { user } = useSelector((state) => state.user);
   const { pathname } = useLocation();
   const [path, setPath] = useState(pathname);
   const navigate = useNavigate();
-
-  let user;
-  // const user = {
-  //   id: 23453,
-  //   username: "Ojigs",
-  //   email: "ojigs@jollify.com",
-  //   bio: "Music lover and web developer",
-  //   profileImage: "https://jollify.com/user-profile.png",
-  // };
 
   const handleToggleNav = () => {
     setIsMenuOpen(!isMenuOpen);

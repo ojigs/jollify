@@ -3,12 +3,11 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/User");
 
 const verifyToken = asyncHandler((req, res, next) => {
-  const authorization = req.headers.authorization || req.headers.Authorization;
-  if (!authorization || !authorization.startsWith("Bearer")) {
+  const { accessToken } = req.cookies;
+  if (!accessToken) {
     return res.status(401).send("Not Authorized, no token");
   }
-  const token = authorization.split(" ")[1];
-  jwt.verify(token, process.env.JWT_SECRET, async (err, decodedUser) => {
+  jwt.verify(accessToken, process.env.JWT_SECRET, async (err, decodedUser) => {
     if (err) {
       return res.status(401).send("Not Authorized, invalid token");
     }

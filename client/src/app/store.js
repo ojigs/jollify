@@ -1,7 +1,15 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { setUpListeners } from "@reduxjs/toolkit/dist/query";
-import { persistReducer, persistStore } from "redux-persist";
-import thunk from "redux-thunk";
+import { setupListeners } from "@reduxjs/toolkit/query";
+import {
+  persistReducer,
+  persistStore,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { apiSlice } from "./apiSlice";
 import themeSlice from "./themeSlice";
@@ -9,26 +17,29 @@ import userSlice from "../features/Users/slice/userSlice";
 
 const persistConfig = {
   key: "root",
+  version: 1,
   storage,
+  blacklist: [apiSlice.reducerPath],
 };
 
 const rootReducers = combineReducers({
   theme: themeSlice,
   user: userSlice,
+  [apiSlice.reducerPath]: apiSlice.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducers);
 
 export const store = configureStore({
-  reducer: {
-    [apiSlice.reducerPath]: apiSlice.reducer,
-    persistedReducer,
-  },
-  middleware: (getDefaultMiddleware) => {
-    getDefaultMiddleware().concat(apiSlice.middleware, thunk);
-  },
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(apiSlice.middleware),
 });
 
-export const persistor = persistStore(store);
+setupListeners(store.dispatch);
 
-setUpListeners(store.dispatch);
+export const persistor = persistStore(store);

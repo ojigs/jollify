@@ -7,7 +7,7 @@ const {
 } = require("../middleware/authMiddleware");
 
 // @desc  Register new user
-// @route POST /user/register
+// @route POST /auth/register
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
@@ -63,13 +63,12 @@ const registerUser = asyncHandler(async (req, res) => {
         email: newUser.email,
         favorites: newUser.favorites,
       },
-      token: { accessToken },
     });
   }
 });
 
 // @desc  Login user
-// @route POST /user/login
+// @route POST /auth/login
 // @access Public
 const loginUser = asyncHandler(async (req, res) => {
   const { username, password } = req.body;
@@ -119,12 +118,11 @@ const loginUser = asyncHandler(async (req, res) => {
       username: user.username,
       favorites: user.favorites,
     },
-    token: { accessToken },
   });
 });
 
 // @desc  Refresh token
-// @route POST /user/refresh
+// @route GET /auth/refresh
 // @access Public
 const refresh = asyncHandler(async (req, res) => {
   const { refreshToken } = req.cookies;
@@ -154,11 +152,11 @@ const refresh = asyncHandler(async (req, res) => {
     maxAge: 15 * 60 * 1000, // 15 minutes (match accessToken expiration)
   });
 
-  res.status(200).json({ accessToken });
+  res.status(200).json({ message: "Token refreshed" });
 });
 
 // @desc  Log out user
-// @route POST /user/logout
+// @route POST /auth/logout
 // @access Public
 const logOutUser = asyncHandler(async (req, res) => {
   res.clearCookie("accessToken");

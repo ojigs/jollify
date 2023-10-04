@@ -49,6 +49,7 @@ const EditUserModal = ({ closeModal, isModalOpen, user, children }) => {
                       value={user.username}
                       className="w-full border border-gray-400 bg-gray-200 rounded-md focus:outline-none p-2  text-gray-800"
                       required
+                      disabled
                     />
                   </div>
                   <div className="mb-4">
