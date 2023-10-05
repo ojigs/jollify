@@ -1,15 +1,22 @@
+import { useEffect } from "react";
+import { useGetAllSongsQuery } from "../../app/apiSlice";
 import SongCard from "./SongCard";
 
 const SongsPage = () => {
-  const songs = [
-    { _id: 23453, artiste: { _id: 23453, name: "Ruger" }, title: "Blue" },
-    { _id: 23454, artiste: { _id: 23454, name: "Ruger" }, title: "Blue" },
-    { _id: 23455, artiste: { _id: 23455, name: "Ruger" }, title: "Blue" },
-    { _id: 23456, artiste: { _id: 23456, name: "Ruger" }, title: "Blue" },
-    { _id: 23457, artiste: { _id: 23457, name: "Ruger" }, title: "Blue" },
-    { _id: 23458, artiste: { _id: 23458, name: "Ruger" }, title: "Blue" },
-    { _id: 23459, artiste: { _id: 23459, name: "Ruger" }, title: "Blue" },
-  ];
+  const { data: songs, isLoading, isError, error } = useGetAllSongsQuery();
+
+  useEffect(() => {
+    if (isError) {
+      console.error(error);
+    }
+  });
+
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
+  if (isError) {
+    return <h1>An error has occured</h1>;
+  }
 
   return (
     <section className="text-gray-100">

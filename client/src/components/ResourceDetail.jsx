@@ -28,13 +28,13 @@ const ResourceDetail = ({ resource, resourceType }) => {
   return (
     <article
       className="relative bg-secondary-200 md:h-[400px] rounded-md shadow-lg w-full bg-center bg-cover bg-no-repeat"
-      style={{ backgroundImage: `url(${coverImage || image})` }}
+      style={{ backgroundImage: `url(${coverImage || image || ""})` }}
     >
       <div className="bg-primary h-full bg-opacity-60 inset-0 rounded-md flex flex-col md:flex-row justify-center md:justify-start items-start md:items-center gap-6 p-6 text-white backdrop-blur-2xl">
         <div
-          className={`shadow-lg w-48 ${
+          className={`w-48  h-48 md:w-60 md:h-60 overflow-hidden bg-secondary-100 bg-center bg-cover bg-no-repeat shadow-md shadow-secondary-200 ${
             isArtiste ? "rounded-full" : "rounded-md"
-          } h-48 md:w-60 md:h-60 overflow-hidden bg-secondary-100 bg-center bg-cover bg-no-repeat shadow-md shadow-secondary-200`}
+          }`}
         >
           {(coverImage || image) && (
             <img

@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Mutex } from "async-mutex";
-import { logoutUser } from "../features/Users/slice/userSlice";
+import { logoutUser } from "../features/Users/userSlice";
 
 const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:4000",
+  baseUrl: "/",
   credentials: "include",
 });
 

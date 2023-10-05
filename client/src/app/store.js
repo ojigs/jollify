@@ -13,7 +13,7 @@ import {
 import storage from "redux-persist/lib/storage";
 import { apiSlice } from "./apiSlice";
 import themeSlice from "./themeSlice";
-import userSlice from "../features/Users/slice/userSlice";
+import userSlice from "../features/Users/userSlice";
 
 const persistConfig = {
   key: "root",

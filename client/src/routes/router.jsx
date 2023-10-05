@@ -13,8 +13,8 @@ import ArtistePage from "../features/Artiste/ArtistePage";
 import FavoritesPage from "../features/Studio/Favorites/FavoritesPage";
 import MyPlaylistPage from "../features/Studio/MyPlaylists/MyPlaylistPage";
 import UsersPage from "../features/Users/UsersPage";
-import LoginPage from "../components/LoginPage";
-import SignupPage from "../components/SignupPage";
+import LoginPage from "../features/Auth/LoginPage";
+import SignupPage from "../features/Auth/SignupPage";
 import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
