@@ -24,8 +24,7 @@ const NavContent = () => {
 
   useEffect(() => {
     setPath(pathname);
-    console.log(selectedTheme);
-  }, [pathname, path, selectedTheme]);
+  }, [pathname, path]);
 
   const handleLoginClick = () => {
     switch (path) {

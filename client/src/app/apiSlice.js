@@ -64,6 +64,9 @@ export const apiSlice = createApi({
     getSongDetails: builder.query({
       query: (songId) => `/api/songs/${songId}`,
     }),
+    getAnySong: builder.query({
+      query: () => "/api/songs/any",
+    }),
     likeSong: builder.mutation({
       query: (songId) => ({
         url: `/api/songs/${songId}/like`,
@@ -83,7 +86,7 @@ export const apiSlice = createApi({
     }),
     // playlists feature
     getAllPlaylists: builder.query({
-      query: () => "/api/playlists",
+      query: (limit) => `/api/playlists?limit=${limit}`,
     }),
     getPlaylistDetails: builder.query({
       query: (playlistId) => `/api/playlists/${playlistId}`,
@@ -103,7 +106,7 @@ export const apiSlice = createApi({
     }),
     //albums feature
     getAllAlbums: builder.query({
-      query: () => "/api/albums",
+      query: (limit) => `/api/albums?limit=${limit}`,
     }),
     getAlbumDetails: builder.query({
       query: (albumId) => `/api/albums/${albumId}`,
@@ -116,7 +119,7 @@ export const apiSlice = createApi({
     }),
     //artistes feature
     getAllArtistes: builder.query({
-      query: () => "/api/artistes",
+      query: (limit) => `/api/artistes?limit=${limit}`,
     }),
     getArtisteDetails: builder.query({
       query: (artisteId) => `/api/artistes/${artisteId}`,
@@ -138,6 +141,7 @@ export const {
   //songs feature
   useGetAllSongsQuery,
   useGetSongDetailsQuery,
+  useGetAnySongQuery,
   useLikeSongMutation,
   //comments route
   useAddCommentMutation,

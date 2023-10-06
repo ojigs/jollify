@@ -1,19 +1,23 @@
 const Album = require("../models/Album");
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
+const { shuffleArray } = require("../util");
 
 // @desc  Get all Albums
 // @route GET api/albums
 // @access Public
 const getAllAlbums = asyncHandler(async (req, res) => {
+  const limit = parseInt(req.query.limit);
   const albums = await Album.find({})
     .sort({ createdAt: -1 })
+    .limit(limit)
     .lean()
     .populate("artiste", "name");
   if (!albums.length) {
     return res.status(404).json({ message: "No albums found" });
   }
-  res.status(200).json(albums);
+  const shuffledAlbums = shuffleArray(albums);
+  res.status(200).json(shuffledAlbums);
 });
 
 // @desc  Get all Albums
@@ -23,7 +27,7 @@ const getAlbumDetails = asyncHandler(async (req, res) => {
   const { albumId } = req.params;
   const album = await Album.findById(albumId)
     .populate("artiste", "name")
-    .populate("song");
+    .populate("songs");
   if (!album) {
     return res.status(404).json({ message: "Album not found" });
   }

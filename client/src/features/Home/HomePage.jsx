@@ -8,11 +8,7 @@ const HomePage = () => {
     <>
       <Search />
       <HomeBanner />
-      <HomeFeature
-        artisteName={"Ruger"}
-        albumTitle={"Ru da world"}
-        songTitle={"Blue"}
-      />
+      <HomeFeature />
       <Recommend type={"albums"} />
       <Recommend type={"playlists"} />
     </>

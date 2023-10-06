@@ -5,7 +5,7 @@ const {
   getAlbumDetails,
   likeAlbum,
 } = require("../controllers/albumController");
-import { verifyToken } from "../middleware/authMiddleware";
+const { verifyToken } = require("../middleware/authMiddleware");
 
 router.get("/", getAllAlbums);
 router.get("/:albumId", getAlbumDetails);

@@ -64,9 +64,9 @@ const SongList = ({ songs, listType }) => {
         <div className="flex justify-center mt-4">
           <button
             onClick={handleMoreClick}
-            className=" text-white px-4 py-2 border-gray-400 border rounded-full hover:bg-primary-dark transition"
+            className={`text-white px-4 py-2 border-${selectedTheme} border rounded-full hover:bg-primary-dark transition`}
           >
-            More
+            More &darr;
           </button>
         </div>
       )}

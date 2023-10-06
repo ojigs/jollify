@@ -1,14 +1,24 @@
+import { useEffect } from "react";
+import { useGetAllAlbumsQuery } from "../../app/apiSlice";
 import AlbumCard from "./AlbumCard";
+import Loading from "../../components/Loading";
+import ErrorMsg from "../../components/ErrorMsg";
 
 const AlbumsPage = () => {
-  const albums = [
-    {
-      _id: 23453,
-      artiste: { _id: 23453, name: "Ruger" },
-      title: "Ru da World",
-      description: "Afro Beats",
-    },
-  ];
+  const { data: albums, isLoading, isError, error } = useGetAllAlbumsQuery();
+
+  useEffect(() => {
+    if (isError) {
+      console.error(error);
+    }
+  });
+
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (isError) {
+    return <ErrorMsg error={error} />;
+  }
 
   return (
     <section className="text-gray-100">

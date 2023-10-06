@@ -1,16 +1,23 @@
 const Playlist = require("../models/Playlist");
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
+const { shuffleArray } = require("../util");
 
 // @desc  Get all Playlists
 // @route GET api/playlists
 // @access Public / Private
 const getAllPlaylists = asyncHandler(async (req, res) => {
-  const playlists = await Playlist.find({}).sort({ createdAt: -1 });
+  const limit = parseInt(req.query.limit);
+  const playlists = await Playlist.find({})
+    .sort({ createdAt: -1 })
+    .limit(limit)
+    .populate("createdBy", "username")
+    .lean();
   if (!playlists.length) {
     return res.status(404).json({ message: "No playlists found" });
   }
-  res.status(200).json(playlists);
+  const shuffledPlaylists = shuffleArray(playlists);
+  res.status(200).json(shuffledPlaylists);
 });
 
 // @desc  Get specific playlist

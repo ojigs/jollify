@@ -1,6 +1,7 @@
 const Song = require("../models/Song");
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
+const { shuffleArray } = require("../util/index");
 
 // @desc  Get all songs
 // @route GET api/songs
@@ -16,8 +17,8 @@ const getAllSongs = asyncHandler(async (req, res) => {
   if (!songs.length) {
     return res.status(404).json({ message: "No songs found" });
   }
-  const shuffledArray = shuffleArray(songs);
-  res.status(200).json(shuffledArray);
+  const shuffledSongs = shuffleArray(songs);
+  res.status(200).json(shuffledSongs);
 });
 
 // @desc  Get specific song
@@ -43,6 +44,23 @@ const getSongDetails = asyncHandler(async (req, res) => {
   res.status(200).json(song);
 });
 
+// @desc  Get any song
+// @route GET api/songs/any
+// @access Public
+const getAnySong = asyncHandler(async (req, res) => {
+  const count = await Song.countDocuments({ coverImage: { $ne: "" } });
+  const randomIndex = Math.floor(Math.random() * count);
+  const randomSong = await Song.findOne({ coverImage: { $ne: "" } })
+    .skip(randomIndex)
+    .populate("artiste", "name image")
+    .populate("album", "title")
+    .lean();
+  if (!randomSong) {
+    return res.status(404).json({ message: "No song with cover image found" });
+  }
+  res.status(200).json(randomSong);
+});
+
 // @desc  Like a song
 // @route POST api/songs/:songId/like
 // @access Private
@@ -66,14 +84,4 @@ const likeSong = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Like status toogled" });
 });
 
-// Fisher-Yates shuffle algorithm to shuffle songs array
-function shuffleArray(array) {
-  const shuffledArray = [...array];
-  for (let i = shuffledArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-  }
-  return shuffledArray;
-}
-
-module.exports = { getAllSongs, getSongDetails, likeSong };
+module.exports = { getAllSongs, getSongDetails, getAnySong, likeSong };

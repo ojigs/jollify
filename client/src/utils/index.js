@@ -21,3 +21,10 @@ export const trimText = (text) => {
     return text;
   }
 };
+
+export const formatDate = (dateString) => {
+  const dateObject = new Date(dateString);
+  const options = { month: "long", year: "numeric" };
+  const formattedDate = dateObject.toLocaleString("en-US", options);
+  return formattedDate;
+};

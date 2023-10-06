@@ -1,20 +1,29 @@
+import { useEffect } from "react";
+import { useGetAllArtistesQuery } from "../../app/apiSlice";
 import ArtisteCard from "./ArtisteCard";
+import Loading from "../../components/Loading";
+import ErrorMsg from "../../components/ErrorMsg";
 
 const ArtistesPage = () => {
-  const artistes = [
-    {
-      _id: 23453,
-      name: "Ruger",
-      title: "Ru da World",
-      description: "Afro Beats",
-    },
-    {
-      _id: 23454,
-      name: "Ruger",
-      title: "Ru da World",
-      description: "Afro Beats",
-    },
-  ];
+  const {
+    data: artistes,
+    isLoading,
+    isError,
+    error,
+  } = useGetAllArtistesQuery();
+
+  useEffect(() => {
+    if (isError) {
+      console.error(error);
+    }
+  });
+
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (isError) {
+    return <ErrorMsg error={error} />;
+  }
 
   return (
     <section className="text-gray-100">

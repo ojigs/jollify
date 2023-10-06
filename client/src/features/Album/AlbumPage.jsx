@@ -1,35 +1,33 @@
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useGetAlbumDetailsQuery } from "../../app/apiSlice";
 import ResourceDetail from "../../components/ResourceDetail";
 import SongList from "../../components/SongList";
+import Loading from "../../components/Loading";
+import ErrorMsg from "../../components/ErrorMsg";
 
 const AlbumPage = () => {
-  const album = {
-    _id: 23453,
-    artiste: { name: "Ruger" },
-    title: "Ru da World",
-    likes: [{}, {}],
-    songs: [
-      { _id: 23453, artiste: "Ruger", title: "Blue", duration: "3:29" },
-      { _id: 23454, artiste: "Ruger", title: "Blue", duration: "3:29" },
-      {
-        _id: 23455,
-        artiste: { name: "Ruger" },
-        title: "Blue",
-        duration: "3:29",
-        isPlaying: true,
-      },
-      { _id: 23456, artiste: "Ruger", title: "Blue", duration: "3:29" },
-      { _id: 23457, artiste: "Ruger", title: "Blue", duration: "3:29" },
-      { _id: 23458, artiste: "Ruger", title: "Blue", duration: "3:29" },
-      { _id: 23459, artiste: "Ruger", title: "Blue", duration: "3:29" },
-    ],
-    duration: "3:29",
-    lyrics: `<p>This is the first line of lyrics</p>
-      <p>This is the second line of lyrics</p>`,
-    comments: [
-      { text: "Nice song Ruger", user: { name: "User1" } },
-      { text: "I've had Blue on repeat all day", user: { name: "User2" } },
-    ],
-  };
+  const { id } = useParams();
+  const {
+    data: album,
+    isLoading,
+    isError,
+    error,
+  } = useGetAlbumDetailsQuery(id);
+
+  useEffect(() => {
+    if (isError) {
+      console.error(error);
+    }
+  });
+
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (isError) {
+    return <ErrorMsg error={error} />;
+  }
+
   return (
     <section className=" text-gray-200">
       <ResourceDetail resource={album} resourceType={"album"} />

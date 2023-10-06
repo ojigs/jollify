@@ -3,16 +3,19 @@ const Song = require("../models/Song");
 const Album = require("../models/Album");
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
+const { shuffleArray } = require("../util");
 
 // @desc  Get all Artistes
 // @route GET api/artistes
 // @access Public
 const getAllArtistes = asyncHandler(async (req, res) => {
-  const artistes = await Artiste.find({});
+  const limit = parseInt(req.query.limit);
+  const artistes = await Artiste.find({}).limit(limit);
   if (!artistes.length) {
     return res.status(404).json({ message: "No artistes found" });
   }
-  res.status(200).json(artistes);
+  const shuffledArtistes = shuffleArray(artistes);
+  res.status(200).json(shuffledArtistes);
 });
 
 // @desc  Get specific Artiste

@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { BsPlay } from "react-icons/bs";
 import LikeButton from "./LikeButton";
-import { aggregateSongsDuration } from "../utils/index";
+import { aggregateSongsDuration, formatDate } from "../utils/index";
 import { FaHeadphones, FaFolderOpen, FaUserAstronaut } from "react-icons/fa";
 
 const ResourceDetail = ({ resource, resourceType }) => {
@@ -30,9 +31,9 @@ const ResourceDetail = ({ resource, resourceType }) => {
       className="relative bg-secondary-200 md:h-[400px] rounded-md shadow-lg w-full bg-center bg-cover bg-no-repeat"
       style={{ backgroundImage: `url(${coverImage || image || ""})` }}
     >
-      <div className="bg-primary h-full bg-opacity-60 inset-0 rounded-md flex flex-col md:flex-row justify-center md:justify-start items-start md:items-center gap-6 p-6 text-white backdrop-blur-2xl">
+      <div className="bg-primary h-full bg-opacity-60 inset-0 rounded-md flex flex-col md:flex-row justify-center md:justify-start items-start md:items-center gap-10 p-6 text-white backdrop-blur-2xl">
         <div
-          className={`w-48  h-48 md:w-60 md:h-60 overflow-hidden bg-secondary-100 bg-center bg-cover bg-no-repeat shadow-md shadow-secondary-200 ${
+          className={`w-48  h-48 md:w-60 md:h-60 flex-shrink-0 overflow-hidden bg-secondary-100 bg-center bg-cover bg-no-repeat shadow-md shadow-secondary-200 ${
             isArtiste ? "rounded-full" : "rounded-md"
           }`}
         >
@@ -52,10 +53,10 @@ const ResourceDetail = ({ resource, resourceType }) => {
             <FaFolderOpen className="p-4 text-gray-400 w-full h-full object-cover backdrop-blur-2xl" />
           )}
           {isArtiste && !image && (
-            <FaUserAstronaut className="p-2 text-gray-400 w-full h-full rounded-full object-cover backdrop-blur-2xl" />
+            <FaUserAstronaut className="pt-6 text-gray-400 w-full h-full rounded-full object-cover backdrop-blur-2xl" />
           )}
         </div>
-        <article className="flex-grow">
+        <article className="flex flex-col">
           {title && (
             <h2 className={`text-2xl text-${selectedTheme}-50 font-bold mb-4`}>
               {title.toUpperCase()}
@@ -69,20 +70,40 @@ const ResourceDetail = ({ resource, resourceType }) => {
           {description && <p className={`text-gray-200 mt-2`}>{description}</p>}
           {bio && <p className={`text-gray-200 mt-2`}>{bio}</p>}
           {createdBy && (
-            <p className={`text-gray-200 hover:text-${selectedTheme}-50 mt-2`}>
-              Created By: {createdBy.username}
+            <p className="mt-2">
+              <span className="text-gray-400 mr-2">Created By: </span>{" "}
+              <Link
+                to={`/users/${createdBy._id}`}
+                className={`text-gray-200 hover:text-${selectedTheme}-50 `}
+              >
+                {createdBy.username}
+              </Link>
             </p>
           )}
           {artiste && (
-            <p className={`text-gray-200 hover:text-${selectedTheme}-50 mt-2`}>
-              Artiste: {artiste.name}
+            <p className="mt-2">
+              <span className="text-gray-400 mr-2">Artiste: </span>{" "}
+              <Link
+                to={`/artistes/${artiste._id}`}
+                className={`text-gray-200 hover:text-${selectedTheme}-50 `}
+              >
+                {artiste.name}
+              </Link>
             </p>
           )}
           {releaseDate && (
-            <p className={`text-gray-200 mt-2`}>Release Date: {releaseDate}</p>
+            <p className={` mt-2`}>
+              <span className="text-gray-400 mr-2">Release Date:</span>{" "}
+              <span className="text-gray-200 hover:text-${selectedTheme}-50">
+                {formatDate(releaseDate)}
+              </span>
+            </p>
           )}
-          <p className={`text-gray-200 hover:text-${selectedTheme}-50 mt-2`}>
-            Genre: {genre}
+          <p className={` mt-2`}>
+            <span className="text-gray-400 mr-2">Genre:</span>{" "}
+            <span className="text-gray-200 hover:text-${selectedTheme}-50">
+              {genre}
+            </span>
           </p>
           {songs && (
             <p className={`text-gray-200 hover:text-${selectedTheme}-50 mt-2`}>

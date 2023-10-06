@@ -1,4 +1,14 @@
-const Card = ({ coverImage, title, name }) => {
+import { Link } from "react-router-dom";
+import { trimText } from "../utils";
+
+const Card = ({ resource, type }) => {
+  const { coverImage, title, artiste, createdBy } = resource;
+  const creator = {
+    id: artiste?._id || createdBy._id,
+    name: artiste?.name || createdBy.user,
+    type: type === "albums" ? "artistes" : "users",
+  };
+
   const backgroundColors = [
     "bg-yellow-400",
     "bg-pink-400",
@@ -24,8 +34,12 @@ const Card = ({ coverImage, title, name }) => {
         <div className="absolute rounded-lg inset-0 bg-gradient-to-tr from-primary via-secondary-500 to-secondary-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"></div>
       </div>
       <div className="p-4 pl-2">
-        <h3 className="text-lg font-semibold">{title}</h3>
-        <p className="text-gray-500">{name}</p>
+        <h3 className="md:text-lg font-semibold">
+          <Link to={`/${type}/${resource._id}`}>{trimText(title)}</Link>
+        </h3>
+        <p className="text-gray-500 text-sm md:text-base">
+          <Link to={`/${creator.type}/${creator.id}`}>{creator.name}</Link>
+        </p>
       </div>
     </article>
   );

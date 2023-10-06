@@ -40,9 +40,9 @@ const SongDetail = ({ song }) => {
           </p>
           {album && (
             <p className="mt-2">
-              <span className="text-gray-400 mr-2">Artiste: </span>{" "}
+              <span className="text-gray-400 mr-2">Album: </span>{" "}
               <Link
-                to={`/artistes/${album._id}`}
+                to={`/albums/${album._id}`}
                 className={`text-gray-200 hover:text-${selectedTheme}-50 `}
               >
                 {album.title}

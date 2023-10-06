@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useGetAllSongsQuery } from "../../app/apiSlice";
 import SongCard from "./SongCard";
+import Loading from "../../components/Loading";
+import ErrorMsg from "../../components/ErrorMsg";
 
 const SongsPage = () => {
   const { data: songs, isLoading, isError, error } = useGetAllSongsQuery();
@@ -12,10 +14,10 @@ const SongsPage = () => {
   });
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <Loading />;
   }
   if (isError) {
-    return <h1>An error has occured</h1>;
+    return <ErrorMsg error={error} />;
   }
 
   return (

@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import SongDetail from "./SongDetail";
 import Lyrics from "./Lyrics";
 import CommentsSection from "./CommentsSection";
+import Loading from "../../components/Loading";
+import ErrorMsg from "../../components/ErrorMsg";
 
 const SongPage = () => {
   const { id } = useParams();
@@ -16,11 +18,11 @@ const SongPage = () => {
   });
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return <Loading />;
   }
 
   if (isError) {
-    return <h1>An error occured</h1>;
+    return <ErrorMsg error={error} />;
   }
 
   // const songs = {

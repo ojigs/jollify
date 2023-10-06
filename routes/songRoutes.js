@@ -4,10 +4,12 @@ const {
   getAllSongs,
   getSongDetails,
   likeSong,
+  getAnySong,
 } = require("../controllers/songController");
 const { verifyToken } = require("../middleware/authMiddleware");
 
 router.get("/", getAllSongs);
+router.get("/any", getAnySong);
 router.get("/:songId", getSongDetails);
 router.post("/:songId/like", verifyToken, likeSong);
 

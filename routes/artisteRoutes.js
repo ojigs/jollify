@@ -5,7 +5,7 @@ const {
   getArtisteDetails,
   likeArtiste,
 } = require("../controllers/artisteController");
-import { verifyToken } from "../middleware/authMiddleware";
+const { verifyToken } = require("../middleware/authMiddleware");
 
 router.get("/", getAllArtistes);
 router.get("/:artisteId", getArtisteDetails);
