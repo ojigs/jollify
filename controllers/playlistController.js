@@ -9,7 +9,6 @@ const { shuffleArray } = require("../util");
 const getAllPlaylists = asyncHandler(async (req, res) => {
   const limit = parseInt(req.query.limit);
   const playlists = await Playlist.find({})
-    .sort({ createdAt: -1 })
     .limit(limit)
     .populate("createdBy", "username")
     .lean();

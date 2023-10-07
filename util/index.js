@@ -1,11 +1,10 @@
 // Fisher-Yates shuffle algorithm to shuffle songs array
 const shuffleArray = (array) => {
-  const shuffledArray = [...array];
-  for (let i = shuffledArray.length - 1; i > 0; i--) {
+  for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    [array[i], array[j]] = [array[j], array[i]];
   }
-  return shuffledArray;
+  return array;
 };
 
 module.exports = { shuffleArray };

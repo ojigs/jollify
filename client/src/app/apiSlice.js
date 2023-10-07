@@ -59,13 +59,16 @@ export const apiSlice = createApi({
     }),
     // songs feature
     getAllSongs: builder.query({
-      query: () => "/api/songs",
+      query: (limit) => `/api/songs?limit=${limit}`,
     }),
     getSongDetails: builder.query({
       query: (songId) => `/api/songs/${songId}`,
     }),
     getAnySong: builder.query({
       query: () => "/api/songs/any",
+    }),
+    getTopSongs: builder.query({
+      query: (limit) => `/api/songs/top?limit=${limit}`,
     }),
     likeSong: builder.mutation({
       query: (songId) => ({
@@ -142,6 +145,7 @@ export const {
   useGetAllSongsQuery,
   useGetSongDetailsQuery,
   useGetAnySongQuery,
+  useGetTopSongsQuery,
   useLikeSongMutation,
   //comments route
   useAddCommentMutation,

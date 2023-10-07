@@ -10,7 +10,7 @@ const { shuffleArray } = require("../util");
 // @access Public
 const getAllArtistes = asyncHandler(async (req, res) => {
   const limit = parseInt(req.query.limit);
-  const artistes = await Artiste.find({}).limit(limit);
+  const artistes = await Artiste.find({}).limit(limit).lean();
   if (!artistes.length) {
     return res.status(404).json({ message: "No artistes found" });
   }
@@ -23,7 +23,7 @@ const getAllArtistes = asyncHandler(async (req, res) => {
 // @access Public
 const getArtisteDetails = asyncHandler(async (req, res) => {
   const { artisteId } = req.params;
-  const artiste = await Artiste.findById(artisteId);
+  const artiste = await Artiste.findById(artisteId).lean();
   if (!artiste) {
     return res.status(404).json({ message: "Artiste not found" });
   }

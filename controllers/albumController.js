@@ -9,7 +9,6 @@ const { shuffleArray } = require("../util");
 const getAllAlbums = asyncHandler(async (req, res) => {
   const limit = parseInt(req.query.limit);
   const albums = await Album.find({})
-    .sort({ createdAt: -1 })
     .limit(limit)
     .lean()
     .populate("artiste", "name");
@@ -27,7 +26,8 @@ const getAlbumDetails = asyncHandler(async (req, res) => {
   const { albumId } = req.params;
   const album = await Album.findById(albumId)
     .populate("artiste", "name")
-    .populate("songs");
+    .populate("songs")
+    .lean();
   if (!album) {
     return res.status(404).json({ message: "Album not found" });
   }

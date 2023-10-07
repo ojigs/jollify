@@ -33,7 +33,7 @@ const ResourceDetail = ({ resource, resourceType }) => {
     >
       <div className="bg-primary h-full bg-opacity-60 inset-0 rounded-md flex flex-col md:flex-row justify-center md:justify-start items-start md:items-center gap-10 p-6 text-white backdrop-blur-2xl">
         <div
-          className={`w-48  h-48 md:w-60 md:h-60 flex-shrink-0 overflow-hidden bg-secondary-100 bg-center bg-cover bg-no-repeat shadow-md shadow-secondary-200 ${
+          className={`w-48  h-48 md:w-60 md:h-60 flex-shrink-0 overflow-hidden bg-secondary-200 bg-center bg-cover bg-no-repeat shadow-md shadow-secondary-100 ${
             isArtiste ? "rounded-full" : "rounded-md"
           }`}
         >
@@ -105,7 +105,7 @@ const ResourceDetail = ({ resource, resourceType }) => {
               {genre}
             </span>
           </p>
-          {songs && (
+          {!isAlbum && songs && (
             <p className={`text-gray-200 hover:text-${selectedTheme}-50 mt-2`}>
               {aggregateSongsDuration(songs)}
             </p>
