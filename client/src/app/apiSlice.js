@@ -11,7 +11,12 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   await mutex.waitForUnlock();
   let result = await baseQuery(args, api, extraOptions);
-  if (result.error && result.error.status === 401) {
+  console.log(result);
+  if (
+    result.error &&
+    (result.error.status === 401 || result.error.originalStatus === 401)
+  ) {
+    console.log("apiSlice: ", "did you refresh");
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
       try {
@@ -28,10 +33,10 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
       } finally {
         release();
       }
+    } else {
+      await mutex.waitForUnlock();
+      result = await baseQuery(args, api, extraOptions);
     }
-  } else {
-    await mutex.waitForUnlock();
-    result = await baseQuery(args, api, extraOptions);
   }
   return result;
 };
@@ -45,7 +50,7 @@ export const apiSlice = createApi({
     }),
     editUserDetails: builder.mutation({
       query: (data) => ({
-        url: "/api/users/",
+        url: "/api/users/edit",
         method: "PATCH",
         body: data,
       }),

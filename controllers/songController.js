@@ -45,12 +45,13 @@ const getSongDetails = asyncHandler(async (req, res) => {
   res.status(200).json(song);
 });
 
+// @desc  Get top songs
+// @route GET api/songs/top
+// @access Public
 const getTopSongs = asyncHandler(async (req, res) => {
   const limit = parseInt(req.query.limit);
-  console.log(limit);
   const songs = await Song.aggregate([
     // { $match: { coverImage: { $ne: "" } } },
-    { $sample: { size: limit } },
     {
       $lookup: {
         from: "artistes",
@@ -80,8 +81,8 @@ const getTopSongs = asyncHandler(async (req, res) => {
         album: { _id: "$album._id", title: "$album.title" },
       },
     },
+    { $sample: { size: limit } },
   ]);
-  console.log("length: ", songs.length);
   if (!songs || songs.length === 0) {
     return res.status(404).json({ message: "No songs found" });
   }

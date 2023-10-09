@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useGetTopSongsQuery } from "../../app/apiSlice";
@@ -6,54 +6,47 @@ import { FaHeart, FaRegHeart, FaClock } from "react-icons/fa";
 
 const HomeFront = () => {
   const { data: songs } = useGetTopSongsQuery(5);
-  console.log(songs);
   // const songRefs = songs.map(() => useRef());
   const [likedSongs, setLikedSongs] = useState([]);
-  // const [highlightedSong, setHighlightedSong] = useState(0);
 
-  // const songRefs = useRef([]);
+  const songRefs = useRef([]);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
-  // useEffect(() => {
-  //   const handleKeyDown = (event) => {
-  //     if (event.key === "ArrowDown") {
-  //       // Scroll to the next song row
-  //       setHighlightedSong((prevSong) => prevSong + 1);
-  //     }
-  //   };
+  // const generateKey = async () => {
+  //   const encryptionKey = await crypto.subtle.generateKey(
+  //     {
+  //       name: "AES-GCM",
+  //       length: 256,
+  //     },
+  //     true,
+  //     ["encrypt", "decrypt"]
+  //   );
+  //   return encryptionKey;
+  // };
 
-  //   const handleKeyUp = (event) => {
-  //     if (event.key === "ArrowUp") {
-  //       // Scroll to the previous song row
-  //       setHighlightedSong((prevSong) => prevSong - 1);
-  //     }
-  //   };
+  // const key = generateKey();
 
-  //   const refs = songRefs?.current;
+  // console.log(key);
 
-  //   refs.forEach((row) => {
-  //     row.addEventListener("keydown", handleKeyDown);
-  //     row.addEventListener("keyup", handleKeyUp);
-  //   });
+  // Function to handle scrolling and set highlighted song
+  const handleScroll = () => {
+    const scrollPosition = window.scrollY;
+    const index = songRefs.current.findIndex(
+      (ref) => ref.offsetTop >= scrollPosition
+    );
 
-  //   return () => {
-  //     refs.forEach((row) => {
-  //       row.removeEventListener("keydown", handleKeyDown);
-  //       row.removeEventListener("keyup", handleKeyUp);
-  //     });
-  //   };
-  // }, []);
+    setHighlightedIndex(index);
+  };
 
-  // useEffect(() => {
-  //   // Remove the highlight from all song rows
-  //   songRefs.current.forEach((row) => {
-  //     row.style.backgroundColor = "";
-  //   });
+  useEffect(() => {
+    // Attach scroll event listener when the component mounts
+    window.addEventListener("scroll", handleScroll);
 
-  //   // Highlight the song row at the specified index
-  //   if (songRefs.current[highlightedSong]) {
-  //     songRefs.current[highlightedSong].style.backgroundColor = "#0d0d0d";
-  //   }
-  // }, [highlightedSong]);
+    // Remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const handleLikeClick = (songId) => {
     if (likedSongs.includes(songId)) {
@@ -70,7 +63,7 @@ const HomeFront = () => {
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg md:text-2xl font-bold">Billboard Top 50</h2>
         <Link
-          to={`/songs}`}
+          to={`/songs`}
           className={`text-base text-${selectedTheme} hover:text-${selectedTheme}-50 active:text-opacity-75 font-bold`}
         >
           See all
@@ -96,25 +89,25 @@ const HomeFront = () => {
       </div>
       <div className="">
         {songs &&
-          songs.map((song, index) => (
+          songs?.map((song, index) => (
             <article
-              // ref={(el) => (songRefs.current[index] = el)}
-              className={`grid grid-cols-6 md:grid-cols-12 gap-4 items-center bg-opacity-50 p-1`}
+              ref={(el) => (songRefs.current[index] = el)}
+              className={`grid grid-cols-6 md:grid-cols-12 gap-4 items-center p-1 ${
+                index === highlightedIndex ? "bg-primary" : ""
+              } `}
               key={song._id}
             >
               <div className="col-span-1 md:col-span-1 text-center">
                 <div>{index + 1}</div>
               </div>
-              <div className="col-span-1 md:col-span-1">
-                <div>
-                  <img
-                    src={song.coverImage}
-                    alt={song.title}
-                    className="w-full h-full rounded-md"
-                  />
-                </div>
+              <div className="col-span-1 md:col-span-1 overflow-hidden">
+                <img
+                  src={song.coverImage}
+                  alt={song.title}
+                  className=" rounded-md"
+                />
               </div>
-              <div className="col-span-3 md:col-span-4 flex flex-col">
+              <div className="col-span-3 md:col-span-4 flex flex-col ">
                 <Link
                   to={`/songs/${song._id}`}
                   className={`hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme}`}
@@ -128,7 +121,7 @@ const HomeFront = () => {
                   {song.artiste.name}
                 </Link>
               </div>
-              <div className="hidden md:block col-span-3">
+              <div className="hidden md:block col-span-3 truncate ...">
                 <Link
                   to={`/albums/${song.album?._id}`}
                   className={`hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme}`}

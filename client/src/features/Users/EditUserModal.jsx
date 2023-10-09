@@ -1,7 +1,36 @@
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEditUserDetailsMutation } from "../../app/apiSlice";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { setUser } from "./userSlice";
 
 const EditUserModal = ({ closeModal, isModalOpen, user, children }) => {
   const selectedTheme = useSelector((state) => state.theme);
+  const dispatch = useDispatch();
+  const [updateUser, { isLoading, isError, error }] =
+    useEditUserDetailsMutation();
+  const [formData, setFormData] = useState({
+    bio: user.bio,
+    image: user.image,
+    country: user.country,
+  });
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const { data, error } = await updateUser(formData);
+      if (error) {
+        console.error(error);
+      } else {
+        dispatch(setUser(data));
+        closeModal();
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div>
       {children}
@@ -37,7 +66,7 @@ const EditUserModal = ({ closeModal, isModalOpen, user, children }) => {
                     Edit Profile
                   </h2>
                 </div>
-                <form>
+                <form onSubmit={handleSubmit}>
                   <div className="mb-4">
                     <label className="block text-gray-700  mb-1">
                       Username
@@ -58,6 +87,10 @@ const EditUserModal = ({ closeModal, isModalOpen, user, children }) => {
                       type="text"
                       placeholder="I love Jollify"
                       name="bio"
+                      defaultValue={user.bio}
+                      onChange={(e) =>
+                        setFormData({ ...formData, bio: e.target.value })
+                      }
                       className="w-full border border-gray-400 bg-gray-200 rounded-md focus:outline-none p-2  text-gray-800"
                     />
                   </div>
@@ -66,6 +99,11 @@ const EditUserModal = ({ closeModal, isModalOpen, user, children }) => {
                     <input
                       type="file"
                       name="image"
+                      defaultValue={user.image}
+                      accept="image/*"
+                      onChange={(e) =>
+                        setFormData({ ...formData, image: e.target.value })
+                      }
                       className="w-full border border-gray-400 bg-gray-200 rounded-md focus:outline-none p-2  text-gray-800"
                     />
                   </div>
@@ -75,6 +113,10 @@ const EditUserModal = ({ closeModal, isModalOpen, user, children }) => {
                       type="text"
                       placeholder="Nigeria"
                       name="country"
+                      defaultValue={user.country}
+                      onChange={(e) =>
+                        setFormData({ ...formData, country: e.target.value })
+                      }
                       className="w-full border border-gray-400 bg-gray-200 rounded-md focus:outline-none p-2  text-gray-800"
                     />
                   </div>
@@ -90,10 +132,19 @@ const EditUserModal = ({ closeModal, isModalOpen, user, children }) => {
                       type="submit"
                       className={`bg-${selectedTheme} hover:bg-${selectedTheme} text-white font-bold py-2 px-4 rounded`}
                     >
-                      Done
+                      {isLoading ? (
+                        <AiOutlineLoading3Quarters className="animate-spin m-auto text-2xl text-gray-400" />
+                      ) : (
+                        `Done`
+                      )}
                     </button>
                   </div>
                 </form>
+                {isError && (
+                  <span className="block text-sm mt-2 saturate-100 text-red-500">
+                    {error?.data?.message}
+                  </span>
+                )}
               </div>
             </div>
           </div>

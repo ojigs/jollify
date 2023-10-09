@@ -1,19 +1,25 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useRegisterUserMutation } from "./authApiSlice";
 import { FaMusic } from "react-icons/fa";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { setUser } from "../Users/userSlice";
 import { signUpSchema } from "../../utils/schema";
 
 const SignupPage = () => {
   const selectedTheme = useSelector((state) => state.theme);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [signUp, { isLoading, isError, error }] = useRegisterUserMutation();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState({});
+  const [validationErrors, setValidationErrors] = useState({});
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const { error } = signUpSchema.validate(formData, {
@@ -23,11 +29,23 @@ const SignupPage = () => {
     });
 
     if (error) {
-      const validationErrors = {};
+      const errors = {};
       error.details.forEach(
-        (detail) => (validationErrors[detail.path[0]] = detail.message)
+        (detail) => (errors[detail.path[0]] = detail.message)
       );
-      setErrors(validationErrors);
+      setValidationErrors(errors);
+    }
+
+    try {
+      const { data, error } = await signUp(formData);
+      if (error) {
+        console.error(error);
+      } else {
+        dispatch(setUser(data?.user));
+        navigate("/");
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -57,10 +75,11 @@ const SignupPage = () => {
                     setFormData({ ...formData, username: e.target.value })
                   }
                   className="w-full bg-gray-200 rounded-md focus:outline-none focus:outline-gray-600 focus:-outline-offset-1 p-2  text-primary"
+                  required
                 />
-                {errors.username && (
+                {validationErrors.username && (
                   <span className="block text-sm mt-2 saturate-100 text-red-500">
-                    {errors.username}
+                    {validationErrors.username}
                   </span>
                 )}
               </div>
@@ -73,10 +92,11 @@ const SignupPage = () => {
                     setFormData({ ...formData, email: e.target.value })
                   }
                   className="w-full bg-gray-200 rounded-md focus:outline-none focus:outline-gray-600 focus:-outline-offset-1 p-2  text-primary"
+                  required
                 />
-                {errors.email && (
+                {validationErrors.email && (
                   <span className="block text-sm mt-2 saturate-100 text-red-500">
-                    {errors.email}
+                    {validationErrors.email}
                   </span>
                 )}
               </div>
@@ -89,20 +109,35 @@ const SignupPage = () => {
                     setFormData({ ...formData, password: e.target.value })
                   }
                   className="w-full bg-gray-200 rounded-md focus:outline-none focus:outline-gray-600 focus:-outline-offset-1 p-2  text-primary"
+                  required
                 />
-                {errors.password && (
+                {validationErrors.password && (
                   <span className="block text-sm mt-2 saturate-100 text-red-500">
-                    {errors.password}
+                    {validationErrors.password}
                   </span>
                 )}
               </div>
               <div className="mb-6">
                 <button
                   type="submit"
-                  className={`bg-${selectedTheme} hover:bg-${selectedTheme} active:translate-y-[1px] w-full text-white font-bold py-2 px-4 rounded`}
+                  className={`bg-${selectedTheme} ${
+                    !isLoading
+                      ? `hover:bg-${selectedTheme}-50 active:translate-y-[1px]`
+                      : `bg-opacity-50`
+                  } w-full text-white font-bold py-2 px-4 rounded`}
+                  disabled={isLoading}
                 >
-                  Log in
+                  {isLoading ? (
+                    <AiOutlineLoading3Quarters className="animate-spin m-auto text-2xl text-gray-400" />
+                  ) : (
+                    `Sign up`
+                  )}
                 </button>
+                {isError && (
+                  <span className="block text-sm mt-2 saturate-100 text-red-500">
+                    {error?.data?.message}
+                  </span>
+                )}
               </div>
               <div className="text-center">
                 <span>Already have an account?</span>{" "}

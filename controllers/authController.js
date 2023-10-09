@@ -126,6 +126,7 @@ const loginUser = asyncHandler(async (req, res) => {
 // @access Public
 const refresh = asyncHandler(async (req, res) => {
   const { refreshToken } = req.cookies;
+  console.log("i tried to refresh");
 
   if (!refreshToken) {
     return res

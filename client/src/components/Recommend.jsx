@@ -39,19 +39,20 @@ const Recommend = ({ type }) => {
         </Link>
       </div>
       <article className="flex overflow-x-auto gap-8">
-        {isLoading ? (
+        {isLoading && (
           <div className="flex-grow flex justify-center items-center h-36 md:h-40">
             <AiOutlineLoading className="text-3xl animate-spin" />
           </div>
-        ) : isError ? (
+        )}
+        {isError && (
           <div className="flex-grow h-36 md:h-40">
             <ErrorMsg error={error} />
           </div>
-        ) : (
+        )}
+        {data &&
           data?.map((item) => (
             <Card key={item._id} resource={item} type={type} />
-          ))
-        )}
+          ))}
       </article>
     </section>
   );

@@ -9,6 +9,9 @@ export default defineConfig({
       "/api": {
         target: "http://localhost:4000",
       },
+      "/auth": {
+        target: "http://localhost:4000",
+      },
     },
   },
 });

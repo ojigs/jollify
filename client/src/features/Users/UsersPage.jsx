@@ -7,6 +7,7 @@ import EditUserModal from "./EditUserModal";
 const UsersPage = () => {
   const selectedTheme = useSelector((state) => state.theme);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user } = useSelector((state) => state.user);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -14,14 +15,6 @@ const UsersPage = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-  };
-
-  const user = {
-    userId: "1",
-    username: "Ojigs",
-    email: "ojigs@jollify.com",
-    bio: "Music lover and web developer",
-    profileImage: "https://jollify.com/user-profile.png",
   };
 
   return (
@@ -73,7 +66,7 @@ const UsersPage = () => {
             <span>{user.bio}</span>
           </h2>
         </div>
-        <div className="px-2 py-6 mt-4 rounded-md bg-secondary-100 shadow-sm shadow-gray-700">
+        <div className="px-4 py-6 mt-4 rounded-md bg-secondary-100 shadow-sm shadow-gray-700">
           <h2 className="flex gap-8 font-semibold">
             <span className="text-gray-300">Country: </span>
             <span>{user.country}</span>

@@ -23,14 +23,16 @@ const getUserDetails = asyncHandler(async (req, res) => {
 // @access Private
 const editUserDetails = asyncHandler(async (req, res) => {
   const userId = req.user.id;
-  const { username, bio, country, image } = req.body;
+  const { bio, country, image } = req.body;
   const updatedUser = await User.findByIdAndUpdate(
     userId,
-    { username, bio, country, image },
+    { bio, country, image },
     { new: true }
   );
   if (!updatedUser) {
-    return res.status(404).json({ message: "User not found" });
+    return res
+      .status(404)
+      .json({ message: "An error occured while updating the user" });
   }
   res.status(200).json(updatedUser);
 });
