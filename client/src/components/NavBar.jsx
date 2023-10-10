@@ -49,7 +49,7 @@ const NavContent = () => {
             <div
               className={`w-10 h-10  bg-${selectedTheme} rounded-full overflow-hidden`}
             >
-              <Link to={`/users/${user.id}`}>
+              <Link to={`/myProfile`}>
                 {user.image ? (
                   <img
                     src={user.image}
@@ -61,7 +61,7 @@ const NavContent = () => {
                 )}
               </Link>
             </div>
-            <Link to={`/users/${user.id}`}>{user.username}</Link>
+            <Link to={`/myProfile`}>{user.username}</Link>
           </div>
         </div>
       ) : (
@@ -265,7 +265,7 @@ const MobileNav = () => {
             <div
               className={`w-8 h-8 overflow-hidden bg-${selectedTheme} rounded-full`}
             >
-              <Link to={`/users/${user.id}`}>
+              <Link to={`/myProfile`}>
                 {user.image ? (
                   <img
                     src={user.image}

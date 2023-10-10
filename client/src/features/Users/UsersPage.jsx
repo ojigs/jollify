@@ -1,21 +1,23 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { FaUser } from "react-icons/fa";
-import EditUserModal from "./EditUserModal";
-// import ruger from "../../assets/images/ruger.png";
+import { useParams } from "react-router-dom";
+import { useGetUserDetailsQuery } from "../../app/apiSlice";
+import Loading from "../../components/Loading";
+import ErrorMsg from "../../components/ErrorMsg";
+import PlaylistCard from "../Playlist/PlaylistCard";
 
 const UsersPage = () => {
   const selectedTheme = useSelector((state) => state.theme);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { user } = useSelector((state) => state.user);
+  const { id } = useParams();
+  const { data: user, isLoading, isError, error } = useGetUserDetailsQuery(id);
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
+  if (isLoading) {
+    return <Loading />;
+  }
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  if (isError) {
+    return <ErrorMsg error={error} />;
+  }
 
   return (
     <section className=" text-gray-100">
@@ -23,43 +25,38 @@ const UsersPage = () => {
         className={`w-full h-28 md:h-48  bg-gradient-to-r from-transparent via-${selectedTheme} to-transparent relative`}
       ></div>
       <div className="-translate-y-14 md:-translate-y-24 translate-x-5 absolute">
-        <div className="w-28 h-28 md:w-48 md:h-48 rounded-full relative bg-secondary-100 shadow-lg  shadow-secondary-100">
+        <div className="w-28 h-28 md:w-48 md:h-48 rounded-full relative bg-secondary-100 shadow-lg  shadow-secondary-100 overflow-hidden">
           {user?.image ? (
             <img
-              src=""
+              src={user.image}
               alt=""
               className="w-full h-full rounded-full object-cover cursor-pointer"
             />
           ) : (
             <FaUser className="w-full h-full pt-4 rounded-full object-cover text-gray-400 cursor-pointer" />
           )}
-          <h1 className="text-xl md:text-3xl font-semibold text-center m-2">
-            {user.username}
-          </h1>
         </div>
+        <h1 className="text-xl md:text-3xl font-semibold text-center m-2">
+          {user.username}
+        </h1>
       </div>
-
-      <div className="flex flex-col items-end sm:flex-row sm:justify-end gap-4 mt-4 text-sm">
-        <EditUserModal
-          closeModal={closeModal}
-          isModalOpen={isModalOpen}
-          user={user}
-        >
-          <button
-            onClick={openModal}
-            className={`bg-${selectedTheme} hover:bg-${selectedTheme}-50 active:bg-opacity-80 font-bold py-1  px-2 sm:py-2 sm:px-4 rounded`}
-          >
-            Edit
-          </button>
-        </EditUserModal>
-        <button
-          className={`bg-transparent  border hover:bg-${selectedTheme} active:bg-opacity-80 font-bold py-1  px-2 sm:py-2 sm:px-4 rounded`}
-        >
-          Log out
-        </button>
+      <div className="mt-32 md:mt-48 mb-8">
+        {user.playlist.length > 0 && (
+          <>
+            <h3 className="text-2xl font-semibold mb-2">Playlists</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {user.playlist.map((playlist) => (
+                <PlaylistCard
+                  key={playlist._id}
+                  playlist={playlist}
+                  type={"user"}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </div>
-
-      <div className="mt-14 md:mt-36 md:w-3/4 text-gray-290">
+      <div className="md:w-3/4">
         <div className="px-4 py-6 rounded-lg bg-secondary-100 shadow-sm shadow-gray-700">
           <h2 className="flex gap-8 font-semibold">
             <span className="text-gray-300">Bio: </span>

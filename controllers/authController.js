@@ -56,14 +56,7 @@ const registerUser = asyncHandler(async (req, res) => {
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
-    res.status(201).json({
-      user: {
-        id: newUser._id,
-        username: newUser.username,
-        email: newUser.email,
-        favorites: newUser.favorites,
-      },
-    });
+    res.status(201).json({ user: newUser });
   }
 });
 
@@ -111,14 +104,7 @@ const loginUser = asyncHandler(async (req, res) => {
     maxAge: 30 * 24 * 60 * 60 * 1000, //30 days (match refreshToken expiration)
   });
 
-  res.status(200).json({
-    user: {
-      id: user._id,
-      email: user.email,
-      username: user.username,
-      favorites: user.favorites,
-    },
-  });
+  res.status(200).json({ user });
 });
 
 // @desc  Refresh token
@@ -126,7 +112,6 @@ const loginUser = asyncHandler(async (req, res) => {
 // @access Public
 const refresh = asyncHandler(async (req, res) => {
   const { refreshToken } = req.cookies;
-  console.log("i tried to refresh");
 
   if (!refreshToken) {
     return res

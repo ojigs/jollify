@@ -1,18 +1,13 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { MdQueue } from "react-icons/md";
 import PlaylistCard from "../../Playlist/PlaylistCard";
 import CreatePlaylistModal from "./CreatePlaylistModal";
 
 const MyPlaylistPage = () => {
+  const { user } = useSelector((state) => state.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const playlists = [
-    {
-      _id: 23453,
-      createdBy: { _id: 23453, username: "Jollify" },
-      title: "Party Time",
-      description: "Afro Beats",
-    },
-  ];
+  const playlists = user.playlist;
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -28,7 +23,7 @@ const MyPlaylistPage = () => {
         <CreatePlaylistModal closeModal={closeModal} isModalOpen={isModalOpen}>
           <button
             onClick={openModal}
-            className="w-full h-72 flex flex-col justify-center items-center rounded-lg shadow-lg bg-secondary-100 hover:text-gray-400 active:text-opacity-80 cursor-pointer"
+            className="w-full h-64 flex flex-col justify-center items-center rounded-lg shadow-lg bg-secondary-100 hover:text-gray-400 active:text-opacity-80 cursor-pointer"
           >
             <MdQueue className="w-20 h-20" />
             <span>Create Playlist</span>
@@ -36,7 +31,11 @@ const MyPlaylistPage = () => {
         </CreatePlaylistModal>
         {playlists &&
           playlists.map((playlist) => (
-            <PlaylistCard key={playlist._id} playlist={playlist} />
+            <PlaylistCard
+              key={playlist._id}
+              playlist={playlist}
+              type={"user"}
+            />
           ))}
       </div>
     </section>

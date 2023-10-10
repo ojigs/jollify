@@ -4,12 +4,14 @@ const {
   getUserDetails,
   editUserDetails,
   uploadImage,
+  getCurrentUser,
 } = require("../controllers/userController");
 const { verifyToken } = require("../middleware/authMiddleware");
 const upload = require("../middleware/multer");
 
-router.get("/:userId", getUserDetails);
 router.patch("/edit", verifyToken, editUserDetails);
+router.get("/currentUser/:userId", verifyToken, getCurrentUser);
 router.post("/upload", verifyToken, upload.single("image"), uploadImage);
+router.get("/:userId", getUserDetails);
 
 module.exports = router;

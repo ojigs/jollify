@@ -1,8 +1,30 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useCreatePlaylistMutation } from "../../../app/apiSlice";
 import { MdQueueMusic } from "react-icons/md";
 
 const CreatePlaylistModal = ({ closeModal, isModalOpen, children }) => {
   const selectedTheme = useSelector((state) => state.theme);
+  const [createPlaylist, { isSuccess }] = useCreatePlaylistMutation();
+  const [formData, setFormData] = useState({ title: "", description: "" });
+
+  const handleCreatePlaylist = async (e) => {
+    e.preventDefault();
+
+    try {
+      const { error } = await createPlaylist(formData);
+      if (error) {
+        console.error(error);
+      } else {
+        closeModal();
+      }
+      if (isSuccess) {
+        console.log("playlist created successfully");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <div>
       {children}
@@ -45,13 +67,16 @@ const CreatePlaylistModal = ({ closeModal, isModalOpen, children }) => {
                     Create Playlist
                   </h2>
                 </div>
-                <form>
+                <form onSubmit={handleCreatePlaylist}>
                   <div className="mb-4">
                     <label className="block text-gray-700  mb-1">Title</label>
                     <input
                       type="text"
                       name="title"
                       placeholder="Enter playlist title"
+                      onChange={(e) =>
+                        setFormData({ ...formData, title: e.target.value })
+                      }
                       className="w-full border border-gray-400 bg-gray-200 rounded-md focus:outline-none p-2  text-gray-800"
                       required
                     />
@@ -64,6 +89,12 @@ const CreatePlaylistModal = ({ closeModal, isModalOpen, children }) => {
                       name="description"
                       rows="3"
                       placeholder="Add playlist description"
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          description: e.target.value,
+                        })
+                      }
                       className="w-full border border-gray-400 bg-gray-200 resize-none focus:outline-none rounded-md p-2  text-gray-800"
                     />
                   </div>

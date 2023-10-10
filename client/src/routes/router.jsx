@@ -15,6 +15,7 @@ import MyPlaylistPage from "../features/Studio/MyPlaylists/MyPlaylistPage";
 import UsersPage from "../features/Users/UsersPage";
 import LoginPage from "../features/Auth/LoginPage";
 import SignupPage from "../features/Auth/SignupPage";
+import MyProfilePage from "../features/Users/MyProfilePage";
 import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       { path: "albums/:id", element: <AlbumPage /> },
       { path: "artistes", element: <ArtistesPage /> },
       { path: "artistes/:id", element: <ArtistePage /> },
+      {
+        path: "myProfile",
+        element: <PrivateRoute component={MyProfilePage} />,
+      },
       {
         path: "favorites",
         element: <PrivateRoute component={FavoritesPage} />,

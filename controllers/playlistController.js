@@ -61,7 +61,7 @@ const createPlaylist = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "Playlist creation failed" });
   }
   // Update user's collection of playlists
-  await user.updateOne({ playlist: playlist._id });
+  await user.updateOne({ $push: { playlist: playlist._id } });
   res.status(201).json(playlist);
 });
 

@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useLoginUserMutation } from "./authApiSlice";
 import { FaMusic, FaGoogle, FaFacebook, FaTwitter } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { loginSchema } from "../../utils/schema";
-import { setUser } from "../Users/userSlice";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -13,7 +12,6 @@ const LoginPage = () => {
   const [validationErrors, setValidationErrors] = useState({});
   const [login, { isLoading, isError, error }] = useLoginUserMutation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   // const location = useLocation();
 
   // Redirect user to page they were before request for authentication
@@ -39,11 +37,10 @@ const LoginPage = () => {
     }
 
     try {
-      const { data, error } = await login(formData);
+      const { error } = await login(formData);
       if (error) {
         console.error(error);
       } else {
-        dispatch(setUser(data.user));
         navigate("/");
       }
     } catch (err) {

@@ -1,16 +1,14 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useRegisterUserMutation } from "./authApiSlice";
 import { FaMusic } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { setUser } from "../Users/userSlice";
 import { signUpSchema } from "../../utils/schema";
 
 const SignupPage = () => {
   const selectedTheme = useSelector((state) => state.theme);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [signUp, { isLoading, isError, error }] = useRegisterUserMutation();
   const [formData, setFormData] = useState({
     username: "",
@@ -37,11 +35,10 @@ const SignupPage = () => {
     }
 
     try {
-      const { data, error } = await signUp(formData);
+      const { error } = await signUp(formData);
       if (error) {
         console.error(error);
       } else {
-        dispatch(setUser(data?.user));
         navigate("/");
       }
     } catch (err) {

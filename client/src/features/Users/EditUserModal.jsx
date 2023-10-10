@@ -1,17 +1,16 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEditUserDetailsMutation } from "../../app/apiSlice";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { setUser } from "./userSlice";
+// import { setUser } from "./userSlice";
 
 const EditUserModal = ({ closeModal, isModalOpen, user, children }) => {
   const selectedTheme = useSelector((state) => state.theme);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [updateUser, { isLoading, isError, error }] =
     useEditUserDetailsMutation();
   const [formData, setFormData] = useState({
     bio: user.bio,
-    image: user.image,
     country: user.country,
   });
 
@@ -19,11 +18,11 @@ const EditUserModal = ({ closeModal, isModalOpen, user, children }) => {
     event.preventDefault();
 
     try {
-      const { data, error } = await updateUser(formData);
+      const { error } = await updateUser(formData);
       if (error) {
         console.error(error);
       } else {
-        dispatch(setUser(data));
+        // dispatch(setUser(data));
         closeModal();
       }
     } catch (err) {
@@ -90,19 +89,6 @@ const EditUserModal = ({ closeModal, isModalOpen, user, children }) => {
                       defaultValue={user.bio}
                       onChange={(e) =>
                         setFormData({ ...formData, bio: e.target.value })
-                      }
-                      className="w-full border border-gray-400 bg-gray-200 rounded-md focus:outline-none p-2  text-gray-800"
-                    />
-                  </div>
-                  <div className="mb-4">
-                    <label className="block text-gray-700  mb-1">Photo</label>
-                    <input
-                      type="file"
-                      name="image"
-                      defaultValue={user.image}
-                      accept="image/*"
-                      onChange={(e) =>
-                        setFormData({ ...formData, image: e.target.value })
                       }
                       className="w-full border border-gray-400 bg-gray-200 rounded-md focus:outline-none p-2  text-gray-800"
                     />

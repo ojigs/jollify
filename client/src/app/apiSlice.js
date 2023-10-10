@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Mutex } from "async-mutex";
-import { logoutUser } from "../features/Users/userSlice";
+import { setUser, logoutUser } from "../features/Users/userSlice";
 
 const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
@@ -11,12 +11,10 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReauth = async (args, api, extraOptions) => {
   await mutex.waitForUnlock();
   let result = await baseQuery(args, api, extraOptions);
-  console.log(result);
   if (
     result.error &&
     (result.error.status === 401 || result.error.originalStatus === 401)
   ) {
-    console.log("apiSlice: ", "did you refresh");
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
       try {
@@ -43,10 +41,24 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithReauth,
+  tagTypes: ["User", "Playlist"],
   endpoints: (builder) => ({
     // users feature
     getUserDetails: builder.query({
       query: (userId) => `/api/users/${userId}`,
+    }),
+    getCurrentUser: builder.query({
+      query: (userId) => `/api/users/currentUser/${userId}`,
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          console.log("did you provide");
+          dispatch(setUser(data.user));
+        } catch (err) {
+          console.log(err);
+        }
+      },
+      providesTags: (result, error, arg) => [{ type: "User", id: arg }],
     }),
     editUserDetails: builder.mutation({
       query: (data) => ({
@@ -54,13 +66,15 @@ export const apiSlice = createApi({
         method: "PATCH",
         body: data,
       }),
+      invalidatesTags: ["User"],
     }),
     uploadImage: builder.mutation({
       query: (data) => ({
-        url: "/users/upload",
+        url: "/api/users/upload",
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["User"],
     }),
     // songs feature
     getAllSongs: builder.query({
@@ -105,6 +119,7 @@ export const apiSlice = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["User"],
     }),
     addSongToPlaylist: builder.mutation({
       query: ({ playlistId, songId }) => ({
@@ -144,6 +159,7 @@ export const apiSlice = createApi({
 export const {
   //users feature
   useGetUserDetailsQuery,
+  useGetCurrentUserQuery,
   useEditUserDetailsMutation,
   useUploadImageMutation,
   //songs feature

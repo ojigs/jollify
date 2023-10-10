@@ -6,6 +6,8 @@ import FavoritePlaylists from "./FavoritePlaylists";
 
 const FavoritesPage = () => {
   const selectedTheme = useSelector((state) => state.theme);
+  const { user } = useSelector((state) => state.user);
+  const { favoriteSongs, favoriteAlbums, favoritePlaylists } = user;
   const [selectedTab, setSelectedTab] = useState("songs");
 
   const handleTabClick = (tab) => {
@@ -49,9 +51,11 @@ const FavoritesPage = () => {
         </button>
       </nav>
 
-      {selectedTab === "songs" && <FavoriteSongs />}
-      {selectedTab === "albums" && <FavoriteAlbums />}
-      {selectedTab === "playlists" && <FavoritePlaylists />}
+      {selectedTab === "songs" && <FavoriteSongs songs={favoriteSongs} />}
+      {selectedTab === "albums" && <FavoriteAlbums albums={favoriteAlbums} />}
+      {selectedTab === "playlists" && (
+        <FavoritePlaylists playlists={favoritePlaylists} />
+      )}
     </section>
   );
 };

@@ -9,13 +9,52 @@ const getUserDetails = asyncHandler(async (req, res) => {
   const userId = req.params.userId;
   const user = await User.findById(userId)
     .select("username bio country image playlist")
-    .populate("playlist", "title coverImage")
+    .populate({
+      path: "playlist",
+      select: "title coverImage",
+      populate: { path: "createdBy", select: "username" },
+    })
     .lean()
     .exec();
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
   res.status(200).json(user);
+});
+
+// @desc  Get current user
+// @route GET api/users/myProfile
+// @access Private
+const getCurrentUser = asyncHandler(async (req, res) => {
+  const userId = req.params.userId;
+  const user = await User.findById(userId)
+    .select("username bio country image playlist")
+    .populate({
+      path: "playlist",
+      select: "title coverImage",
+      populate: { path: "createdBy", select: "username" },
+    })
+    .populate({
+      path: "favoriteSongs",
+      select: "title audioUrl",
+      populate: { path: "artiste", select: "name" },
+    })
+    .populate({
+      path: "favoriteAlbums",
+      select: "title coverImage",
+      populate: { path: "artiste", select: "name" },
+    })
+    .populate({
+      path: "favoritePlaylists",
+      select: "title coverImage",
+      populate: { path: "createdBy", select: "username" },
+    })
+    .lean()
+    .exec();
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+  res.status(200).json({ user });
 });
 
 // @desc  Update user details
@@ -51,4 +90,9 @@ const uploadImage = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Profile image successfully uploaded!" });
 });
 
-module.exports = { getUserDetails, editUserDetails, uploadImage };
+module.exports = {
+  getUserDetails,
+  getCurrentUser,
+  editUserDetails,
+  uploadImage,
+};

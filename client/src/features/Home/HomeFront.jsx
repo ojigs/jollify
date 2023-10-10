@@ -69,7 +69,7 @@ const HomeFront = () => {
           See all
         </Link>
       </div>
-      <div className="grid grid-cols-6 md:grid-cols-12 gap-4">
+      <div className="grid grid-cols-6 md:grid-cols-12 gap-4 mb-2">
         <div className="col-span-1 text-center font-semibold"></div>
         <div className="col-span-1 md:col-span-1 font-semibold"></div>
         <div className="col-span-3 md:col-span-4 font-semibold">

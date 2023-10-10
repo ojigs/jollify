@@ -2,8 +2,11 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { FaHeadphones } from "react-icons/fa";
 
-const PlaylistCard = ({ playlist }) => {
+const PlaylistCard = ({ playlist, type }) => {
   const selectedTheme = useSelector((state) => state.theme);
+
+  const isUserPlaylist = type === "user";
+
   return (
     <article className="group bg-secondary-100 rounded-lg shadow-lg p-4 transition transform hover:scale-105">
       <div className="relative bg-secondary-200">
@@ -26,12 +29,14 @@ const PlaylistCard = ({ playlist }) => {
         >
           {playlist.title}
         </Link>
-        <Link
-          to={`/users/${playlist.createdBy._id}`}
-          className={`text-gray-500 hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme}`}
-        >
-          {playlist.createdBy.username}
-        </Link>
+        {!isUserPlaylist && (
+          <Link
+            to={`/users/${playlist.createdBy._id}`}
+            className={`text-gray-500 hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme}`}
+          >
+            {playlist.createdBy.username}
+          </Link>
+        )}
       </div>
     </article>
   );
