@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Mutex } from "async-mutex";
-import { setUser, logoutUser } from "../features/Users/userSlice";
+import { logoutUser } from "../features/Auth/authSlice";
 
 const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
@@ -49,16 +49,7 @@ export const apiSlice = createApi({
     }),
     getCurrentUser: builder.query({
       query: (userId) => `/api/users/currentUser/${userId}`,
-      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          console.log("did you provide");
-          dispatch(setUser(data.user));
-        } catch (err) {
-          console.log(err);
-        }
-      },
-      providesTags: (result, error, arg) => [{ type: "User", id: arg }],
+      providesTags: ["User"],
     }),
     editUserDetails: builder.mutation({
       query: (data) => ({
@@ -109,6 +100,7 @@ export const apiSlice = createApi({
     // playlists feature
     getAllPlaylists: builder.query({
       query: (limit) => `/api/playlists?limit=${limit}`,
+      providesTags: ["Playlist"],
     }),
     getPlaylistDetails: builder.query({
       query: (playlistId) => `/api/playlists/${playlistId}`,
@@ -119,7 +111,7 @@ export const apiSlice = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["User", "Playlist"],
     }),
     addSongToPlaylist: builder.mutation({
       query: ({ playlistId, songId }) => ({

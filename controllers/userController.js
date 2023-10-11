@@ -54,7 +54,7 @@ const getCurrentUser = asyncHandler(async (req, res) => {
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
-  res.status(200).json({ user });
+  res.status(200).json(user);
 });
 
 // @desc  Update user details
@@ -85,8 +85,17 @@ const uploadImage = asyncHandler(async (req, res) => {
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
-  const result = await cloudinary.uploader.upload(req.file.path);
-  await user.updateOne({ image: result.secure_url });
+  const publicId = user.image.split("/").pop().split(".")[0];
+  if (!publicId) {
+    const result = await cloudinary.uploader.upload(req.file.path);
+    await user.updateOne({ image: result.secure_url });
+  } else {
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      public_id: publicId,
+      overwrite: true,
+    });
+    await user.updateOne({ image: result.secure_url });
+  }
   res.status(200).json({ message: "Profile image successfully uploaded!" });
 });
 

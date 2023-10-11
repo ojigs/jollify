@@ -24,10 +24,10 @@ const getAllPlaylists = asyncHandler(async (req, res) => {
 // @access Public
 const getPlaylistDetails = asyncHandler(async (req, res) => {
   const { playlistId } = req.params;
-  const playlist = await Playlist.findById(playlistIdId)
+  const playlist = await Playlist.findById(playlistId)
     .populate("createdBy", "username")
     .populate({
-      path: "song",
+      path: "songs",
       select: "title coverImage duration audioURL artiste album",
       populate: [
         { path: "artiste", select: "name" },
@@ -75,7 +75,7 @@ const addSongToPlaylist = asyncHandler(async (req, res) => {
     return res.status(404), json({ message: "Playlist not found" });
   }
   if (!playlist.songs.includes(songId)) {
-    playlist.push(songId);
+    playlist.songs.push(songId);
     await playlist.save();
   }
   res.status(200).json(playlist);

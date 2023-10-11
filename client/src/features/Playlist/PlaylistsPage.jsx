@@ -1,12 +1,21 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useGetAllPlaylistsQuery } from "../../app/apiSlice";
 import { FaPlus } from "react-icons/fa";
 import PlaylistCard from "./PlaylistCard";
 import CreatePlaylistModal from "../Studio/MyPlaylists/CreatePlaylistModal";
+import Loading from "../../components/Loading";
+import ErrorMsg from "../../components/ErrorMsg";
 
 const PlaylistsPage = () => {
   const selectedTheme = useSelector((state) => state.theme);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const {
+    data: playlists,
+    isLoading,
+    isError,
+    error,
+  } = useGetAllPlaylistsQuery();
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -15,19 +24,13 @@ const PlaylistsPage = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  const playlists = [
-    {
-      _id: 23453,
-      createdBy: { _id: 23453, username: "Jollify" },
-      title: "Party Time",
-      description: "Afro Beats",
-    },
-  ];
 
-  const handleCreatePlaylist = () => {
-    //handle create playlist logic here
-    openModal();
-  };
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (isError) {
+    return <ErrorMsg error={error} />;
+  }
 
   return (
     <section className="text-gray-100">
@@ -40,7 +43,7 @@ const PlaylistsPage = () => {
         >
           <button
             className={`bg-${selectedTheme} flex justify-center items-center mb-2 hover:bg-${selectedTheme}-50 active:bg-opacity-90 py-2 px-4 rounded-lg`}
-            onClick={handleCreatePlaylist}
+            onClick={() => openModal()}
           >
             <FaPlus className="text-xs mr-2" />
             <span>Create Playlist</span>

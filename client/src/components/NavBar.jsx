@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useGetCurrentUserQuery } from "../app/apiSlice";
 import {
   FaHome,
   FaCompactDisc,
@@ -13,11 +15,12 @@ import {
 import { BiMenuAltLeft } from "react-icons/bi";
 import { AiOutlineClose } from "react-icons/ai";
 import { MdQueue } from "react-icons/md";
-import { useEffect, useState } from "react";
 
 const NavContent = () => {
   const selectedTheme = useSelector((state) => state.theme);
-  const { user } = useSelector((state) => state.user);
+  const { id } = useSelector((state) => state.auth);
+  const { data: user } = useGetCurrentUserQuery(id, { skip: !id });
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [path, setPath] = useState(pathname);
@@ -43,17 +46,17 @@ const NavContent = () => {
 
   return (
     <>
-      {user ? (
+      {isAuthenticated ? (
         <div className="mt-4 mb-8">
           <div className="flex justify-center items-center gap-2 m-auto">
             <div
               className={`w-10 h-10  bg-${selectedTheme} rounded-full overflow-hidden`}
             >
               <Link to={`/myProfile`}>
-                {user.image ? (
+                {user?.image ? (
                   <img
-                    src={user.image}
-                    alt={user.username}
+                    src={user?.image}
+                    alt={user?.username}
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -61,7 +64,7 @@ const NavContent = () => {
                 )}
               </Link>
             </div>
-            <Link to={`/myProfile`}>{user.username}</Link>
+            <Link to={`/myProfile`}>{user?.username}</Link>
           </div>
         </div>
       ) : (
@@ -151,7 +154,7 @@ const NavContent = () => {
           </NavLink>
         </li>
       </ul>
-      {user && (
+      {isAuthenticated && (
         <div className="mt-8">
           <div className="mx-4 mb-4 flex items-center">
             <h2
@@ -202,7 +205,9 @@ const NavContent = () => {
 const MobileNav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const selectedTheme = useSelector((state) => state.theme);
-  const { user } = useSelector((state) => state.user);
+  const { id } = useSelector((state) => state.auth);
+  const { data: user } = useGetCurrentUserQuery(id, { skip: !id });
+  const isAuthenticated = useSelector((state) => state.auth);
   const { pathname } = useLocation();
   const [path, setPath] = useState(pathname);
   const navigate = useNavigate();
@@ -261,12 +266,12 @@ const MobileNav = () => {
           </h1>
         </div>
         <div>
-          {user ? (
+          {isAuthenticated ? (
             <div
               className={`w-8 h-8 overflow-hidden bg-${selectedTheme} rounded-full`}
             >
               <Link to={`/myProfile`}>
-                {user.image ? (
+                {user?.image ? (
                   <img
                     src={user.image}
                     alt={user.username}

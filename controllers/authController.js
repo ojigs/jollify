@@ -56,7 +56,7 @@ const registerUser = asyncHandler(async (req, res) => {
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
-    res.status(201).json({ user: newUser });
+    res.status(201).json({ id: newUser._id });
   }
 });
 
@@ -104,7 +104,7 @@ const loginUser = asyncHandler(async (req, res) => {
     maxAge: 30 * 24 * 60 * 60 * 1000, //30 days (match refreshToken expiration)
   });
 
-  res.status(200).json({ user });
+  res.status(200).json({ id: user._id });
 });
 
 // @desc  Refresh token

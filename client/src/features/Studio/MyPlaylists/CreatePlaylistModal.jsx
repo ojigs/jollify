@@ -2,24 +2,30 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useCreatePlaylistMutation } from "../../../app/apiSlice";
 import { MdQueueMusic } from "react-icons/md";
+import LoginModal from "../../../components/LoginModal";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const CreatePlaylistModal = ({ closeModal, isModalOpen, children }) => {
   const selectedTheme = useSelector((state) => state.theme);
-  const [createPlaylist, { isSuccess }] = useCreatePlaylistMutation();
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const [createPlaylist, { isLoading }] = useCreatePlaylistMutation();
   const [formData, setFormData] = useState({ title: "", description: "" });
+  const [validationErrors, setValidationErrors] = useState(null);
 
   const handleCreatePlaylist = async (e) => {
     e.preventDefault();
 
     try {
+      if (!formData.title) {
+        setValidationErrors("Please give your playlist a title");
+        return;
+      }
       const { error } = await createPlaylist(formData);
       if (error) {
         console.error(error);
       } else {
         closeModal();
-      }
-      if (isSuccess) {
-        console.log("playlist created successfully");
+        setValidationErrors(null);
       }
     } catch (err) {
       console.error(err);
@@ -29,14 +35,21 @@ const CreatePlaylistModal = ({ closeModal, isModalOpen, children }) => {
     <div>
       {children}
 
-      {isModalOpen && (
+      {isModalOpen && !isAuthenticated && (
+        <LoginModal
+          isModalOpen={isModalOpen}
+          closeModal={closeModal}
+          message={"create a playlist"}
+        />
+      )}
+      {isModalOpen && isAuthenticated && (
         <div className="fixed z-10 inset-0 overflow-y-auto backdrop-blur-sm">
           <div className="flex items-center justify-center min-h-screen">
             <div className="relative bg-gray-200 w-96 rounded-lg shadow-lg">
               <div className="absolute top-0 right-0 pt-2 pr-4">
                 <button
                   onClick={closeModal}
-                  className="text-gray-800 hover:text-gray-600"
+                  className="text-gray-800 hover:text-gray-200 hover:bg-red-500"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +88,10 @@ const CreatePlaylistModal = ({ closeModal, isModalOpen, children }) => {
                       name="title"
                       placeholder="Enter playlist title"
                       onChange={(e) =>
-                        setFormData({ ...formData, title: e.target.value })
+                        setFormData({
+                          ...formData,
+                          title: e.target.value.trim(),
+                        })
                       }
                       className="w-full border border-gray-400 bg-gray-200 rounded-md focus:outline-none p-2  text-gray-800"
                       required
@@ -108,12 +124,26 @@ const CreatePlaylistModal = ({ closeModal, isModalOpen, children }) => {
                     </button>
                     <button
                       type="submit"
-                      className={`bg-${selectedTheme} hover:bg-${selectedTheme} text-white font-bold py-2 px-4 rounded`}
+                      className={`bg-${selectedTheme} ${
+                        !isLoading
+                          ? `hover:bg-${selectedTheme}-50 active:translate-y-[1px]`
+                          : `bg-opacity-50`
+                      } text-white text-center font-bold py-2 px-4 rounded`}
+                      disabled={isLoading}
                     >
-                      Create
+                      {isLoading ? (
+                        <AiOutlineLoading3Quarters className="animate-spin m-auto text-2xl text-gray-300" />
+                      ) : (
+                        `Create`
+                      )}
                     </button>
                   </div>
                 </form>
+                {validationErrors && (
+                  <span className="block text-sm mt-2 text-center font-bold saturate-100 text-red-500">
+                    {validationErrors}
+                  </span>
+                )}
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import { apiSlice } from "../../app/apiSlice";
 import { updateTheme } from "../../app/themeSlice";
-import { setUser, logoutUser } from "../Users/userSlice";
+import { setUser, logoutUser } from "./authSlice";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -14,9 +14,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(updateTheme("rock"));
-          dispatch(setUser(data.user));
+          dispatch(setUser(data.id));
         } catch (err) {
-          console.log(err);
+          console.error(err);
         }
       },
     }),
@@ -30,9 +30,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(updateTheme("rock"));
-          dispatch(setUser(data.user));
+          dispatch(setUser(data.id));
         } catch (err) {
-          console.log(err);
+          console.error(err);
         }
       },
     }),
@@ -43,13 +43,10 @@ export const authApiSlice = apiSlice.injectEndpoints({
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
-          const { data } = await queryFulfilled;
-          console.log(data);
+          await queryFulfilled;
           dispatch(logoutUser());
           dispatch(updateTheme("pop"));
-          setTimeout(() => {
-            dispatch(apiSlice.util.resetApiState());
-          }, 1000);
+          dispatch(apiSlice.util.resetApiState());
         } catch (err) {
           console.log(err);
         }

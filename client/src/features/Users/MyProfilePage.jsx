@@ -9,13 +9,19 @@ import {
 } from "../../app/apiSlice";
 import { useLogoutUserMutation } from "../Auth/authApiSlice";
 import EditUserModal from "./EditUserModal";
+import ErrorMsg from "../../components/ErrorMsg";
+import Loading from "../../components/Loading";
 
 const MyProfilePage = () => {
   const selectedTheme = useSelector((state) => state.theme);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { user } = useSelector((state) => state.user);
-  const { isError: isCurrentUserError, error: currentUserError } =
-    useGetCurrentUserQuery(user?._id);
+  const { id } = useSelector((state) => state.auth);
+  const {
+    data: user,
+    isLoading: isCurrentUserLoading,
+    isError: isCurrentUserError,
+    error: currentUserError,
+  } = useGetCurrentUserQuery(id, { skip: !id });
   const imageRef = useRef(null);
   const [uploadImage, { isError, error }] = useUploadImageMutation();
   const [logOut, { isLoading }] = useLogoutUserMutation();
@@ -25,8 +31,12 @@ const MyProfilePage = () => {
     imageRef.current.click();
   };
 
+  if (isCurrentUserLoading) {
+    return <Loading />;
+  }
+
   if (isCurrentUserError) {
-    console.error(currentUserError);
+    return <ErrorMsg error={currentUserError} />;
   }
 
   const handleImageUpload = async (e) => {
