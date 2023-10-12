@@ -13,18 +13,20 @@ import {
 import storage from "redux-persist/lib/storage";
 import { apiSlice } from "./apiSlice";
 import themeSlice from "./themeSlice";
+import modalSlice from "./modalSlice";
 import authSlice from "../features/Auth/authSlice";
 
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: [apiSlice.reducerPath],
+  blacklist: [apiSlice.reducerPath, "modal"],
 };
 
 const rootReducers = combineReducers({
   theme: themeSlice,
   auth: authSlice,
+  modal: modalSlice,
   [apiSlice.reducerPath]: apiSlice.reducer,
 });
 

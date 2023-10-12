@@ -1,5 +1,6 @@
 const Playlist = require("../models/Playlist");
 const User = require("../models/User");
+const Song = require("../models/Song");
 const asyncHandler = require("express-async-handler");
 const { shuffleArray } = require("../util");
 
@@ -69,16 +70,22 @@ const createPlaylist = asyncHandler(async (req, res) => {
 // @route POST api/playlists/:playlistId/songs/:songId
 // @access Private
 const addSongToPlaylist = asyncHandler(async (req, res) => {
-  const { playlistId, songId } = req.body;
+  const { playlistId, songId } = req.params;
   const playlist = await Playlist.findById(playlistId);
   if (!playlist) {
-    return res.status(404), json({ message: "Playlist not found" });
+    return res.status(404).json({ message: "Playlist not found" });
   }
   if (!playlist.songs.includes(songId)) {
     playlist.songs.push(songId);
+    if (playlist.songs.length === 1) {
+      const song = await Song.findById(songId);
+      if (song) {
+        playlist.coverImage = song.coverImage;
+      }
+    }
     await playlist.save();
   }
-  res.status(200).json(playlist);
+  res.status(200).json({ message: "Song added to playlist" });
 });
 
 module.exports = {

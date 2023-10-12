@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useLoginUserMutation } from "./authApiSlice";
 import { FaMusic, FaGoogle, FaFacebook, FaTwitter } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -12,11 +12,7 @@ const LoginPage = () => {
   const [validationErrors, setValidationErrors] = useState({});
   const [login, { isLoading, isError, error }] = useLoginUserMutation();
   const navigate = useNavigate();
-  // const location = useLocation();
-
-  // Redirect user to page they were before request for authentication
-  // const from = location?.state?.from;
-  // console.log(from);
+  const location = useLocation();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -41,7 +37,11 @@ const LoginPage = () => {
       if (error) {
         console.error(error);
       } else {
-        navigate("/");
+        if (location?.state?.from === "/signup") {
+          navigate("/");
+        } else {
+          navigate(-1);
+        }
       }
     } catch (err) {
       console.error(err);
@@ -146,7 +146,13 @@ const LoginPage = () => {
               </div>
               <div className="text-center">
                 <span>New to Jollify?</span>{" "}
-                <Link to={`/signup`} className="text-blue-300">
+                <Link
+                  to={{
+                    pathname: `/signup`,
+                    state: { from: location.pathname },
+                  }}
+                  className="text-blue-300"
+                >
                   Sign up now!
                 </Link>
               </div>

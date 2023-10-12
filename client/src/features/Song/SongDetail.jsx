@@ -1,20 +1,36 @@
-import { useSelector } from "react-redux";
-import { BsPlay } from "react-icons/bs";
-import LikeButton from "../../components/LikeButton";
-import { FaCompactDisc } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { BsPlay } from "react-icons/bs";
+import { FaCompactDisc, FaPlus } from "react-icons/fa";
+import LikeButton from "../../components/LikeButton";
+import {
+  toggleAddToPlaylistModal,
+  toggleLoginModal,
+  setMessage,
+} from "../../app/modalSlice";
 
 const SongDetail = ({ song }) => {
   const { title, coverImage, artiste, album, genre, likes } = song;
   const selectedTheme = useSelector((state) => state.theme);
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  const openModal = () => {
+    if (!isAuthenticated) {
+      dispatch(setMessage("add song to playlist"));
+      dispatch(toggleLoginModal());
+    } else {
+      dispatch(toggleAddToPlaylistModal());
+    }
+  };
 
   return (
     <article
-      className="relative bg-secondary-200 md:h-[400px] rounded-md shadow-lg w-full bg-center bg-cover bg-no-repeat"
+      className="bg-secondary-200 md:h-[400px] rounded-md shadow-lg w-full bg-center bg-cover bg-no-repeat"
       style={{ backgroundImage: `url(${coverImage || ""})` }}
     >
       <div className=" bg-primary h-full bg-opacity-60 inset-0 rounded-md flex flex-col md:flex-row justify-center md:justify-start items-start md:items-center gap-10 p-6 text-white backdrop-blur-2xl">
-        <div className="w-48 rounded-md h-48 md:w-60 md:h-60 overflow-hidden bg-secondary-100 bg-center bg-cover bg-no-repeat shadow-md shadow-secondary-200">
+        <div className="w-48 rounded-md h-48 md:w-60 md:h-60 overflow-hidden bg-secondary-200 bg-center bg-cover bg-no-repeat shadow-md shadow-secondary-200">
           {coverImage ? (
             <img
               src={coverImage}
@@ -49,20 +65,30 @@ const SongDetail = ({ song }) => {
               </Link>
             </p>
           )}
-          <p className={` mt-2`}>
+          <p className={`mt-2`}>
             <span className="text-gray-400 mr-2">Genre:</span>{" "}
             <span className="text-gray-200 hover:text-${selectedTheme}-50">
               {genre}
             </span>
           </p>
-          <div className="flex flex-row gap-4 mt-6">
+          <div className="mt-6">
             <button
-              className={`inset-0 flex items-center justify-center bg-${selectedTheme}-50 bg-opacity-80 active:bg-opacity-100 rounded-lg transition duration-300 ease-in-out py-1 px-2 md:px-6`}
+              className={`bg-${selectedTheme}-50 bg-opacity-80 active:bg-opacity-100 rounded-lg transition duration-300 ease-in-out py-1 px-2 md:px-4 mr-2`}
             >
-              <span className="mr-2">Play</span>
-              <BsPlay className="text-white text-2xl md:text-4xl" />
+              <span className="mr-2 text-xl">Play</span>
+              <span className="align-middle">
+                <BsPlay className="inline-block align-baseline text-white text-xl md:text-xl" />
+              </span>
             </button>
-            <LikeButton likes={likes} />
+            <LikeButton likes={likes} songId={song._id} />
+            <button
+              onClick={openModal}
+              className={`ml-4 text-gray-400 bg-secondary-200 active:bg-opacity-50 rounded-lg transition duration-300 ease-in-ou px-3 py-1 h-full`}
+            >
+              <span className="align-middle text-sm">
+                <FaPlus className="inline-block text-white align-baseline" />
+              </span>
+            </button>
           </div>
         </article>
       </div>

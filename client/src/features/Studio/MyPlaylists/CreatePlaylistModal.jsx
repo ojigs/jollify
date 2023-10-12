@@ -1,16 +1,21 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useCreatePlaylistMutation } from "../../../app/apiSlice";
 import { MdQueueMusic } from "react-icons/md";
-import LoginModal from "../../../components/LoginModal";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { toggleCreatePlaylistModal } from "../../../app/modalSlice";
 
-const CreatePlaylistModal = ({ closeModal, isModalOpen, children }) => {
+const CreatePlaylistModal = ({ children }) => {
   const selectedTheme = useSelector((state) => state.theme);
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isCreatePlaylistModal } = useSelector((state) => state.modal);
   const [createPlaylist, { isLoading }] = useCreatePlaylistMutation();
   const [formData, setFormData] = useState({ title: "", description: "" });
   const [validationErrors, setValidationErrors] = useState(null);
+  const dispatch = useDispatch();
+
+  const closeModal = () => {
+    dispatch(toggleCreatePlaylistModal());
+  };
 
   const handleCreatePlaylist = async (e) => {
     e.preventDefault();
@@ -34,15 +39,7 @@ const CreatePlaylistModal = ({ closeModal, isModalOpen, children }) => {
   return (
     <div>
       {children}
-
-      {isModalOpen && !isAuthenticated && (
-        <LoginModal
-          isModalOpen={isModalOpen}
-          closeModal={closeModal}
-          message={"create a playlist"}
-        />
-      )}
-      {isModalOpen && isAuthenticated && (
+      {isCreatePlaylistModal && (
         <div className="fixed z-10 inset-0 overflow-y-auto backdrop-blur-sm">
           <div className="flex items-center justify-center min-h-screen">
             <div className="relative bg-gray-200 w-96 rounded-lg shadow-lg">

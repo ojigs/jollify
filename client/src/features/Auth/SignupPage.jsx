@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useRegisterUserMutation } from "./authApiSlice";
 import { FaMusic } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -9,6 +9,7 @@ import { signUpSchema } from "../../utils/schema";
 const SignupPage = () => {
   const selectedTheme = useSelector((state) => state.theme);
   const navigate = useNavigate();
+  const location = useLocation();
   const [signUp, { isLoading, isError, error }] = useRegisterUserMutation();
   const [formData, setFormData] = useState({
     username: "",
@@ -138,7 +139,13 @@ const SignupPage = () => {
               </div>
               <div className="text-center">
                 <span>Already have an account?</span>{" "}
-                <Link to={`/login`} className="text-blue-300">
+                <Link
+                  to={{
+                    pathname: `/login`,
+                    state: { from: location.pathname },
+                  }}
+                  className="text-blue-300"
+                >
                   Log in
                 </Link>
               </div>

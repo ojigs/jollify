@@ -6,6 +6,7 @@ import Lyrics from "./Lyrics";
 import CommentsSection from "./CommentsSection";
 import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";
+import AddToPlaylistModal from "../Playlist/AddToPlaylistModal";
 
 const SongPage = () => {
   const { id } = useParams();
@@ -25,24 +26,12 @@ const SongPage = () => {
     return <ErrorMsg error={error} />;
   }
 
-  // const songs = {
-  //   _id: 23453,
-  //   artiste: "Ruger",
-  //   title: "Blue",
-  //   likes: [{}, {}],
-  //   lyrics: `<p>This is the first line of lyrics</p>
-  // <p>This is the second line of lyrics</p>`,
-  //   comments: [
-  //     { text: "Nice song Ruger", user: { name: "User1" } },
-  //     { text: "I've had Blue on repeat all day", user: { name: "User2" } },
-  //   ],
-  // };
   return (
     <section className=" text-gray-200">
       <SongDetail song={song} />
-
       <Lyrics lyrics={song.lyrics} />
       <CommentsSection comments={song.comments} />
+      <AddToPlaylistModal songId={song._id} />
     </section>
   );
 };

@@ -1,18 +1,26 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toggleLoginModal } from "../app/modalSlice";
 
-const LoginModal = ({ closeModal, isModalOpen, message }) => {
+const LoginModal = () => {
   const selectedTheme = useSelector((state) => state.theme);
+  const { isLoginModal } = useSelector((state) => state.modal);
+  const { message } = useSelector((state) => state.modal);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleClick = () => {
     closeModal();
     navigate("/login");
   };
 
+  const closeModal = () => {
+    dispatch(toggleLoginModal());
+  };
+
   return (
     <>
-      {isModalOpen && (
+      {isLoginModal && (
         <div className="fixed z-10 inset-0 text-gray-800 overflow-y-auto backdrop-blur-sm">
           <div className="flex items-center justify-center min-h-screen">
             <div className="relative bg-gray-200 w-96 rounded-lg shadow-lg">
@@ -43,7 +51,7 @@ const LoginModal = ({ closeModal, isModalOpen, message }) => {
                 <div className="flex justify-end gap-2">
                   <button
                     type="button"
-                    onClick={() => closeModal()}
+                    onClick={closeModal}
                     className="mr-2 text-gray-800 hover:text-gray-800 font-medium"
                   >
                     Cancel

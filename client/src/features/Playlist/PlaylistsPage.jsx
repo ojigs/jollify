@@ -1,28 +1,35 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetAllPlaylistsQuery } from "../../app/apiSlice";
+import {
+  toggleCreatePlaylistModal,
+  toggleLoginModal,
+  setMessage,
+} from "../../app/modalSlice";
 import { FaPlus } from "react-icons/fa";
 import PlaylistCard from "./PlaylistCard";
 import CreatePlaylistModal from "../Studio/MyPlaylists/CreatePlaylistModal";
 import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";
+import LoginModal from "../../components/LoginModal";
 
 const PlaylistsPage = () => {
   const selectedTheme = useSelector((state) => state.theme);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     data: playlists,
     isLoading,
     isError,
     error,
   } = useGetAllPlaylistsQuery();
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
+    if (!isAuthenticated) {
+      dispatch(setMessage("create a playlist"));
+      dispatch(toggleLoginModal());
+    } else {
+      dispatch(toggleCreatePlaylistModal());
+    }
   };
 
   if (isLoading) {
@@ -36,14 +43,10 @@ const PlaylistsPage = () => {
     <section className="text-gray-100">
       <div className="flex justify-between items-center">
         <h1 className="text-xl md:text-3xl font-semibold mb-2">Playlists</h1>
-        <CreatePlaylistModal
-          openModal={openModal}
-          closeModal={closeModal}
-          isModalOpen={isModalOpen}
-        >
+        <CreatePlaylistModal>
           <button
             className={`bg-${selectedTheme} flex justify-center items-center mb-2 hover:bg-${selectedTheme}-50 active:bg-opacity-90 py-2 px-4 rounded-lg`}
-            onClick={() => openModal()}
+            onClick={openModal}
           >
             <FaPlus className="text-xs mr-2" />
             <span>Create Playlist</span>
@@ -58,6 +61,7 @@ const PlaylistsPage = () => {
           <PlaylistCard key={playlist._id} playlist={playlist} />
         ))}
       </div>
+      <LoginModal />
     </section>
   );
 };

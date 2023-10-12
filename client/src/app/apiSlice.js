@@ -81,10 +81,28 @@ export const apiSlice = createApi({
       query: (limit) => `/api/songs/top?limit=${limit}`,
     }),
     likeSong: builder.mutation({
-      query: (songId) => ({
+      query: ({ songId }) => ({
         url: `/api/songs/${songId}/like`,
         method: "POST",
       }),
+      async onQueryStarted({ songId, userId }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          apiSlice.util.updateQueryData("getSongDetails", songId, (draft) => {
+            const liked = draft.likes.includes(userId);
+            if (!liked) {
+              draft.likes = [...draft.likes, userId];
+            } else {
+              draft.likes = draft.likes.filter((e) => !(e === userId));
+            }
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
+      invalidatesTags: ["User"],
     }),
     //comments route
     addComment: builder.mutation({

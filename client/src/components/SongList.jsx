@@ -16,9 +16,9 @@ const SongList = ({ songs, listType }) => {
   };
 
   return (
-    <div>
+    <ul>
       {songs.slice(0, visibleSongs).map((song, index) => (
-        <article
+        <li
           key={song._id}
           className={`flex items-center justify-between p-4 ${
             song.isPlaying
@@ -58,7 +58,7 @@ const SongList = ({ songs, listType }) => {
           </div>
           <p className="mr-2">{song.duration}</p>
           <LikeButton likes={song.likes} />
-        </article>
+        </li>
       ))}
       {visibleSongs < songs.length && (
         <div className="flex justify-center mt-4">
@@ -70,7 +70,7 @@ const SongList = ({ songs, listType }) => {
           </button>
         </div>
       )}
-    </div>
+    </ul>
   );
 };
 
