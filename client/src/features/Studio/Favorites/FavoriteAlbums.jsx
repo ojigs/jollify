@@ -1,15 +1,48 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useGetCurrentUserQuery } from "../../../app/apiSlice";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import AlbumCard from "../../Album/AlbumCard";
+import ErrorMsg from "../../../components/ErrorMsg";
 
-const FavoriteAlbums = ({ albums }) => {
+const emptyArray = [];
+
+const FavoriteAlbums = () => {
   const selectedTheme = useSelector((state) => state.theme);
+  const { id } = useSelector((state) => state.auth);
+  const {
+    data: albums,
+    isLoading,
+    isError,
+    error,
+  } = useGetCurrentUserQuery(id, {
+    skip: !id,
+    selectFromResult: ({ data, isLoading, isError, error }) => ({
+      data: data?.favoriteAlbums ?? emptyArray,
+      isLoading,
+      isError,
+      error,
+    }),
+  });
 
   const navigate = useNavigate();
+
+  if (isLoading) {
+    return (
+      <div className="flex-grow flex justify-center items-center h-full">
+        <AiOutlineLoading3Quarters className="text-3xl animate-spin" />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <ErrorMsg error={error} />;
+  }
 
   const handleClick = () => {
     navigate("/albums");
   };
+
   return (
     <>
       {!albums?.length ? (
@@ -25,9 +58,9 @@ const FavoriteAlbums = ({ albums }) => {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {albums.map((album) => (
-            <AlbumCard key={album._id} />
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {albums?.map((album) => (
+            <AlbumCard key={album._id} album={album} />
           ))}
         </div>
       )}

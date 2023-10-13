@@ -7,6 +7,7 @@ import {
   toggleAddToPlaylistModal,
   toggleLoginModal,
   setMessage,
+  setSongId,
 } from "../../app/modalSlice";
 
 const SongDetail = ({ song }) => {
@@ -15,11 +16,12 @@ const SongDetail = ({ song }) => {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const openModal = () => {
+  const openModal = (songId) => {
     if (!isAuthenticated) {
       dispatch(setMessage("add song to playlist"));
       dispatch(toggleLoginModal());
     } else {
+      dispatch(setSongId(songId));
       dispatch(toggleAddToPlaylistModal());
     }
   };
@@ -80,9 +82,12 @@ const SongDetail = ({ song }) => {
                 <BsPlay className="inline-block align-baseline text-white text-xl md:text-xl" />
               </span>
             </button>
-            <LikeButton likes={likes} songId={song._id} />
+            <span className=" bg-secondary-200 active:bg-opacity-50 rounded-lg transition duration-300 ease-in-out py-1 px-2 md:px-4 h-full inline-block">
+              <LikeButton songId={song._id} type={"song"} />
+              <span className="ml-2 text-xl">{likes && likes.length}</span>
+            </span>
             <button
-              onClick={openModal}
+              onClick={() => openModal(song._id)}
               className={`ml-4 text-gray-400 bg-secondary-200 active:bg-opacity-50 rounded-lg transition duration-300 ease-in-ou px-3 py-1 h-full`}
             >
               <span className="align-middle text-sm">

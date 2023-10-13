@@ -41,7 +41,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["User", "Playlist"],
+  tagTypes: ["User", "Playlist", "Song"],
   endpoints: (builder) => ({
     // users feature
     getUserDetails: builder.query({
@@ -73,6 +73,7 @@ export const apiSlice = createApi({
     }),
     getSongDetails: builder.query({
       query: (songId) => `/api/songs/${songId}`,
+      providesTags: ["Song"],
     }),
     getAnySong: builder.query({
       query: () => "/api/songs/any",
@@ -104,16 +105,13 @@ export const apiSlice = createApi({
       },
       invalidatesTags: ["User"],
     }),
-    //comments route
     addComment: builder.mutation({
-      query: ({ songId, ...body }) => ({
-        url: `/api/comments/${songId}`,
+      query: ({ songId, body }) => ({
+        url: `/api/songs/${songId}/comment`,
         method: "POST",
         body,
       }),
-    }),
-    getSongComments: builder.query({
-      query: (songId) => `/api/comments/${songId}`,
+      invalidatesTags: ["Song"],
     }),
     // playlists feature
     getAllPlaylists: builder.query({
@@ -136,6 +134,38 @@ export const apiSlice = createApi({
         url: `/api/playlists/${playlistId}/songs/${songId}`,
         method: "POST",
       }),
+      invalidatesTags: ["User"],
+    }),
+    likePlaylist: builder.mutation({
+      query: ({ playlistId }) => ({
+        url: `/api/albums/${playlistId}/like`,
+        method: "POST",
+      }),
+      async onQueryStarted(
+        { playlistId, userId },
+        { dispatch, queryFulfilled }
+      ) {
+        const patchResult = dispatch(
+          apiSlice.util.updateQueryData(
+            "getPlaylistDetails",
+            playlistId,
+            (draft) => {
+              const liked = draft.likes.includes(userId);
+              if (!liked) {
+                draft.likes = [...draft.likes, userId];
+              } else {
+                draft.likes = draft.likes.filter((e) => !(e === userId));
+              }
+            }
+          )
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
+      invalidatesTags: ["User"],
     }),
     //albums feature
     getAllAlbums: builder.query({
@@ -149,6 +179,24 @@ export const apiSlice = createApi({
         url: `/api/albums/${albumId}/like`,
         method: "POST",
       }),
+      async onQueryStarted({ albumId, userId }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          apiSlice.util.updateQueryData("getAlbumDetails", albumId, (draft) => {
+            const liked = draft.likes.includes(userId);
+            if (!liked) {
+              draft.likes = [...draft.likes, userId];
+            } else {
+              draft.likes = draft.likes.filter((e) => !(e === userId));
+            }
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
+      invalidatesTags: ["User"],
     }),
     //artistes feature
     getAllArtistes: builder.query({
@@ -162,6 +210,31 @@ export const apiSlice = createApi({
         url: `/api/artistes/${artisteId}/like`,
         method: "POST",
       }),
+      async onQueryStarted(
+        { artisteId, userId },
+        { dispatch, queryFulfilled }
+      ) {
+        const patchResult = dispatch(
+          apiSlice.util.updateQueryData(
+            "getArtisteDetails",
+            artisteId,
+            (draft) => {
+              const liked = draft.likes.includes(userId);
+              if (!liked) {
+                draft.likes = [...draft.likes, userId];
+              } else {
+                draft.likes = draft.likes.filter((e) => !(e === userId));
+              }
+            }
+          )
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
+      invalidatesTags: ["User"],
     }),
   }),
 });
@@ -186,6 +259,7 @@ export const {
   useGetPlaylistDetailsQuery,
   useCreatePlaylistMutation,
   useAddSongToPlaylistMutation,
+  useLikePlaylistMutation,
   //albums feature
   useGetAllAlbumsQuery,
   useGetAlbumDetailsQuery,

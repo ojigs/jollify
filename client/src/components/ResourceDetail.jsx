@@ -13,7 +13,6 @@ const ResourceDetail = ({ resource, resourceType }) => {
     artiste,
     description,
     genre,
-    likes,
     songs,
     coverImage,
     image,
@@ -119,7 +118,12 @@ const ResourceDetail = ({ resource, resourceType }) => {
                 <BsPlay className="text-white text-2xl md:text-4xl" />
               </button>
             )}
-            <LikeButton likes={likes} />
+            <LikeButton
+              albumId={isAlbum ? resource._id : null}
+              artisteId={isArtiste ? resource._id : null}
+              playlistId={isPlaylist ? resource._id : null}
+              type={resourceType}
+            />
           </div>
         </article>
       </div>

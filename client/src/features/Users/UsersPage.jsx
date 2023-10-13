@@ -43,8 +43,8 @@ const UsersPage = () => {
       <div className="mt-32 md:mt-48 mb-8">
         {user.playlist.length > 0 && (
           <>
-            <h3 className="text-2xl font-semibold mb-2">Playlists</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <h3 className="text-2xl font-semibold mb-6">Playlists</h3>
+            <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {user.playlist.map((playlist) => (
                 <PlaylistCard
                   key={playlist._id}

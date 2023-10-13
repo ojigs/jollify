@@ -32,15 +32,16 @@ const getSongDetails = asyncHandler(async (req, res) => {
     .populate("artiste", "name")
     .populate("album", "title")
     .populate({
-      path: "comments",
-      options: { sort: { createdAt: -1 } },
-      populate: { path: "user", select: "username" },
+      path: "comments.user",
+      select: "username image",
     })
     .lean()
     .exec();
   if (!song) {
     return res.status(404).json({ message: "Song not found" });
   }
+
+  song.comments.sort((a, b) => b.createdAt - a.createdAt);
 
   res.status(200).json(song);
 });
@@ -157,10 +158,35 @@ const likeSong = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Like status toogled" });
 });
 
+// @desc  Add comment to song
+// @route POST api/songs/:songId/comment
+// @access Private
+const addComment = asyncHandler(async (req, res) => {
+  const { text } = req.body;
+  const songId = req.params.songId;
+  const userId = req.user.id;
+
+  const song = await Song.findById(songId);
+  if (!song) {
+    return res.status(404).json({ message: "Song not found" });
+  }
+  const newComment = {
+    text,
+    user: userId,
+  };
+
+  // update songs comment field
+  song.comments.push(newComment);
+  await song.save();
+
+  res.status(201).json({ message: "Comment added" });
+});
+
 module.exports = {
   getAllSongs,
   getSongDetails,
   getAnySong,
   getTopSongs,
   likeSong,
+  addComment,
 };

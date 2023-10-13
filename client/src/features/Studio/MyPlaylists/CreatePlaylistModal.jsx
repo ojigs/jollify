@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import DOMPurify from "dompurify";
 import { useCreatePlaylistMutation } from "../../../app/apiSlice";
 import { MdQueueMusic } from "react-icons/md";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -25,7 +26,13 @@ const CreatePlaylistModal = ({ children }) => {
         setValidationErrors("Please give your playlist a title");
         return;
       }
-      const { error } = await createPlaylist(formData);
+      const sanitizedFormData = {};
+
+      for (const [key, value] of Object.entries(formData)) {
+        sanitizedFormData[key] = DOMPurify.sanitize(value);
+      }
+
+      const { error } = await createPlaylist(sanitizedFormData);
       if (error) {
         console.error(error);
       } else {

@@ -88,9 +88,33 @@ const addSongToPlaylist = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Song added to playlist" });
 });
 
+// @desc  Like a Playlist
+// @route GET api/playlists/:playlistId/like
+// @access Private
+const likePlaylist = asyncHandler(async (req, res) => {
+  const playlistId = req.params.playlistId;
+  const userId = req.user.id;
+  const playlist = await playlist.findById(playlistId);
+  const user = await User.findById(userId);
+  if (!playlist) {
+    return res.status(404).json({ message: "playlist not found" });
+  }
+  //   check if user already liked an playlist
+  const toogled = await playlist.toogleLike(userId);
+  //   update user favorite playlists if like was toogled
+  if (toogled) {
+    user.favoritePlaylists.push(playlistId);
+  } else {
+    user.favoritePlaylists.pull(playlistId);
+  }
+  await user.save();
+  res.status(200).json({ message: "Like status toogled" });
+});
+
 module.exports = {
   getAllPlaylists,
   getPlaylistDetails,
   createPlaylist,
   addSongToPlaylist,
+  likePlaylist,
 };

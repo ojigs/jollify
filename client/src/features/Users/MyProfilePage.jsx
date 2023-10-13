@@ -119,9 +119,10 @@ const MyProfilePage = () => {
         <button
           className={`bg-transparent  border hover:bg-${selectedTheme} active:bg-opacity-80 font-bold py-1  px-2 sm:py-2 sm:px-4 rounded`}
           onClick={handleLogOut}
+          disabled={isLoading}
         >
           {isLoading ? (
-            <AiOutlineLoading3Quarters className="animate-spin m-auto text-2xl text-gray-400" />
+            <AiOutlineLoading3Quarters className="animate-spin m-auto text-lg text-gray-400" />
           ) : (
             `Log out`
           )}

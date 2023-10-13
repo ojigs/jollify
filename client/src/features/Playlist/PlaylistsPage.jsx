@@ -56,7 +56,7 @@ const PlaylistsPage = () => {
       <p className="mb-8 text-gray-200">
         Unleash your musical journey from our collection of playlists
       </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {playlists.map((playlist) => (
           <PlaylistCard key={playlist._id} playlist={playlist} />
         ))}

@@ -6,11 +6,6 @@ const CommentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    song: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Song",
-      required: true,
-    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -20,4 +15,4 @@ const CommentSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Comment", CommentSchema);
+module.exports = { CommentSchema };

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { CommentSchema } = require("./Comment");
 
 const SongSchema = new mongoose.Schema(
   {
@@ -27,12 +28,7 @@ const SongSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
-    comments: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Comment",
-      },
-    ],
+    comments: [CommentSchema],
     releaseDate: Date,
     genre: String,
     lyrics: String,

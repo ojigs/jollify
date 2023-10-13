@@ -6,6 +6,7 @@ const modalSlice = createSlice({
     isLoginModal: false,
     isCreatePlaylistModal: false,
     isAddToPlaylistModal: false,
+    addSongId: null,
     message: "",
   },
   reducers: {
@@ -18,6 +19,9 @@ const modalSlice = createSlice({
     toggleAddToPlaylistModal: (state) => {
       state.isAddToPlaylistModal = !state.isAddToPlaylistModal;
     },
+    setSongId: (state, action) => {
+      state.addSongId = action.payload;
+    },
     setMessage: (state, action) => {
       state.message = action.payload;
     },
@@ -28,6 +32,7 @@ export const {
   toggleLoginModal,
   toggleCreatePlaylistModal,
   toggleAddToPlaylistModal,
+  setSongId,
   setMessage,
 } = modalSlice.actions;
 

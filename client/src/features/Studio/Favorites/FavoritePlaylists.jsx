@@ -1,11 +1,43 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useGetCurrentUserQuery } from "../../../app/apiSlice";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import PlaylistCard from "../../Playlist/PlaylistCard";
+import ErrorMsg from "../../../components/ErrorMsg";
 
-const FavoritePlaylists = ({ playlists }) => {
+const emptyArray = [];
+
+const FavoritePlaylists = () => {
   const selectedTheme = useSelector((state) => state.theme);
+  const { id } = useSelector((state) => state.auth);
+  const {
+    data: playlists,
+    isLoading,
+    isError,
+    error,
+  } = useGetCurrentUserQuery(id, {
+    skip: !id,
+    selectFromResult: ({ data, isLoading, isError, error }) => ({
+      data: data?.favoritePlaylists ?? emptyArray,
+      isLoading,
+      isError,
+      error,
+    }),
+  });
 
   const navigate = useNavigate();
+
+  if (isLoading) {
+    return (
+      <div className="flex-grow flex justify-center items-center h-full">
+        <AiOutlineLoading3Quarters className="text-3xl animate-spin" />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <ErrorMsg error={error} />;
+  }
 
   const handleClick = () => {
     navigate("/playlists");
@@ -26,9 +58,9 @@ const FavoritePlaylists = ({ playlists }) => {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {playlists.map((playlist) => (
-            <PlaylistCard key={playlist._id} />
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {playlists?.map((playlist) => (
+            <PlaylistCard key={playlist._id} playlist={playlist} />
           ))}
         </div>
       )}

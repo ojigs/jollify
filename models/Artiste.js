@@ -9,6 +9,12 @@ const ArtisteSchema = new mongoose.Schema({
   image: {
     type: String,
   },
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 });
 
 ArtisteSchema.methods.toogleLike = async function (userId) {

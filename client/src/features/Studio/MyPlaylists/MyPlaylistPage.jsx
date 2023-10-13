@@ -40,13 +40,13 @@ const MyPlaylistPage = () => {
   };
 
   return (
-    <section className="container text-gray-100">
+    <section className="text-gray-100">
       <h1 className="text-xl md:text-3xl font-semibold mb-8">My Playlist</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         <CreatePlaylistModal>
           <button
             onClick={openModal}
-            className="w-full h-64 flex flex-col gap-2 justify-center items-center rounded-lg shadow-lg bg-secondary-100 hover:text-gray-400 active:text-opacity-80 cursor-pointer"
+            className="w-full h-full min-h[120px] sm:min-h-[185px] lg:min-h-[256px] flex flex-col gap-2 justify-center items-center rounded-lg shadow-lg bg-secondary-100 hover:text-gray-400 active:text-opacity-80 cursor-pointer"
           >
             <MdQueue className="text-3xl" />
             <span>Create Playlist</span>

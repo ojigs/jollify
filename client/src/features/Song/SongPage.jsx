@@ -7,19 +7,29 @@ import CommentsSection from "./CommentsSection";
 import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";
 import AddToPlaylistModal from "../Playlist/AddToPlaylistModal";
+import LoginModal from "../../components/LoginModal";
 
 const SongPage = () => {
   const { id } = useParams();
-  const { data: song, isLoading, isError, error } = useGetSongDetailsQuery(id);
+  const {
+    data: song,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetSongDetailsQuery(id);
 
   useEffect(() => {
     if (isError) {
-      console.log(error);
+      console.error(error);
     }
   });
 
   if (isLoading) {
     return <Loading />;
+  }
+  if (isSuccess) {
+    console.log(song);
   }
 
   if (isError) {
@@ -27,12 +37,17 @@ const SongPage = () => {
   }
 
   return (
-    <section className=" text-gray-200">
-      <SongDetail song={song} />
-      <Lyrics lyrics={song.lyrics} />
-      <CommentsSection comments={song.comments} />
-      <AddToPlaylistModal songId={song._id} />
-    </section>
+    <>
+      {isSuccess && (
+        <section className=" text-gray-200">
+          <SongDetail song={song} />
+          <Lyrics lyrics={song.lyrics} />
+          <CommentsSection comments={song.comments} songId={song._id} />
+          <AddToPlaylistModal songId={song._id} />
+          <LoginModal />
+        </section>
+      )}
+    </>
   );
 };
 

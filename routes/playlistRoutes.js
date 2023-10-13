@@ -5,12 +5,14 @@ const {
   getPlaylistDetails,
   createPlaylist,
   addSongToPlaylist,
+  likePlaylist,
 } = require("../controllers/playlistController");
 const { verifyToken } = require("../middleware/authMiddleware");
 
 router.get("/", getAllPlaylists);
-router.get("/:playlistId", getPlaylistDetails);
 router.post("/", verifyToken, createPlaylist);
 router.post("/:playlistId/songs/:songId", verifyToken, addSongToPlaylist);
+router.get("/:playlistId/like", likePlaylist);
+router.get("/:playlistId", getPlaylistDetails);
 
 module.exports = router;

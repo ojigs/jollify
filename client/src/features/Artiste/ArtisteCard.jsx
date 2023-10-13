@@ -15,7 +15,7 @@ const ArtisteCard = ({ artiste }) => {
               className="w-full h-28 md:h-40 object-cover rounded-full relative"
             />
           ) : (
-            <FaUserAstronaut className="w-full p-2 h-28 md:h-40 rounded-full text-gray-400" />
+            <FaUserAstronaut className="w-full pt-4 h-28 md:h-40 rounded-full text-gray-400" />
           )}
         </Link>
       </div>

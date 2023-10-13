@@ -1,47 +1,140 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { useGetCurrentUserQuery, useLikeSongMutation } from "../app/apiSlice";
+import {
+  useGetCurrentUserQuery,
+  useLikeSongMutation,
+  useLikeAlbumMutation,
+  useLikePlaylistMutation,
+  useLikeArtisteMutation,
+} from "../app/apiSlice";
+import { setMessage, toggleLoginModal } from "../app/modalSlice";
 
-const LikeButton = ({ likes, songId }) => {
+const LikeButton = ({ songId, albumId, artisteId, playlistId, type }) => {
   const { id: userId } = useSelector((state) => state.auth);
   const [liked, setLiked] = useState(false);
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const { data: user } = useGetCurrentUserQuery(userId);
   const [likeSong] = useLikeSongMutation();
+  const [likeAlbum] = useLikeAlbumMutation();
+  const [likeArtiste] = useLikeArtisteMutation();
+  const [likePlaylist] = useLikePlaylistMutation();
+  const dispatch = useDispatch();
+
+  const isSong = type === "song";
+  const isAlbum = type === "album";
+  const isArtiste = type === "artiste";
+  const isPlaylist = type === "playlist";
 
   useEffect(() => {
-    if (user?.favoriteSongs?.find((song) => song._id === songId)) {
-      setLiked(true);
-    } else {
-      setLiked(false);
+    switch (true) {
+      case isSong:
+        if (user?.favoriteSongs?.find((song) => song._id === songId)) {
+          setLiked(true);
+        } else {
+          setLiked(false);
+        }
+        break;
+      case isAlbum:
+        if (user?.favoriteAlbums?.find((album) => album._id === albumId)) {
+          setLiked(true);
+        } else {
+          setLiked(false);
+        }
+        break;
+      case isArtiste:
+        if (
+          user?.favoriteArtistes?.find((artiste) => artiste._id === artisteId)
+        ) {
+          setLiked(true);
+        } else {
+          setLiked(false);
+        }
+        break;
+      case isPlaylist:
+        if (
+          user?.favoritePlaylists?.find(
+            (playlist) => playlist._id === playlistId
+          )
+        ) {
+          setLiked(true);
+        } else {
+          setLiked(false);
+        }
+        break;
+
+      default:
+        break;
     }
-    console.log(user);
-    console.log(user?.favoriteSongs.includes(songId));
-  }, [user, songId]);
+  }, [
+    user,
+    songId,
+    albumId,
+    artisteId,
+    playlistId,
+    isSong,
+    isAlbum,
+    isArtiste,
+    isPlaylist,
+  ]);
 
   const handleLikeClick = async () => {
+    if (!isAuthenticated) {
+      switch (true) {
+        case isSong:
+          dispatch(setMessage("add song to favorite"));
+          break;
+        case isAlbum:
+          dispatch(setMessage("add album to favorite"));
+          break;
+        case isPlaylist:
+          dispatch(setMessage("add playlist to favorite"));
+          break;
+        default:
+          break;
+      }
+      dispatch(toggleLoginModal());
+      return;
+    }
+
     setLiked(!liked);
-    const { error } = await likeSong({ songId, userId });
-    if (error) {
-      console.log(error);
+
+    switch (true) {
+      case isSong:
+        await likeSong({ songId, userId })
+          .unwrap()
+          .catch((error) => console.log(error));
+        break;
+      case isAlbum:
+        await likeAlbum({ albumId, userId })
+          .unwrap()
+          .catch((error) => console.log(error));
+        break;
+      case isArtiste:
+        await likeArtiste({ artisteId, userId })
+          .unwrap()
+          .catch((error) => console.log(error));
+        break;
+      case isPlaylist:
+        await likePlaylist({ playlistId, userId })
+          .unwrap()
+          .catch((error) => console.log(error));
+        break;
+
+      default:
+        break;
     }
   };
 
   return (
-    <button
-      className={`text-gray-400 bg-secondary-200 active:bg-opacity-50 rounded-lg transition duration-300 ease-in-out py-1 px-2 md:px-4`}
-      onClick={handleLikeClick}
-    >
-      {liked ? (
-        <span className="align-middle">
+    <button className={`text-gray-400`} onClick={handleLikeClick}>
+      <span className="align-middle">
+        {liked ? (
           <FaHeart className="inline-block align-baseline text-red-500 text-base md:text-xl" />
-        </span>
-      ) : (
-        <span className="align-middle">
+        ) : (
           <FaRegHeart className="inline-block align-baseline text-base md:text-xl" />
-        </span>
-      )}
-      {likes && <span className="ml-2 text-xl">{likes.length}</span>}
+        )}
+      </span>
     </button>
   );
 };
