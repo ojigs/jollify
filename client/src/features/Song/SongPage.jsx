@@ -28,9 +28,6 @@ const SongPage = () => {
   if (isLoading) {
     return <Loading />;
   }
-  if (isSuccess) {
-    console.log(song);
-  }
 
   if (isError) {
     return <ErrorMsg error={error} />;

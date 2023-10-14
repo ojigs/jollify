@@ -10,16 +10,19 @@ const getAllSongs = asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page || 1);
   const limit = parseInt(req.query.limit);
   const startIndex = (page - 1) * limit;
-  const songs = await Song.find({})
-    .skip(startIndex)
-    .limit(limit)
-    .populate("artiste", "name")
-    .lean();
+  const [songs, total] = await Promise.all([
+    Song.find({})
+      .skip(startIndex)
+      .limit(limit)
+      .populate("artiste", "name")
+      .lean(),
+    Song.countDocuments(),
+  ]);
   if (!songs.length) {
     return res.status(404).json({ message: "No songs found" });
   }
   const shuffledSongs = shuffleArray(songs);
-  res.status(200).json(shuffledSongs);
+  res.status(200).json({ songs: shuffledSongs, total });
 });
 
 // @desc  Get specific song

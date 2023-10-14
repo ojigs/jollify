@@ -70,22 +70,25 @@ const CommentsSection = ({ comments, songId }) => {
 
       {comments && comments.length > 0 ? (
         <article>
-          {comments.map((comment) => (
-            <div key={comment._id} className="flex items-start gap-4 mb-8">
+          {comments.map((comment, index) => (
+            <div
+              key={comment._id}
+              className="flex items-start gap-4 mb-6 lg:w-3/4"
+            >
               <div className="w-14 h-14 rounded-full">
                 <Link to={`/users/${comment.user._id}`}>
                   {comment?.user?.image ? (
                     <img
                       src={comment?.user.image}
                       alt={comment?.user.username}
-                      className="w-14 h-14 rounded-full"
+                      className="w-12 h-12 rounded-full"
                     />
                   ) : (
-                    <FaUserCircle className="w-14 h-14 pt-2 text-gray-400 rounded-full" />
+                    <FaUserCircle className="w-12 h-12 pt-2 text-gray-400 rounded-full" />
                   )}
                 </Link>
               </div>
-              <div className="ml-3">
+              <div className="ml-3 flex-grow">
                 <h3 className="text-lg font-semibold">
                   <Link
                     to={`/users/${comment.user._id}`}
@@ -94,10 +97,13 @@ const CommentsSection = ({ comments, songId }) => {
                     {comment?.user.username}
                   </Link>
                 </h3>
-                <p className="text-gray-400 mt-2">{comment?.text}</p>
+                <p className="text-gray-300 mt-2">{comment?.text}</p>
                 <p className="text-gray-400 mt-2">
                   <RelativeTime createdAt={comment.createdAt} />
                 </p>
+                {index !== comments.length - 1 && (
+                  <p className="h-[1px] bg-gray-600 mt-6"></p>
+                )}
               </div>
             </div>
           ))}

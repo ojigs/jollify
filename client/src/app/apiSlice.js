@@ -69,7 +69,7 @@ export const apiSlice = createApi({
     }),
     // songs feature
     getAllSongs: builder.query({
-      query: (limit) => `/api/songs?limit=${limit}`,
+      query: ({ page, limit }) => `/api/songs?page=${page}&limit=${limit}`,
     }),
     getSongDetails: builder.query({
       query: (songId) => `/api/songs/${songId}`,
@@ -138,7 +138,7 @@ export const apiSlice = createApi({
     }),
     likePlaylist: builder.mutation({
       query: ({ playlistId }) => ({
-        url: `/api/albums/${playlistId}/like`,
+        url: `/api/playlists/${playlistId}/like`,
         method: "POST",
       }),
       async onQueryStarted(

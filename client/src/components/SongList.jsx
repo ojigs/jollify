@@ -57,7 +57,7 @@ const SongList = ({ songs, listType }) => {
             )}
           </div>
           <p className="mr-2">{song.duration}</p>
-          <LikeButton likes={song.likes} />
+          <LikeButton songId={song._id} type={"song"} />
         </li>
       ))}
       {visibleSongs < songs.length && (

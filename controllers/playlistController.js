@@ -94,7 +94,7 @@ const addSongToPlaylist = asyncHandler(async (req, res) => {
 const likePlaylist = asyncHandler(async (req, res) => {
   const playlistId = req.params.playlistId;
   const userId = req.user.id;
-  const playlist = await playlist.findById(playlistId);
+  const playlist = await Playlist.findById(playlistId);
   const user = await User.findById(userId);
   if (!playlist) {
     return res.status(404).json({ message: "playlist not found" });
@@ -110,6 +110,16 @@ const likePlaylist = asyncHandler(async (req, res) => {
   await user.save();
   res.status(200).json({ message: "Like status toogled" });
 });
+
+// const updatePlaylist = async () => {
+//   const { error } = await Playlist.updateMany({}, { $set: { likes: [] } });
+//   if (error) {
+//     console.error("Error updating playlists:", error);
+//   } else {
+//     console.log("Updated playlists:");
+//   }
+// };
+// updatePlaylist();
 
 module.exports = {
   getAllPlaylists,

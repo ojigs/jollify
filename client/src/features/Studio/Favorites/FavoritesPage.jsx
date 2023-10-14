@@ -47,7 +47,7 @@ const FavoritesPage = () => {
   }
 
   return (
-    <section className="container text-gray-100 h-full">
+    <section className="text-gray-100 h-full">
       <h1 className="text-xl md:text-3xl font-semibold mb-4">Favorites</h1>
 
       <nav className="flex justify-start gap-4 mb-8">

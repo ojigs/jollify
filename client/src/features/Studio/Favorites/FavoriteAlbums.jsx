@@ -29,14 +29,18 @@ const FavoriteAlbums = () => {
 
   if (isLoading) {
     return (
-      <div className="flex-grow flex justify-center items-center h-full">
+      <div className="flex-grow flex justify-center items-center h-4/6">
         <AiOutlineLoading3Quarters className="text-3xl animate-spin" />
       </div>
     );
   }
 
   if (isError) {
-    return <ErrorMsg error={error} />;
+    return (
+      <div className="h-4/6">
+        <ErrorMsg error={error} />;
+      </div>
+    );
   }
 
   const handleClick = () => {

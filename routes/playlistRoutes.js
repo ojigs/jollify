@@ -12,7 +12,7 @@ const { verifyToken } = require("../middleware/authMiddleware");
 router.get("/", getAllPlaylists);
 router.post("/", verifyToken, createPlaylist);
 router.post("/:playlistId/songs/:songId", verifyToken, addSongToPlaylist);
-router.get("/:playlistId/like", likePlaylist);
+router.post("/:playlistId/like", verifyToken, likePlaylist);
 router.get("/:playlistId", getPlaylistDetails);
 
 module.exports = router;

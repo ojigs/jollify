@@ -28,7 +28,7 @@ const AlbumsPage = () => {
       <p className="mb-8 text-gray-200">
         Indulge your passion for music with our handpicked selection of albums
       </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {albums.map((album) => (
           <AlbumCard key={album._id} album={album} />
         ))}
