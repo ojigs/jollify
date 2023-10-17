@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { FaPlay } from "react-icons/fa";
 import LikeButton from "./LikeButton";
-import { trimText } from "../utils";
+import AddToPlaylistButton from "./AddToPlaylistButton";
+// import { trimText } from "../utils";
 
 const SongList = ({ songs, listType }) => {
   const selectedTheme = useSelector((state) => state.theme);
@@ -20,7 +21,7 @@ const SongList = ({ songs, listType }) => {
       {songs.slice(0, visibleSongs).map((song, index) => (
         <li
           key={song._id}
-          className={`flex items-center justify-between p-4 ${
+          className={`grid grid-cols-6 md:grid-cols-12 items-center gap-4 w-full rounded-md p-4 ${
             song.isPlaying
               ? `bg-${selectedTheme} bg-opacity-50`
               : index % 2 === 0
@@ -28,36 +29,55 @@ const SongList = ({ songs, listType }) => {
               : "bg-secondary-200"
           }`}
         >
-          <button className="flex items-center">
-            <FaPlay className="text-base" />
-          </button>
-          <div className="flex-grow px-8">
+          <div className="col-span-1">
+            <button>
+              <FaPlay className="text-base" />
+            </button>
+          </div>
+          <div className="col-span-2 md:col-span-8 flex flex-col gap-1 items-start">
             {isPlaylist ? (
-              <div className="flex flex-col">
+              <>
                 <Link
                   to={`/songs/${song._id}`}
-                  className={`hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme}`}
+                  className={`hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme} truncate ...`}
                 >
-                  {trimText(song.title)}
+                  {song.title}
                 </Link>
                 <Link
                   to={`/artistes/${song.artiste._id}`}
-                  className={`text-sm text-gray-400 hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme}`}
+                  className={`text-sm text-gray-400 hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme} truncate ...`}
                 >
                   {song.artiste.name}
                 </Link>
-              </div>
+              </>
             ) : (
               <Link
                 to={`/songs/${song._id}`}
                 className={`hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme}`}
               >
-                {trimText(song.title)}
+                {song.title}
               </Link>
             )}
           </div>
-          <p className="mr-2">{song.duration}</p>
-          <LikeButton songId={song._id} type={"song"} />
+          <span className="col-span-1 text-end">{song.duration}</span>
+          <div className="col-span-1 text-end">
+            <span
+              className={`${
+                index % 2 === 0 ? "bg-secondary-200" : "bg-secondary-100"
+              } p-2 rounded-md inline-flex items-center`}
+            >
+              <LikeButton songId={song._id} type={"song"} />
+            </span>
+          </div>
+          <div className="col-span-1 text-end">
+            <span
+              className={`${
+                index % 2 === 0 ? "bg-secondary-200" : "bg-secondary-100"
+              } p-2 rounded-md inline-flex items-center`}
+            >
+              <AddToPlaylistButton songId={song._id} />
+            </span>
+          </div>
         </li>
       ))}
       {visibleSongs < songs.length && (

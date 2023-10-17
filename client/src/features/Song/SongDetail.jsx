@@ -1,30 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { BsPlay } from "react-icons/bs";
-import { FaCompactDisc, FaPlus } from "react-icons/fa";
+import { FaCompactDisc } from "react-icons/fa";
 import LikeButton from "../../components/LikeButton";
-import {
-  toggleAddToPlaylistModal,
-  toggleLoginModal,
-  setMessage,
-  setSongId,
-} from "../../app/modalSlice";
+import AddToPlaylistButton from "../../components/AddToPlaylistButton";
 
 const SongDetail = ({ song }) => {
   const { title, coverImage, artiste, album, genre, likes } = song;
   const selectedTheme = useSelector((state) => state.theme);
-  const { isAuthenticated } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
-
-  const openModal = (songId) => {
-    if (!isAuthenticated) {
-      dispatch(setMessage("add song to playlist"));
-      dispatch(toggleLoginModal());
-    } else {
-      dispatch(setSongId(songId));
-      dispatch(toggleAddToPlaylistModal());
-    }
-  };
 
   return (
     <article
@@ -73,27 +55,21 @@ const SongDetail = ({ song }) => {
               {genre}
             </span>
           </p>
-          <div className="mt-6">
+          <div className="mt-6 flex items-stretch h-10 gap-4">
             <button
-              className={`bg-${selectedTheme}-50 bg-opacity-80 active:bg-opacity-100 rounded-lg transition duration-300 ease-in-out py-1 px-2 md:px-4 mr-2`}
+              className={`inline-flex items-center bg-${selectedTheme}-50 bg-opacity-80 active:bg-opacity-100 rounded-lg transition duration-300 ease-in-out py-1 px-2 md:px-4`}
             >
               <span className="mr-2 text-xl">Play</span>
-              <span className="align-middle">
-                <BsPlay className="inline-block align-baseline text-white text-xl md:text-xl" />
-              </span>
             </button>
-            <span className=" bg-secondary-200 active:bg-opacity-50 rounded-lg transition duration-300 ease-in-out py-1 px-2 md:px-4 h-full inline-block">
+            <span className=" bg-secondary-200 active:bg-opacity-50 rounded-lg transition duration-300 ease-in-out py-1 px-2 md:px-4 h-full inline-flex items-center">
               <LikeButton songId={song._id} type={"song"} />
               <span className="ml-2 text-xl">{likes && likes.length}</span>
             </span>
-            <button
-              onClick={() => openModal(song._id)}
-              className={`ml-4 text-gray-400 bg-secondary-200 active:bg-opacity-50 rounded-lg transition duration-300 ease-in-ou px-3 py-1 h-full`}
+            <span
+              className={`text-white bg-secondary-200 active:bg-opacity-50 rounded-lg transition duration-300 ease-in-ou px-3 py-1 h-full inline-flex items-center`}
             >
-              <span className="align-middle text-sm">
-                <FaPlus className="inline-block text-white align-baseline" />
-              </span>
-            </button>
+              <AddToPlaylistButton songId={song._id} />
+            </span>
           </div>
         </article>
       </div>

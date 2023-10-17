@@ -4,17 +4,19 @@ import { useAddSongToPlaylistMutation } from "../../app/apiSlice";
 import { toggleAddToPlaylistModal } from "../../app/modalSlice";
 import { MdQueueMusic } from "react-icons/md";
 import { FaHeadphones } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const emptyArray = [];
 
-const AddToPlaylistModal = ({ children, songId }) => {
+const AddToPlaylistModal = ({ children }) => {
   const selectedTheme = useSelector((state) => state.theme);
-  const { isAddToPlaylistModal } = useSelector((state) => state.modal);
+  const { isAddToPlaylistModal, addSongId: songId } = useSelector(
+    (state) => state.modal
+  );
   const { id: userId } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const {
     data: playlists,
-    // isLoading,
     isError,
     error,
   } = useGetCurrentUserQuery(userId, {
@@ -26,19 +28,27 @@ const AddToPlaylistModal = ({ children, songId }) => {
       error,
     }),
   });
-  const [addSong] = useAddSongToPlaylistMutation();
+  const [addSong, { error: addError }] = useAddSongToPlaylistMutation();
 
   const closeModal = () => {
     dispatch(toggleAddToPlaylistModal());
   };
 
   const handleAddSong = async (playlistId) => {
-    const { error } = await addSong({ playlistId, songId });
-    if (error) {
-      console.log(error);
-    } else {
-      closeModal();
+    await toast.promise(addSong({ playlistId, songId }).unwrap(), {
+      pending: "Loading...",
+      success: {
+        render() {
+          return "Song added to playlist";
+        },
+        icon: false,
+      },
+      error: "An error occured",
+    });
+    if (addError) {
+      console.error(addError);
     }
+    closeModal();
   };
 
   if (isError) {

@@ -9,14 +9,12 @@ const emptyArray = [];
 
 const FavoriteSongs = () => {
   const selectedTheme = useSelector((state) => state.theme);
-  const { id } = useSelector((state) => state.auth);
   const {
     data: songs,
     isLoading,
     isError,
     error,
-  } = useGetCurrentUserQuery(id, {
-    skip: !id,
+  } = useGetCurrentUserQuery(undefined, {
     selectFromResult: ({ data, isLoading, isError, error }) => ({
       data: data?.favoriteSongs ?? emptyArray,
       isLoading,
@@ -62,7 +60,7 @@ const FavoriteSongs = () => {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:gid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {songs?.map((song) => (
             <SongCard key={song._id} song={song} />
           ))}

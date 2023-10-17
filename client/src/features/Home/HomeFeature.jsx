@@ -1,9 +1,10 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { FaRegHeart, FaPlay } from "react-icons/fa";
+import { FaPlay } from "react-icons/fa";
 import { AiOutlineLoading } from "react-icons/ai";
 import ErrorMsg from "../../components/ErrorMsg";
 import { useGetAnySongQuery } from "../../app/apiSlice";
+import LikeButton from "../../components/LikeButton";
 
 const HomeFeature = () => {
   const selectedTheme = useSelector((state) => state.theme);
@@ -65,8 +66,8 @@ const HomeFeature = () => {
                 <button className="text-outline-gray hover:text-secondary-500">
                   <FaPlay className="text-base md:text-2xl" />
                 </button>
-                <button className="bg-secondary-400 text-white rounded-full p-2">
-                  <FaRegHeart className="text-base md:text-2xl " />
+                <button className="bg-secondary-400 text-white text-2xl rounded-full p-2">
+                  <LikeButton songId={song._id} type={"song"} />
                 </button>
               </div>
             </div>

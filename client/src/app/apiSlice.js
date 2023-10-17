@@ -48,7 +48,7 @@ export const apiSlice = createApi({
       query: (userId) => `/api/users/${userId}`,
     }),
     getCurrentUser: builder.query({
-      query: (userId) => `/api/users/currentUser/${userId}`,
+      query: () => `/api/users/currentUser`,
       providesTags: ["User"],
     }),
     editUserDetails: builder.mutation({
@@ -73,7 +73,7 @@ export const apiSlice = createApi({
     }),
     getSongDetails: builder.query({
       query: (songId) => `/api/songs/${songId}`,
-      providesTags: ["Song"],
+      providesTags: (result, error, id) => [{ type: "Song", id }],
     }),
     getAnySong: builder.query({
       query: () => "/api/songs/any",
@@ -111,15 +111,25 @@ export const apiSlice = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["Song"],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Song", id: arg.songId },
+      ],
     }),
     // playlists feature
     getAllPlaylists: builder.query({
       query: (limit) => `/api/playlists?limit=${limit}`,
-      providesTags: ["Playlist"],
+      // providesTags: ["Playlist"],
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ _id }) => ({ type: "Playlist", id: _id })),
+              { type: "Playlist", id: "LIST" },
+            ]
+          : [{ type: "Playlist", id: "LIST" }],
     }),
     getPlaylistDetails: builder.query({
       query: (playlistId) => `/api/playlists/${playlistId}`,
+      providesTags: (result, error, id) => [{ type: "Playlist", id }],
     }),
     createPlaylist: builder.mutation({
       query: (body) => ({
@@ -127,14 +137,16 @@ export const apiSlice = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["User", "Playlist"],
+      invalidatesTags: ["User", { type: "Playlist", id: "LIST" }],
     }),
     addSongToPlaylist: builder.mutation({
       query: ({ playlistId, songId }) => ({
         url: `/api/playlists/${playlistId}/songs/${songId}`,
         method: "POST",
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Playlist", id: arg.playlistId },
+      ],
     }),
     likePlaylist: builder.mutation({
       query: ({ playlistId }) => ({
@@ -253,7 +265,6 @@ export const {
   useLikeSongMutation,
   //comments route
   useAddCommentMutation,
-  useGetSongCommentsQuery,
   //playlists feature
   useGetAllPlaylistsQuery,
   useGetPlaylistDetailsQuery,

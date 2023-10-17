@@ -9,6 +9,7 @@ import {
   useLikeArtisteMutation,
 } from "../app/apiSlice";
 import { setMessage, toggleLoginModal } from "../app/modalSlice";
+import { toast } from "react-toastify";
 
 const LikeButton = ({ songId, albumId, artisteId, playlistId, type }) => {
   const { id: userId } = useSelector((state) => state.auth);
@@ -99,7 +100,10 @@ const LikeButton = ({ songId, albumId, artisteId, playlistId, type }) => {
       case isSong:
         await likeSong({ songId, userId })
           .unwrap()
-          .catch((error) => console.error(error));
+          .catch((error) => {
+            toast.error("An error occured");
+            console.error(error);
+          });
         break;
       case isAlbum:
         await likeAlbum({ albumId, userId })
@@ -123,15 +127,15 @@ const LikeButton = ({ songId, albumId, artisteId, playlistId, type }) => {
   };
 
   return (
-    <button className={`text-gray-400`} onClick={handleLikeClick}>
-      <span className="align-middle">
+    <>
+      <button className={``} onClick={handleLikeClick}>
         {liked ? (
-          <FaHeart className="inline-block align-baseline text-red-500 text-base md:text-xl" />
+          <FaHeart className="text-red-500" />
         ) : (
-          <FaRegHeart className="inline-block align-baseline text-base md:text-xl" />
+          <FaRegHeart className="" />
         )}
-      </span>
-    </button>
+      </button>
+    </>
   );
 };
 

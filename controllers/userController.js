@@ -26,7 +26,7 @@ const getUserDetails = asyncHandler(async (req, res) => {
 // @route GET api/users/myProfile
 // @access Private
 const getCurrentUser = asyncHandler(async (req, res) => {
-  const userId = req.params.userId;
+  const userId = req.user.id;
   const user = await User.findById(userId)
     .select("username bio country image playlist")
     .populate({

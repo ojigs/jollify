@@ -9,14 +9,12 @@ const emptyArray = [];
 
 const FavoriteAlbums = () => {
   const selectedTheme = useSelector((state) => state.theme);
-  const { id } = useSelector((state) => state.auth);
   const {
     data: albums,
     isLoading,
     isError,
     error,
-  } = useGetCurrentUserQuery(id, {
-    skip: !id,
+  } = useGetCurrentUserQuery(undefined, {
     selectFromResult: ({ data, isLoading, isError, error }) => ({
       data: data?.favoriteAlbums ?? emptyArray,
       isLoading,

@@ -10,7 +10,7 @@ const { verifyToken } = require("../middleware/authMiddleware");
 const upload = require("../middleware/multer");
 
 router.patch("/edit", verifyToken, editUserDetails);
-router.get("/currentUser/:userId", verifyToken, getCurrentUser);
+router.get("/currentUser", verifyToken, getCurrentUser);
 router.post("/upload", verifyToken, upload.single("image"), uploadImage);
 router.get("/:userId", getUserDetails);
 

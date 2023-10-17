@@ -18,8 +18,7 @@ import { MdQueue } from "react-icons/md";
 
 const NavContent = () => {
   const selectedTheme = useSelector((state) => state.theme);
-  const { id } = useSelector((state) => state.auth);
-  const { data: user } = useGetCurrentUserQuery(id, { skip: !id });
+  const { data: user } = useGetCurrentUserQuery();
   const { isAuthenticated } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -205,8 +204,7 @@ const NavContent = () => {
 const MobileNav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const selectedTheme = useSelector((state) => state.theme);
-  const { id } = useSelector((state) => state.auth);
-  const { data: user } = useGetCurrentUserQuery(id, { skip: !id });
+  const { data: user } = useGetCurrentUserQuery();
   const isAuthenticated = useSelector((state) => state.auth);
   const { pathname } = useLocation();
   const [path, setPath] = useState(pathname);

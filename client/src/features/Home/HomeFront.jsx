@@ -2,12 +2,12 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useGetTopSongsQuery } from "../../app/apiSlice";
-import { FaHeart, FaRegHeart, FaClock } from "react-icons/fa";
+import { FaClock } from "react-icons/fa";
+import ErrorMsg from "../../components/ErrorMsg";
+import LikeButton from "../../components/LikeButton";
 
 const HomeFront = () => {
-  const { data: songs } = useGetTopSongsQuery(5);
-  // const songRefs = songs.map(() => useRef());
-  const [likedSongs, setLikedSongs] = useState([]);
+  const { data: songs, isLoading, isError, error } = useGetTopSongsQuery(5);
 
   const songRefs = useRef([]);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
@@ -28,36 +28,29 @@ const HomeFront = () => {
 
   // console.log(key);
 
-  // Function to handle scrolling and set highlighted song
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
     const index = songRefs.current.findIndex(
-      (ref) => ref.offsetTop >= scrollPosition
+      (ref) => ref.offsetTop + 300 >= scrollPosition
     );
 
     setHighlightedIndex(index);
   };
 
   useEffect(() => {
-    // Attach scroll event listener when the component mounts
     window.addEventListener("scroll", handleScroll);
 
-    // Remove the event listener when the component unmounts
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-  const handleLikeClick = (songId) => {
-    if (likedSongs.includes(songId)) {
-      setLikedSongs(likedSongs.filter((id) => id !== songId));
-    } else {
-      setLikedSongs([...likedSongs, songId]);
-    }
-  };
-
-  const isSongLiked = (songId) => likedSongs.includes(songId);
   const selectedTheme = useSelector((state) => state.theme);
+
+  if (isError) {
+    return <ErrorMsg error={error} />;
+  }
+
   return (
     <section className="relative mt-8 text-gray-200">
       <div className="flex justify-between items-center mb-4">
@@ -69,30 +62,44 @@ const HomeFront = () => {
           See all
         </Link>
       </div>
-      <div className="grid grid-cols-6 md:grid-cols-12 gap-4 mb-2">
-        <div className="col-span-1 text-center font-semibold"></div>
-        <div className="col-span-1 md:col-span-1 font-semibold"></div>
-        <div className="col-span-3 md:col-span-4 font-semibold">
-          <div>Title</div>
-        </div>
-        <div className="hidden md:block col-span-3 font-semibold">
-          <div>Album</div>
-        </div>
-        <div className="hidden md:block col-span-2 font-semibold">
-          <div>
-            <FaClock />
+      {isError ? (
+        <ErrorMsg error={error} />
+      ) : (
+        <div className="grid grid-cols-6 md:grid-cols-12 gap-4 mb-2">
+          <div className="col-span-1 text-center font-semibold"></div>
+          <div className="col-span-1 md:col-span-1 font-semibold"></div>
+          <div className="col-span-3 md:col-span-4 font-semibold">
+            <div>Title</div>
+          </div>
+          <div className="hidden md:block col-span-3 font-semibold">
+            <div>Album</div>
+          </div>
+          <div className="hidden md:block col-span-2 font-semibold">
+            <div>
+              <FaClock />
+            </div>
+          </div>
+          <div className="col-span-1 md:col-span-1 text-center font-semibold">
+            <div></div>
           </div>
         </div>
-        <div className="col-span-1 md:col-span-1 text-center font-semibold">
-          <div></div>
-        </div>
-      </div>
+      )}
       <div className="">
+        {isLoading && (
+          <div className="grid grid-rows-5 gap-4">
+            {[1, 2, 3, 4, 5].map((item) => (
+              <div
+                key={item}
+                className="h-12 bg-secondary-100 rounded-md animate-pulse"
+              ></div>
+            ))}
+          </div>
+        )}
         {songs &&
           songs?.map((song, index) => (
             <article
               ref={(el) => (songRefs.current[index] = el)}
-              className={`grid grid-cols-6 md:grid-cols-12 gap-4 items-center p-1 ${
+              className={`grid grid-cols-6 md:grid-cols-12 gap-4 items-center p-1 rounded-md ${
                 index === highlightedIndex ? "bg-primary" : ""
               } `}
               key={song._id}
@@ -110,13 +117,13 @@ const HomeFront = () => {
               <div className="col-span-3 md:col-span-4 flex flex-col ">
                 <Link
                   to={`/songs/${song._id}`}
-                  className={`hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme}`}
+                  className={`hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme} truncate ...`}
                 >
                   {song.title}
                 </Link>
                 <Link
                   to={`/artistes/${song.artiste._id}`}
-                  className={`text-sm text-gray-400 hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme}`}
+                  className={`text-sm text-gray-400 hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme} truncate ...`}
                 >
                   {song.artiste.name}
                 </Link>
@@ -124,7 +131,7 @@ const HomeFront = () => {
               <div className="hidden md:block col-span-3 truncate ...">
                 <Link
                   to={`/albums/${song.album?._id}`}
-                  className={`hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme}`}
+                  className={`hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme} truncate ...`}
                 >
                   {song.album?.title}
                 </Link>
@@ -133,13 +140,7 @@ const HomeFront = () => {
                 <div>{song.duration}</div>
               </div>
               <div className="col-span-1 md:col-span-1 text-center">
-                <button onClick={() => handleLikeClick(song._id)}>
-                  {isSongLiked(song._id) ? (
-                    <FaHeart className="text-red-500 text-base md:text-xl" />
-                  ) : (
-                    <FaRegHeart className="text-base md:text-xl" />
-                  )}
-                </button>
+                <LikeButton songId={song._id} type={"song"} />
               </div>
             </article>
           ))}

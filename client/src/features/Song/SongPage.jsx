@@ -40,7 +40,7 @@ const SongPage = () => {
           <SongDetail song={song} />
           <Lyrics lyrics={song.lyrics} />
           <CommentsSection comments={song.comments} songId={song._id} />
-          <AddToPlaylistModal songId={song._id} />
+          <AddToPlaylistModal />
           <LoginModal />
         </section>
       )}

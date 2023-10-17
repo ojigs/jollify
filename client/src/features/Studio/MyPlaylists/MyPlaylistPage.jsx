@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { MdQueue } from "react-icons/md";
 import PlaylistCard from "../../Playlist/PlaylistCard";
 import CreatePlaylistModal from "./CreatePlaylistModal";
@@ -10,14 +10,12 @@ import { toggleCreatePlaylistModal } from "../../../app/modalSlice";
 const emptyArray = [];
 
 const MyPlaylistPage = () => {
-  const { id } = useSelector((state) => state.auth);
   const {
     data: playlists,
     isLoading,
     isError,
     error,
-  } = useGetCurrentUserQuery(id, {
-    skip: !id,
+  } = useGetCurrentUserQuery(undefined, {
     selectFromResult: ({ data, isLoading, isError, error }) => ({
       data: data?.playlist ?? emptyArray,
       isLoading,

@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { BsPlay } from "react-icons/bs";
 import LikeButton from "./LikeButton";
 import { aggregateSongsDuration, formatDate } from "../utils/index";
 import { FaHeadphones, FaFolderOpen, FaUserAstronaut } from "react-icons/fa";
@@ -109,21 +108,22 @@ const ResourceDetail = ({ resource, resourceType }) => {
               {aggregateSongsDuration(songs)}
             </p>
           )}
-          <div className="flex flex-row gap-4 mt-6">
+          <div className="flex flex-row gap-4 mt-6 h-10 items-stretch">
             {!isArtiste && (
               <button
-                className={`inset-0 flex items-center justify-center bg-${selectedTheme}-50 bg-opacity-80 active:bg-opacity-100 rounded-lg transition duration-300 ease-in-out py-1 px-2 md:px-6`}
+                className={`inset-0 flex items-center justify-center bg-${selectedTheme}-50 bg-opacity-80 active:bg-opacity-100 rounded-lg transition duration-300 ease-in-out py-1 px-2 md:px-4`}
               >
-                <span className="mr-2">Play</span>
-                <BsPlay className="text-white text-2xl md:text-4xl" />
+                <span className="mr-2 text-xl">Play</span>
               </button>
             )}
-            <LikeButton
-              albumId={isAlbum ? resource._id : null}
-              artisteId={isArtiste ? resource._id : null}
-              playlistId={isPlaylist ? resource._id : null}
-              type={resourceType}
-            />
+            <span className=" bg-secondary-200 active:bg-opacity-50 rounded-lg transition duration-300 ease-in-out py-1 px-2 md:px-4 h-full inline-flex items-center">
+              <LikeButton
+                albumId={isAlbum ? resource._id : null}
+                artisteId={isArtiste ? resource._id : null}
+                playlistId={isPlaylist ? resource._id : null}
+                type={resourceType}
+              />
+            </span>
           </div>
         </article>
       </div>

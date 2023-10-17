@@ -1,6 +1,8 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Layout = () => {
   return (
@@ -13,6 +15,11 @@ const Layout = () => {
           <Outlet />
         </div>
         <Footer />
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={true}
+        />
       </main>
     </div>
   );
