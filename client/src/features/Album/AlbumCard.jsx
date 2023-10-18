@@ -22,13 +22,13 @@ const AlbumCard = ({ album }) => {
       <div className="p-2 md:p-4 flex flex-col">
         <Link
           to={`/albums/${album._id}`}
-          className={`text-sm sm:text-base lg:text-lg font-semibold mb-1 hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme}`}
+          className={`text-sm sm:text-base lg:text-lg font-semibold mb-1 hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme} truncate ...`}
         >
           {album.title}
         </Link>
         <Link
           to={`/artistes/${album.artiste._id}`}
-          className={`text-xs sm:text-sm lg:text-base hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme}`}
+          className={`text-xs sm:text-sm lg:text-base hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme} truncate ...`}
         >
           {album.artiste.name}
         </Link>

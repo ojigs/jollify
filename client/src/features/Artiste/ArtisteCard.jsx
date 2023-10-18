@@ -22,7 +22,7 @@ const ArtisteCard = ({ artiste }) => {
       <div className="p-4 text-center">
         <Link
           to={`/artistes/${artiste._id}`}
-          className={`text-sm sm:text-base lg:text-lg font-semibold mb-1 hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme}`}
+          className={`text-sm sm:text-base lg:text-lg font-semibold mb-1 hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme} truncate ...`}
         >
           {artiste.name}
         </Link>

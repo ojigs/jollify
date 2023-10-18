@@ -26,12 +26,12 @@ const ResourceDetail = ({ resource, resourceType }) => {
 
   return (
     <article
-      className="relative bg-secondary-200 md:h-[400px] rounded-md shadow-lg w-full bg-center bg-cover bg-no-repeat"
+      className="relative bg-secondary-200 sm:h-[400px] rounded-md shadow-lg w-full bg-center bg-cover bg-no-repeat"
       style={{ backgroundImage: `url(${coverImage || image || ""})` }}
     >
-      <div className="bg-primary h-full bg-opacity-60 inset-0 rounded-md flex flex-col md:flex-row justify-center md:justify-start items-start md:items-center gap-10 p-6 text-white backdrop-blur-2xl">
+      <div className="bg-primary h-full bg-opacity-60 inset-0 rounded-md flex flex-col sm:flex-row justify-center sm:justify-start items-start sm:items-center gap-10 p-6 text-white backdrop-blur-2xl">
         <div
-          className={`w-48  h-48 md:w-60 md:h-60 flex-shrink-0 overflow-hidden bg-secondary-200 bg-center bg-cover bg-no-repeat shadow-md shadow-secondary-100 ${
+          className={`w-48 h-48 md:w-60 md:h-60 flex-shrink-0 overflow-hidden bg-secondary-200 bg-center bg-cover bg-no-repeat shadow-md shadow-secondary-100 ${
             isArtiste ? "rounded-full" : "rounded-md"
           }`}
         >

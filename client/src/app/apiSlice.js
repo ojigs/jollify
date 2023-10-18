@@ -146,6 +146,7 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: (result, error, arg) => [
         { type: "Playlist", id: arg.playlistId },
+        "User",
       ],
     }),
     likePlaylist: builder.mutation({

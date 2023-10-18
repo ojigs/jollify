@@ -15,6 +15,7 @@ import { apiSlice } from "./apiSlice";
 import themeSlice from "./themeSlice";
 import modalSlice from "./modalSlice";
 import authSlice from "../features/Auth/authSlice";
+import playerSlice from "../features/MusicPlayer/playerSlice";
 
 const persistConfig = {
   key: "root",
@@ -27,6 +28,7 @@ const rootReducers = combineReducers({
   theme: themeSlice,
   auth: authSlice,
   modal: modalSlice,
+  player: playerSlice,
   [apiSlice.reducerPath]: apiSlice.reducer,
 });
 

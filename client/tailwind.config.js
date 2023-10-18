@@ -3,7 +3,7 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   safelist: [
     {
-      pattern: /(bg|text|border|decoration|from|via)-(pop|rock|bubble)/,
+      pattern: /(bg|text|border|decoration|from|via|accent)-(pop|rock|bubble)/,
       variants: ["hover", "focus", "active"],
     },
   ],

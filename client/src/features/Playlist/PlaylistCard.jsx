@@ -25,14 +25,14 @@ const PlaylistCard = ({ playlist, type }) => {
       <div className="p-2 md:p-4 flex flex-col">
         <Link
           to={`/playlists/${playlist._id}`}
-          className={`text-sm sm:text-base lg:text-lg font-semibold mb-1 hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme}`}
+          className={`text-sm sm:text-base lg:text-lg font-semibold mb-1 hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme} truncate ...`}
         >
           {playlist.title}
         </Link>
         {!isUserPlaylist && (
           <Link
             to={`/users/${playlist.createdBy._id}`}
-            className={`text-xs sm:text-sm lg:text-base text-gray-500 hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme}`}
+            className={`text-xs sm:text-sm lg:text-base text-gray-500 hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme} truncate ...`}
           >
             {playlist.createdBy.username}
           </Link>

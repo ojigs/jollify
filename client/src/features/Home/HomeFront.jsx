@@ -47,10 +47,6 @@ const HomeFront = () => {
 
   const selectedTheme = useSelector((state) => state.theme);
 
-  if (isError) {
-    return <ErrorMsg error={error} />;
-  }
-
   return (
     <section className="relative mt-8 text-gray-200">
       <div className="flex justify-between items-center mb-4">
@@ -63,7 +59,9 @@ const HomeFront = () => {
         </Link>
       </div>
       {isError ? (
-        <ErrorMsg error={error} />
+        <div className="h-80">
+          <ErrorMsg error={error} />
+        </div>
       ) : (
         <div className="grid grid-cols-6 md:grid-cols-12 gap-4 mb-2">
           <div className="col-span-1 text-center font-semibold"></div>

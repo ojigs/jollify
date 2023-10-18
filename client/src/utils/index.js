@@ -28,3 +28,14 @@ export const formatDate = (dateString) => {
   const formattedDate = dateObject.toLocaleString("en-US", options);
   return formattedDate;
 };
+
+export const convertToSeconds = (time) => {
+  const [minutes, seconds] = time.split(":").map(Number);
+  return minutes * 60 + seconds;
+};
+
+export const convertSecondsToTime = (seconds) => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = Math.floor(seconds % 60);
+  return `${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+};
