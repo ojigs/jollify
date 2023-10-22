@@ -18,11 +18,17 @@ import { MdQueue } from "react-icons/md";
 
 const NavContent = () => {
   const selectedTheme = useSelector((state) => state.theme);
-  const { data: user } = useGetCurrentUserQuery();
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const { userImage } = useGetCurrentUserQuery(undefined, {
+    skip: !isAuthenticated,
+    selectFromResult: ({ data }) => ({
+      userImage: data?.image ?? "",
+    }),
+  });
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [path, setPath] = useState(pathname);
+  const { username } = useSelector((state) => state.auth);
 
   useEffect(() => {
     setPath(pathname);
@@ -52,10 +58,10 @@ const NavContent = () => {
               className={`w-10 h-10  bg-${selectedTheme} rounded-full overflow-hidden`}
             >
               <Link to={`/myProfile`}>
-                {user?.image ? (
+                {userImage ? (
                   <img
-                    src={user?.image}
-                    alt={user?.username}
+                    src={userImage}
+                    alt={username}
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -63,7 +69,7 @@ const NavContent = () => {
                 )}
               </Link>
             </div>
-            <Link to={`/myProfile`}>{user?.username}</Link>
+            <Link to={`/myProfile`}>{username}</Link>
           </div>
         </div>
       ) : (
@@ -204,8 +210,14 @@ const NavContent = () => {
 const MobileNav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const selectedTheme = useSelector((state) => state.theme);
-  const { data: user } = useGetCurrentUserQuery();
-  const isAuthenticated = useSelector((state) => state.auth);
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { username } = useSelector((state) => state.auth);
+  const { userImage } = useGetCurrentUserQuery(undefined, {
+    skip: !isAuthenticated,
+    selectFromResult: ({ data }) => ({
+      userImage: data?.image ?? "",
+    }),
+  });
   const { pathname } = useLocation();
   const [path, setPath] = useState(pathname);
   const navigate = useNavigate();
@@ -248,7 +260,7 @@ const MobileNav = () => {
   }, [pathname]);
 
   return (
-    <div className="fixed top-0 left-0 p-3 z-30 w-full bg-primary">
+    <div className="fixed top-0 left-0 p-3 z-50 w-full bg-primary">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-4">
           <button onClick={handleToggleNav}>
@@ -269,10 +281,10 @@ const MobileNav = () => {
               className={`w-8 h-8 overflow-hidden bg-${selectedTheme} rounded-full`}
             >
               <Link to={`/myProfile`}>
-                {user?.image ? (
+                {userImage ? (
                   <img
-                    src={user.image}
-                    alt={user.username}
+                    src={userImage}
+                    alt={username}
                     className="w-full h-full object-cover"
                   />
                 ) : (
@@ -283,7 +295,7 @@ const MobileNav = () => {
           ) : (
             <button
               onClick={handleLoginClick}
-              className={`bg-${selectedTheme} hover:bg-${selectedTheme} w-full text-white font-bold py-2 px-4 rounded`}
+              className={`bg-${selectedTheme} hover:bg-${selectedTheme} text-white font-bold text-sm py-1 px-2 rounded`}
             >
               {path === "/login" ? "Sign up" : "Login"}
             </button>

@@ -1,12 +1,19 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { FaCompactDisc } from "react-icons/fa";
 import LikeButton from "../../components/LikeButton";
 import AddToPlaylistButton from "../../components/AddToPlaylistButton";
+import { setPlaying, setQueue } from "../MusicPlayer/playerSlice";
 
 const SongDetail = ({ song }) => {
   const { title, coverImage, artiste, album, genre, likes } = song;
   const selectedTheme = useSelector((state) => state.theme);
+  const dispatch = useDispatch();
+
+  const handlePlay = () => {
+    dispatch(setQueue({ queue: [song] }));
+    dispatch(setPlaying(true));
+  };
 
   return (
     <article
@@ -57,7 +64,8 @@ const SongDetail = ({ song }) => {
           </p>
           <div className="mt-6 flex items-stretch h-10 gap-4">
             <button
-              className={`inline-flex items-center bg-${selectedTheme}-50 bg-opacity-80 active:bg-opacity-100 rounded-lg transition duration-300 ease-in-out py-1 px-2 md:px-4`}
+              onClick={handlePlay}
+              className={`inline-flex items-center bg-${selectedTheme}-50 bg-opacity-80 active:bg-opacity-100 active:translate-y-1 rounded-lg transition duration-300 ease-in-out py-1 px-2 md:px-4`}
             >
               <span className="mr-2 text-xl">Play</span>
             </button>

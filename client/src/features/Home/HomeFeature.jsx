@@ -66,9 +66,9 @@ const HomeFeature = () => {
                 <button className="text-outline-gray hover:text-secondary-500">
                   <FaPlay className="text-base md:text-2xl" />
                 </button>
-                <button className="bg-secondary-400 text-white text-2xl rounded-full p-2">
+                <span className="bg-secondary-400 text-white text-2xl rounded-full p-2">
                   <LikeButton songId={song._id} type={"song"} />
-                </button>
+                </span>
               </div>
             </div>
           </article>

@@ -15,13 +15,12 @@ import Loading from "../../components/Loading";
 const MyProfilePage = () => {
   const selectedTheme = useSelector((state) => state.theme);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { id } = useSelector((state) => state.auth);
   const {
     data: user,
     isLoading: isCurrentUserLoading,
     isError: isCurrentUserError,
     error: currentUserError,
-  } = useGetCurrentUserQuery(id, { skip: !id });
+  } = useGetCurrentUserQuery();
   const imageRef = useRef(null);
   const [uploadImage, { isError, error }] = useUploadImageMutation();
   const [logOut, { isLoading }] = useLogoutUserMutation();

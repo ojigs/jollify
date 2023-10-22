@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   FaPlay,
@@ -13,45 +13,83 @@ import {
   FaVolumeUp,
   FaVolumeDown,
 } from "react-icons/fa";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { TbRepeat, TbRepeatOnce, TbRepeatOff } from "react-icons/tb";
 import {
   setPlaying,
   setCurrentTime,
-  setDuration,
   setIsMuted,
   setVolume,
   setPrevVolume,
+  setRepeat,
+  playNext,
+  playPrev,
 } from "./playerSlice";
-import { convertToSeconds } from "../../utils";
+import { convertSecondsToTime } from "../../utils";
+import AudioPlayer from "./AudioPlayer";
+const key = import.meta.env.VITE_JOLLIFY_KEY;
 
-const Player = ({ song }) => {
+const Player = () => {
   const selectedTheme = useSelector((state) => state.theme);
-  const { isPlaying } = useSelector((state) => state.player);
-  const { currentTime } = useSelector((state) => state.player);
-  const { isMuted } = useSelector((state) => state.player);
-  const { volume } = useSelector((state) => state.player);
-  const { prevVolume } = useSelector((state) => state.player);
-  const { duration } = useSelector((state) => state.player);
+  const {
+    isPlaying,
+    currentSong,
+    currentTime,
+    queue,
+    isMuted,
+    volume,
+    prevVolume,
+    duration,
+    repeat,
+  } = useSelector((state) => state.player);
   const dispatch = useDispatch();
+  const audioRef = useRef(null);
+  const [isLoading, setIsLoading] = useState();
 
   useEffect(() => {
-    dispatch(setDuration(convertToSeconds(song?.duration ?? "2:23")));
-  }, [song, dispatch]);
+    if (audioRef?.current) {
+      audioRef.current.src = "https://" + key + "/" + currentSong.audioURL;
+      audioRef.current.load();
+      audioRef.current.currentTime = 0;
+      dispatch(setCurrentTime(audioRef.current.currentTime));
+      // dispatch(setPlaying(true));
+    }
+  }, [currentSong.audioURL, dispatch]);
+
+  useEffect(() => {
+    audioRef.current.volume = volume / 100;
+  }, [volume]);
 
   const handleTogglePlay = () => {
     dispatch(setPlaying(!isPlaying));
+    setIsLoading(false);
   };
 
   const handleNext = () => {
-    console.log("Next song");
+    if (queue.length === 1) {
+      restartSong();
+    } else {
+      dispatch(playNext());
+    }
   };
 
   const handlePrev = () => {
-    console.log("Prev song");
+    if (queue.length === 1) {
+      restartSong();
+    } else {
+      dispatch(playPrev());
+    }
   };
 
-  const handlePlayerChange = (e) => {
-    dispatch(setIsMuted(false));
+  const restartSong = () => {
+    audioRef.current.currentTime = 0;
+    dispatch(setCurrentTime(audioRef.current.currentTime));
+    audioRef.current.play();
+  };
+
+  const handleSeekChange = (e) => {
     dispatch(setCurrentTime(Number(e.target.value)));
+    audioRef.current.currentTime = Number(e.target.value);
   };
 
   const handleToggleMute = () => {
@@ -68,6 +106,10 @@ const Player = ({ song }) => {
     dispatch(setVolume(e.target.value));
   };
 
+  const handleToggleRepeat = () => {
+    dispatch(setRepeat());
+  };
+
   return (
     <article
       className={`relative p-4 bg-primary bg-opacity-95 backdrop-blur-lg text-white`}
@@ -75,10 +117,10 @@ const Player = ({ song }) => {
       <div className="flex items-center justify-between">
         {/* Song Details */}
         <div className="flex items-center">
-          {song?.coverImage ? (
+          {currentSong?.coverImage ? (
             <img
-              src="song-cover.jpg"
-              alt="Song Cover"
+              src={currentSong?.coverImage}
+              alt={currentSong?.artiste?.name}
               className="w-14 h-14 rounded-md mr-4"
             />
           ) : (
@@ -87,8 +129,8 @@ const Player = ({ song }) => {
             </div>
           )}
           <div className="w-20">
-            <p className="font-bold truncate ...">Song Title</p>
-            <p className="truncate ...">Artiste</p>
+            <p className="font-bold truncate ...">{currentSong?.title}</p>
+            <p className="truncate ...">{currentSong?.artiste?.name}</p>
           </div>
         </div>
 
@@ -99,7 +141,13 @@ const Player = ({ song }) => {
             onClick={handleTogglePlay}
             className={`p-4 rounded-full bg-${selectedTheme}`}
           >
-            {isPlaying ? <FaPause /> : <FaPlay />}
+            {isLoading ? (
+              <AiOutlineLoading3Quarters className="animate-spin" />
+            ) : isPlaying ? (
+              <FaPause />
+            ) : (
+              <FaPlay />
+            )}
           </button>
           <FaStepForward onClick={handleNext} className="cursor-pointer" />
         </div>
@@ -109,6 +157,15 @@ const Player = ({ song }) => {
           <div className="flex justify-center items-center gap-4">
             <FaHeart className="cursor-pointer" />
             <FaListUl className="cursor-pointer" />
+            <button onClick={handleToggleRepeat}>
+              {repeat === "off" ? (
+                <TbRepeatOff />
+              ) : repeat === "single" ? (
+                <TbRepeatOnce />
+              ) : (
+                <TbRepeat />
+              )}
+            </button>
             <FaRedo className="cursor-pointer" />
           </div>
           {/* Volume Controls */}
@@ -142,22 +199,36 @@ const Player = ({ song }) => {
               onChange={handleVolumeChange}
               className={`w-32 outline-none accent-${selectedTheme} rounded-full h-[2px]`}
             />
+            <audio src="" />
           </div>
         </div>
       </div>
+
+      <span className="text-xs text-gray-400 absolute top-9 left-1/2 ml-20">
+        <label htmlFor="audio rail">{convertSecondsToTime(currentTime)}</label>
+        {" / "}
+        <label htmlFor="audio rail">{convertSecondsToTime(duration)}</label>
+      </span>
 
       {/* Audio Rail */}
       <div className="w-80">
         {/* Implement the audio slider here */}
         <input
+          id="audio rail"
           type="range"
           min={0}
-          max={duration}
+          max={Math.floor(duration)}
           value={currentTime}
-          onChange={handlePlayerChange}
+          onChange={handleSeekChange}
           className={`w-full absolute left-0 top-0 h-[1px] accent-${selectedTheme} rounded-full outline-none`}
         />
       </div>
+      <AudioPlayer
+        audioRef={audioRef}
+        restartSong={restartSong}
+        handleNext={handleNext}
+        setIsLoading={setIsLoading}
+      />
     </article>
   );
 };

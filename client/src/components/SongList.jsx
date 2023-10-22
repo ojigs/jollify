@@ -1,19 +1,26 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { FaPlay } from "react-icons/fa";
 import LikeButton from "./LikeButton";
 import AddToPlaylistButton from "./AddToPlaylistButton";
 // import { trimText } from "../utils";
+import { setQueue } from "../features/MusicPlayer/playerSlice";
 
 const SongList = ({ songs, listType }) => {
   const selectedTheme = useSelector((state) => state.theme);
   const songsPerPage = 5;
   const [visibleSongs, setVisibleSongs] = useState(songsPerPage);
   const isPlaylist = listType === "playlist";
+  const dispatch = useDispatch();
+  const { currentSong } = useSelector((state) => state.player);
 
   const handleMoreClick = () => {
     setVisibleSongs(visibleSongs + songsPerPage);
+  };
+
+  const handlePlay = (index) => {
+    dispatch(setQueue({ queue: songs, index }));
   };
 
   return (
@@ -22,7 +29,7 @@ const SongList = ({ songs, listType }) => {
         <li
           key={song._id}
           className={`grid grid-cols-6 md:grid-cols-12 items-center gap-4 w-full rounded-md p-4 ${
-            song.isPlaying
+            currentSong._id === song._id
               ? `bg-${selectedTheme} bg-opacity-50`
               : index % 2 === 0
               ? "bg-secondary-100"
@@ -30,7 +37,7 @@ const SongList = ({ songs, listType }) => {
           }`}
         >
           <div className="col-span-1">
-            <button>
+            <button onClick={() => handlePlay(index)}>
               <FaPlay className="text-base" />
             </button>
           </div>

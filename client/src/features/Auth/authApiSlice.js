@@ -14,7 +14,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(updateTheme("rock"));
-          dispatch(setUser(data.id));
+          dispatch(setUser(data.username));
         } catch (err) {
           console.error(err);
         }
@@ -30,7 +30,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(updateTheme("rock"));
-          dispatch(setUser(data.id));
+          dispatch(setUser(data.username));
         } catch (err) {
           console.error(err);
         }

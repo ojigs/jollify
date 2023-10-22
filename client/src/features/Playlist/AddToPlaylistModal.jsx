@@ -13,14 +13,12 @@ const AddToPlaylistModal = ({ children }) => {
   const { isAddToPlaylistModal, addSongId: songId } = useSelector(
     (state) => state.modal
   );
-  const { id: userId } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const {
     data: playlists,
     isError,
     error,
-  } = useGetCurrentUserQuery(userId, {
-    skip: !userId,
+  } = useGetCurrentUserQuery(undefined, {
     selectFromResult: ({ data, isLoading, isError, error }) => ({
       data: data?.playlist ?? emptyArray,
       isLoading,

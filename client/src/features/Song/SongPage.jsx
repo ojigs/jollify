@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useGetSongDetailsQuery } from "../../app/apiSlice";
 import { useParams } from "react-router-dom";
 import SongDetail from "./SongDetail";
@@ -18,12 +17,6 @@ const SongPage = () => {
     isError,
     error,
   } = useGetSongDetailsQuery(id);
-
-  useEffect(() => {
-    if (isError) {
-      console.error(error);
-    }
-  });
 
   if (isLoading) {
     return <Loading />;
