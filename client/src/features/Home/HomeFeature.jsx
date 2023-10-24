@@ -1,14 +1,21 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineLoading } from "react-icons/ai";
 import ErrorMsg from "../../components/ErrorMsg";
 import { useGetAnySongQuery } from "../../app/apiSlice";
 import LikeButton from "../../components/LikeButton";
+import { setQueue, setPlaying } from "../MusicPlayer/playerSlice";
 
 const HomeFeature = () => {
   const selectedTheme = useSelector((state) => state.theme);
   const { data: song, isLoading, isError, error } = useGetAnySongQuery();
+  const dispatch = useDispatch();
+
+  const handlePlay = () => {
+    dispatch(setQueue({ queue: [song] }));
+    dispatch(setPlaying(true));
+  };
 
   return (
     <section className="relative mt-8 text-gray-200">
@@ -63,10 +70,13 @@ const HomeFeature = () => {
                 </h3>
               </div>
               <div className="flex items-center gap-6">
-                <button className="text-outline-gray hover:text-secondary-500">
+                <button
+                  onClick={handlePlay}
+                  className="text-outline-gray hover:text-secondary-500"
+                >
                   <FaPlay className="text-base md:text-2xl" />
                 </button>
-                <span className="bg-secondary-400 text-white text-2xl rounded-full p-2">
+                <span className="bg-secondary-400 text-white text-lg md:text-2xl rounded-full p-2">
                   <LikeButton songId={song._id} type={"song"} />
                 </span>
               </div>

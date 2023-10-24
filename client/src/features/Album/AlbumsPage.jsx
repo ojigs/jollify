@@ -3,6 +3,7 @@ import { useGetAllAlbumsQuery } from "../../app/apiSlice";
 import AlbumCard from "./AlbumCard";
 import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";
+import { motion } from "framer-motion";
 
 const AlbumsPage = () => {
   const { data: albums, isLoading, isError, error } = useGetAllAlbumsQuery();
@@ -28,11 +29,16 @@ const AlbumsPage = () => {
       <p className="mb-8 text-gray-200">
         Indulge your passion for music with our handpicked selection of albums
       </p>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
+      >
         {albums.map((album) => (
           <AlbumCard key={album._id} album={album} />
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };

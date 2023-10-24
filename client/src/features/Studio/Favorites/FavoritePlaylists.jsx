@@ -4,6 +4,7 @@ import { useGetCurrentUserQuery } from "../../../app/apiSlice";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import PlaylistCard from "../../Playlist/PlaylistCard";
 import ErrorMsg from "../../../components/ErrorMsg";
+import { motion } from "framer-motion";
 
 const emptyArray = [];
 
@@ -60,11 +61,16 @@ const FavoritePlaylists = () => {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
+        >
           {playlists?.map((playlist) => (
             <PlaylistCard key={playlist._id} playlist={playlist} />
           ))}
-        </div>
+        </motion.div>
       )}
     </>
   );

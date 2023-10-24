@@ -6,6 +6,7 @@ import { useGetCurrentUserQuery } from "../../../app/apiSlice";
 import Loading from "../../../components/Loading";
 import ErrorMsg from "../../../components/ErrorMsg";
 import { toggleCreatePlaylistModal } from "../../../app/modalSlice";
+import { motion } from "framer-motion";
 
 const emptyArray = [];
 
@@ -40,7 +41,12 @@ const MyPlaylistPage = () => {
   return (
     <section className="text-gray-100">
       <h1 className="text-xl md:text-3xl font-semibold mb-8">My Playlist</h1>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
+      >
         <CreatePlaylistModal>
           <button
             onClick={openModal}
@@ -58,7 +64,7 @@ const MyPlaylistPage = () => {
               type={"user"}
             />
           ))}
-      </div>
+      </motion.div>
     </section>
   );
 };

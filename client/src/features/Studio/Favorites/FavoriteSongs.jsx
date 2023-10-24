@@ -4,6 +4,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useGetCurrentUserQuery } from "../../../app/apiSlice";
 import SongCard from "../../Song/SongCard";
 import ErrorMsg from "../../../components/ErrorMsg";
+import { motion } from "framer-motion";
 
 const emptyArray = [];
 
@@ -60,11 +61,16 @@ const FavoriteSongs = () => {
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
+        >
           {songs?.map((song) => (
             <SongCard key={song._id} song={song} />
           ))}
-        </div>
+        </motion.div>
       )}
     </>
   );

@@ -1,4 +1,4 @@
-// import { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentTime, setDuration, setPlaying } from "./playerSlice";
 
@@ -8,30 +8,30 @@ const AudioPlayer = ({ audioRef, restartSong, handleNext, setIsLoading }) => {
   );
   const dispatch = useDispatch();
 
-  //   const src = audioRef?.current?.src ?? null;
+  const src = audioRef?.current?.src ?? null;
 
-  //   useEffect(() => {
-  //     if (isPlaying && audioRef.current.src) {
-  //       audioRef.current.play();
-  //     } else {
-  //       audioRef.current.pause();
-  //     }
-  //   }, [isPlaying, src, audioRef]);
+  useEffect(() => {
+    if (isPlaying && audioRef.current.src) {
+      audioRef.current.play();
+    } else {
+      audioRef.current.pause();
+    }
+  }, [isPlaying, src, audioRef]);
 
   const handleTimeUpdate = () => {
     if (audioRef.current) {
       const currentTime = audioRef.current.currentTime;
       dispatch(setCurrentTime(currentTime));
-      const { buffered, duration } = audioRef.current;
-      if (
-        buffered.length > 0 &&
-        buffered.end(0) - currentTime < 1 &&
-        buffered.end(0) < duration
-      ) {
-        setIsLoading(true);
-      } else {
-        setIsLoading(false);
-      }
+      // const { buffered, duration } = audioRef.current;
+      // if (
+      //   buffered.length > 0 &&
+      //   buffered.end(0) - currentTime < 1 &&
+      //   buffered.end(0) < duration
+      // ) {
+      //   setIsLoading(true);
+      // } else {
+      //   setIsLoading(false);
+      // }
     }
   };
 
@@ -63,11 +63,15 @@ const AudioPlayer = ({ audioRef, restartSong, handleNext, setIsLoading }) => {
 
   const handleCanPlay = () => {
     if (isPlaying && audioRef.current.src) {
-      console.log("are you here?");
+      setIsLoading(false);
       audioRef.current.play();
     } else {
       audioRef.current.pause();
     }
+  };
+
+  const handleWait = () => {
+    setIsLoading(true);
   };
 
   return (
@@ -78,6 +82,7 @@ const AudioPlayer = ({ audioRef, restartSong, handleNext, setIsLoading }) => {
       onTimeUpdate={handleTimeUpdate}
       onLoadedMetadata={handleLoadedMetaData}
       onEnded={handleEnded}
+      onWaiting={handleWait}
     />
   );
 };

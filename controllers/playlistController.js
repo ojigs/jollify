@@ -111,16 +111,6 @@ const likePlaylist = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Like status toogled" });
 });
 
-// const updatePlaylist = async () => {
-//   const { error } = await Playlist.updateMany({}, { $set: { likes: [] } });
-//   if (error) {
-//     console.error("Error updating playlists:", error);
-//   } else {
-//     console.log("Updated playlists:");
-//   }
-// };
-// updatePlaylist();
-
 module.exports = {
   getAllPlaylists,
   getPlaylistDetails,

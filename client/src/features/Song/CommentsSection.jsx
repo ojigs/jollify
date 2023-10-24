@@ -58,7 +58,7 @@ const CommentsSection = ({ comments, songId }) => {
             type="submit"
             className={`bg-${selectedTheme} ${
               isLoading
-                ? "bg-opacity-90"
+                ? "bg-opacity-90 cursor-not-allowed"
                 : `hover:bg-${selectedTheme}-50 active:bg-opacity-50`
             }  py-2 px-4 rounded-lg mt-4 self-end`}
             disabled={isLoading}

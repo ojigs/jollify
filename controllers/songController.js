@@ -81,6 +81,7 @@ const getTopSongs = asyncHandler(async (req, res) => {
         coverImage: 1,
         audioUrl: 1,
         duration: 1,
+        audioURL: 1,
         artiste: { _id: "$artiste._id", name: "$artiste.name" },
         album: { _id: "$album._id", title: "$album.title" },
       },
@@ -122,7 +123,7 @@ const getAnySong = asyncHandler(async (req, res) => {
       $project: {
         _id: 1,
         title: 1,
-        audioUrl: 1,
+        audioURL: 1,
         artiste: {
           _id: "$artiste._id",
           name: "$artiste.name",

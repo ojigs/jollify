@@ -116,7 +116,10 @@ const EditUserModal = ({ closeModal, isModalOpen, user, children }) => {
                     </button>
                     <button
                       type="submit"
-                      className={`bg-${selectedTheme} hover:bg-${selectedTheme} text-white font-bold py-2 px-4 rounded`}
+                      className={`bg-${selectedTheme} hover:bg-${selectedTheme} text-white font-bold py-2 px-4 rounded ${
+                        isLoading && "cursor-not-allowed"
+                      }`}
+                      disabled={isLoading}
                     >
                       {isLoading ? (
                         <AiOutlineLoading3Quarters className="animate-spin m-auto text-2xl text-gray-400" />

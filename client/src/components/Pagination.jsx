@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const Pagination = ({ currentPage, totalPages }) => {
+const Pagination = ({ path, currentPage, totalPages }) => {
   const selectedTheme = useSelector((state) => state.theme);
-  const getPageLink = (pageNumber) => `/explore?page=${pageNumber}`;
+  const getPageLink = (pageNumber) => `${path}?page=${pageNumber}`;
 
   return (
     <div>
@@ -12,10 +12,8 @@ const Pagination = ({ currentPage, totalPages }) => {
           <Link
             key={pageNumber}
             to={getPageLink(pageNumber)}
-            className={`${
-              pageNumber === currentPage
-                ? `bg-${selectedTheme} text-gray-200`
-                : `text-${selectedTheme} bg-gray-200`
+            className={`text-gray-200 ${
+              pageNumber !== currentPage && ` bg-${selectedTheme}`
             } px-2 py-1 mr-4 rounded-md`}
           >
             {pageNumber}

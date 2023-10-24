@@ -1,9 +1,16 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { FaPlay, FaCompactDisc } from "react-icons/fa";
+import { setPlaying, setQueue } from "../MusicPlayer/playerSlice";
 
 const SongCard = ({ song }) => {
   const selectedTheme = useSelector((state) => state.theme);
+  const dispatch = useDispatch();
+
+  const handlePlay = () => {
+    dispatch(setQueue({ queue: [song] }));
+    dispatch(setPlaying(true));
+  };
 
   return (
     <article className="group bg-secondary-100 rounded-lg shadow-lg p-2 md:p-4 transition transform hover:scale-105">
@@ -22,6 +29,7 @@ const SongCard = ({ song }) => {
           className="absolute inset-0 flex items-center justify-center bg-primary bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
         ></Link>
         <button
+          onClick={handlePlay}
           className={`bg-${selectedTheme} absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 top-1/2 bg-opacity-50 hover:bg-opacity-100 text-white flex justify-center items-center w-14 h-14 active:bg-${selectedTheme}-50 active:bg-opacity-40 rounded-full transition`}
         >
           <FaPlay className="text-white text-xl text-opacity-70 hover:text-opacity-100" />

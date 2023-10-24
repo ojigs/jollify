@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import DOMPurify from "dompurify";
 import { useCreatePlaylistMutation } from "../../../app/apiSlice";
 import { MdQueueMusic } from "react-icons/md";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { toggleCreatePlaylistModal } from "../../../app/modalSlice";
+import { toast } from "react-toastify";
 
 const CreatePlaylistModal = ({ children }) => {
   const selectedTheme = useSelector((state) => state.theme);
   const { isCreatePlaylistModal } = useSelector((state) => state.modal);
-  const [createPlaylist, { isLoading }] = useCreatePlaylistMutation();
+  const [createPlaylist, { isLoading, error }] = useCreatePlaylistMutation();
   const [formData, setFormData] = useState({ title: "", description: "" });
   const [validationErrors, setValidationErrors] = useState(null);
   const dispatch = useDispatch();
@@ -32,7 +32,11 @@ const CreatePlaylistModal = ({ children }) => {
         sanitizedFormData[key] = DOMPurify.sanitize(value);
       }
 
-      const { error } = await createPlaylist(sanitizedFormData);
+      await toast.promise(createPlaylist(sanitizedFormData).unwrap(), {
+        pending: "Loading...",
+        success: "Playlist creation successful",
+        error: "An error occurred",
+      });
       if (error) {
         console.error(error);
       } else {
@@ -131,15 +135,11 @@ const CreatePlaylistModal = ({ children }) => {
                       className={`bg-${selectedTheme} ${
                         !isLoading
                           ? `hover:bg-${selectedTheme}-50 active:translate-y-[1px]`
-                          : `bg-opacity-50`
+                          : `bg-opacity-50 cursor-not-allowed`
                       } text-white text-center font-bold py-2 px-4 rounded`}
                       disabled={isLoading}
                     >
-                      {isLoading ? (
-                        <AiOutlineLoading3Quarters className="animate-spin m-auto text-2xl text-gray-300" />
-                      ) : (
-                        `Create`
-                      )}
+                      Create
                     </button>
                   </div>
                 </form>

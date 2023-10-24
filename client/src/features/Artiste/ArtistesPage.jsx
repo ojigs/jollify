@@ -3,6 +3,7 @@ import { useGetAllArtistesQuery } from "../../app/apiSlice";
 import ArtisteCard from "./ArtisteCard";
 import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";
+import { motion } from "framer-motion";
 
 const ArtistesPage = () => {
   const {
@@ -34,11 +35,16 @@ const ArtistesPage = () => {
         Connect with your favorite artistes and stay up-to-date with their
         latest releases
       </p>
-      <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-4 gap-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-4 gap-4"
+      >
         {artistes.map((artiste) => (
           <ArtisteCard key={artiste._id} artiste={artiste} />
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };

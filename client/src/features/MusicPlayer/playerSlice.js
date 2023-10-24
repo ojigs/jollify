@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const playerSlice = createSlice({
   name: "player",
   initialState: {
-    currentSong: true,
+    currentSong: null,
     currentIndex: 0,
     queue: [],
     isPlaying: false,

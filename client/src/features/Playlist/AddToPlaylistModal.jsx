@@ -10,6 +10,7 @@ const emptyArray = [];
 
 const AddToPlaylistModal = ({ children }) => {
   const selectedTheme = useSelector((state) => state.theme);
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const { isAddToPlaylistModal, addSongId: songId } = useSelector(
     (state) => state.modal
   );
@@ -19,6 +20,7 @@ const AddToPlaylistModal = ({ children }) => {
     isError,
     error,
   } = useGetCurrentUserQuery(undefined, {
+    skip: !isAuthenticated,
     selectFromResult: ({ data, isLoading, isError, error }) => ({
       data: data?.playlist ?? emptyArray,
       isLoading,
@@ -39,9 +41,8 @@ const AddToPlaylistModal = ({ children }) => {
         render() {
           return "Song added to playlist";
         },
-        icon: false,
       },
-      error: "An error occured",
+      error: "An error occurred",
     });
     if (addError) {
       console.error(addError);
@@ -109,7 +110,7 @@ const AddToPlaylistModal = ({ children }) => {
                                 <img
                                   src={playlist.coverImage}
                                   alt={playlist.title}
-                                  className="w-full h-full object-cover rounded-t-lg relative"
+                                  className="w-full h-full object-cover rounded-md relative"
                                 />
                               ) : (
                                 <FaHeadphones className="w-full h-full p-4 text-gray-200" />

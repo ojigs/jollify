@@ -5,9 +5,7 @@ import {
   FaPause,
   FaStepForward,
   FaStepBackward,
-  FaHeart,
   FaListUl,
-  FaRedo,
   FaCompactDisc,
   FaVolumeMute,
   FaVolumeUp,
@@ -27,6 +25,8 @@ import {
 } from "./playerSlice";
 import { convertSecondsToTime } from "../../utils";
 import AudioPlayer from "./AudioPlayer";
+import LikeButton from "../../components/LikeButton";
+import LoginModal from "../../components/LoginModal";
 const key = import.meta.env.VITE_JOLLIFY_KEY;
 
 const Player = () => {
@@ -46,15 +46,15 @@ const Player = () => {
   const audioRef = useRef(null);
   const [isLoading, setIsLoading] = useState();
 
+  const audioURL = currentSong?.audioURL ?? null;
   useEffect(() => {
     if (audioRef?.current) {
-      audioRef.current.src = "https://" + key + "/" + currentSong.audioURL;
+      audioRef.current.src = "https://" + key + "/" + audioURL;
       audioRef.current.load();
       audioRef.current.currentTime = 0;
       dispatch(setCurrentTime(audioRef.current.currentTime));
-      // dispatch(setPlaying(true));
     }
-  }, [currentSong.audioURL, dispatch]);
+  }, [audioURL, dispatch]);
 
   useEffect(() => {
     audioRef.current.volume = volume / 100;
@@ -111,125 +111,135 @@ const Player = () => {
   };
 
   return (
-    <article
-      className={`relative p-4 bg-primary bg-opacity-95 backdrop-blur-lg text-white`}
-    >
-      <div className="flex items-center justify-between">
-        {/* Song Details */}
-        <div className="flex items-center">
-          {currentSong?.coverImage ? (
-            <img
-              src={currentSong?.coverImage}
-              alt={currentSong?.artiste?.name}
-              className="w-14 h-14 rounded-md mr-4"
-            />
-          ) : (
-            <div className="bg-secondary-200 mr-4 w-14 h-14 rounded-md">
-              <FaCompactDisc className="w-full h-full p-2 text-gray-400" />
-            </div>
-          )}
-          <div className="w-20">
-            <p className="font-bold truncate ...">{currentSong?.title}</p>
-            <p className="truncate ...">{currentSong?.artiste?.name}</p>
-          </div>
-        </div>
-
-        {/* Play Controls */}
-        <div className="flex items-center justify-center gap-4">
-          <FaStepBackward onClick={handlePrev} className="cursor-pointer" />
-          <button
-            onClick={handleTogglePlay}
-            className={`p-4 rounded-full bg-${selectedTheme}`}
-          >
-            {isLoading ? (
-              <AiOutlineLoading3Quarters className="animate-spin" />
-            ) : isPlaying ? (
-              <FaPause />
+    <>
+      <article
+        className={`relative p-4 bg-primary bg-opacity-95 backdrop-blur-lg text-white`}
+      >
+        <div className="flex items-center justify-between">
+          {/* Song Details */}
+          <div className="flex items-center">
+            {currentSong?.coverImage ? (
+              <img
+                src={currentSong?.coverImage}
+                alt={currentSong?.artiste?.name}
+                className="w-14 h-14 rounded-md mr-4"
+              />
             ) : (
-              <FaPlay />
+              <div className="bg-secondary-200 mr-4 w-14 h-14 rounded-md">
+                <FaCompactDisc className="w-full h-full p-2 text-gray-400" />
+              </div>
             )}
-          </button>
-          <FaStepForward onClick={handleNext} className="cursor-pointer" />
-        </div>
+            <div className="w-20">
+              <p className="text-sm sm:text-base font-semibold truncate ...">
+                {currentSong?.title}
+              </p>
+              <p className="text-sm sm:text-base truncate ...">
+                {currentSong?.artiste?.name}
+              </p>
+            </div>
+          </div>
 
-        {/* Additional Controls */}
-        <div className="flex flex-col gap-2">
-          <div className="flex justify-center items-center gap-4">
-            <FaHeart className="cursor-pointer" />
-            <FaListUl className="cursor-pointer" />
-            <button onClick={handleToggleRepeat}>
-              {repeat === "off" ? (
-                <TbRepeatOff />
-              ) : repeat === "single" ? (
-                <TbRepeatOnce />
+          {/* Play Controls */}
+          <div className="flex items-center justify-center gap-4">
+            <FaStepBackward onClick={handlePrev} className="cursor-pointer" />
+            <button
+              onClick={handleTogglePlay}
+              className={`p-4 rounded-full bg-${selectedTheme}`}
+            >
+              {isLoading ? (
+                <AiOutlineLoading3Quarters className="animate-spin" />
+              ) : isPlaying ? (
+                <FaPause />
               ) : (
-                <TbRepeat />
+                <FaPlay />
               )}
             </button>
-            <FaRedo className="cursor-pointer" />
+            <FaStepForward onClick={handleNext} className="cursor-pointer" />
           </div>
-          {/* Volume Controls */}
-          <div className="flex items-center gap-2">
-            {isMuted ? (
-              <FaVolumeMute
-                className="cursor-pointer"
-                onClick={handleToggleMute}
+
+          {/* Additional Controls */}
+          <div className="hidden sm:flex flex-col gap-2">
+            <div className="flex justify-center items-center gap-4">
+              <LikeButton songId={currentSong?._id ?? null} type={"song"} />
+              <button onClick={handleToggleRepeat}>
+                {repeat === "off" ? (
+                  <TbRepeatOff />
+                ) : repeat === "single" ? (
+                  <TbRepeatOnce />
+                ) : (
+                  <TbRepeat />
+                )}
+              </button>
+              <FaListUl className="cursor-pointer" />
+            </div>
+            {/* Volume Controls */}
+            <div className="flex items-center gap-2">
+              {isMuted ? (
+                <FaVolumeMute
+                  className="cursor-pointer"
+                  onClick={handleToggleMute}
+                />
+              ) : volume > 70 ? (
+                <FaVolumeUp
+                  className="cursor-pointer"
+                  onClick={handleToggleMute}
+                />
+              ) : volume > 0 ? (
+                <FaVolumeDown
+                  className="cursor-pointer"
+                  onClick={handleToggleMute}
+                />
+              ) : (
+                <FaVolumeMute
+                  className="cursor-pointer"
+                  onClick={handleToggleMute}
+                />
+              )}
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={isMuted ? 0 : volume}
+                onChange={handleVolumeChange}
+                className={`w-20 outline-none accent-${selectedTheme} rounded-full h-[2px]`}
               />
-            ) : volume > 70 ? (
-              <FaVolumeUp
-                className="cursor-pointer"
-                onClick={handleToggleMute}
-              />
-            ) : volume > 0 ? (
-              <FaVolumeDown
-                className="cursor-pointer"
-                onClick={handleToggleMute}
-              />
-            ) : (
-              <FaVolumeMute
-                className="cursor-pointer"
-                onClick={handleToggleMute}
-              />
-            )}
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value={isMuted ? 0 : volume}
-              onChange={handleVolumeChange}
-              className={`w-32 outline-none accent-${selectedTheme} rounded-full h-[2px]`}
-            />
-            <audio src="" />
+            </div>
           </div>
         </div>
-      </div>
 
-      <span className="text-xs text-gray-400 absolute top-9 left-1/2 ml-20">
-        <label htmlFor="audio rail">{convertSecondsToTime(currentTime)}</label>
-        {" / "}
-        <label htmlFor="audio rail">{convertSecondsToTime(duration)}</label>
-      </span>
+        {/* Duration */}
+        <span className="hidden sm:block text-xs text-gray-400 absolute top-9 left-1/2 ml-28">
+          <label htmlFor="audio rail">
+            {convertSecondsToTime(currentTime)}
+          </label>
+          {" / "}
+          <label htmlFor="audio rail">
+            {convertSecondsToTime(duration === "0:00" ? 0 : duration)}
+          </label>
+        </span>
 
-      {/* Audio Rail */}
-      <div className="w-80">
-        {/* Implement the audio slider here */}
-        <input
-          id="audio rail"
-          type="range"
-          min={0}
-          max={Math.floor(duration)}
-          value={currentTime}
-          onChange={handleSeekChange}
-          className={`w-full absolute left-0 top-0 h-[1px] accent-${selectedTheme} rounded-full outline-none`}
+        {/* Audio Rail */}
+        <div className="w-80">
+          <input
+            id="audio rail"
+            type="range"
+            min={0}
+            max={Math.floor(duration === "0:00" ? 0 : duration)}
+            step={0.0000000001}
+            value={currentTime}
+            onChange={handleSeekChange}
+            className={`w-full transition-all ease-linear absolute left-0 top-0 h-[1px] accent-${selectedTheme} rounded-full outline-none`}
+          />
+        </div>
+        <AudioPlayer
+          audioRef={audioRef}
+          restartSong={restartSong}
+          handleNext={handleNext}
+          setIsLoading={setIsLoading}
         />
-      </div>
-      <AudioPlayer
-        audioRef={audioRef}
-        restartSong={restartSong}
-        handleNext={handleNext}
-        setIsLoading={setIsLoading}
-      />
-    </article>
+      </article>
+      <LoginModal />
+    </>
   );
 };
 

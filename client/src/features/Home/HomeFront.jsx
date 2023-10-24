@@ -1,16 +1,23 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useGetTopSongsQuery } from "../../app/apiSlice";
 import { FaClock } from "react-icons/fa";
+import { BsSoundwave } from "react-icons/bs";
+import { FiPlay } from "react-icons/fi";
 import ErrorMsg from "../../components/ErrorMsg";
 import LikeButton from "../../components/LikeButton";
+import { setQueue, setPlaying } from "../MusicPlayer/playerSlice";
 
 const HomeFront = () => {
   const { data: songs, isLoading, isError, error } = useGetTopSongsQuery(5);
-
+  const selectedTheme = useSelector((state) => state.theme);
   const songRefs = useRef([]);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const { currentSong, isPlaying, queue } = useSelector(
+    (state) => state.player
+  );
+  const dispatch = useDispatch();
 
   // const generateKey = async () => {
   //   const encryptionKey = await crypto.subtle.generateKey(
@@ -37,6 +44,12 @@ const HomeFront = () => {
     setHighlightedIndex(index);
   };
 
+  const handlePlay = (index) => {
+    dispatch(setQueue({ queue: songs, index }));
+    dispatch(setPlaying(true));
+    console.log(queue);
+  };
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
 
@@ -44,8 +57,6 @@ const HomeFront = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  const selectedTheme = useSelector((state) => state.theme);
 
   return (
     <section className="relative mt-8 text-gray-200">
@@ -97,13 +108,24 @@ const HomeFront = () => {
           songs?.map((song, index) => (
             <article
               ref={(el) => (songRefs.current[index] = el)}
-              className={`grid grid-cols-6 md:grid-cols-12 gap-4 items-center p-1 rounded-md ${
-                index === highlightedIndex ? "bg-primary" : ""
+              onClick={() => handlePlay(index)}
+              className={`grid grid-cols-6 md:grid-cols-12 gap-4 items-center p-1 rounded-md cursor-pointer ${
+                currentSong && currentSong?._id === song._id
+                  ? `bg-${selectedTheme} bg-opacity-50`
+                  : index === highlightedIndex
+                  ? "bg-primary"
+                  : ""
               } `}
               key={song._id}
             >
-              <div className="col-span-1 md:col-span-1 text-center">
-                <div>{index + 1}</div>
+              <div className="col-span-1 md:col-span-1 text-center m-auto">
+                {currentSong && currentSong._id === song._id && isPlaying ? (
+                  <BsSoundwave className={`animate-pulse`} />
+                ) : index === highlightedIndex ? (
+                  <FiPlay />
+                ) : (
+                  <div>{index + 1}</div>
+                )}
               </div>
               <div className="col-span-1 md:col-span-1 overflow-hidden">
                 <img
@@ -112,7 +134,7 @@ const HomeFront = () => {
                   className=" rounded-md"
                 />
               </div>
-              <div className="col-span-3 md:col-span-4 flex flex-col ">
+              <div className="col-span-3 md:col-span-4 flex flex-col items-start ">
                 <Link
                   to={`/songs/${song._id}`}
                   className={`hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-${selectedTheme} truncate ...`}

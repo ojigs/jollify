@@ -5,6 +5,7 @@ import SongCard from "./SongCard";
 import Pagination from "../../components/Pagination";
 import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";
+import { motion } from "framer-motion";
 
 const SongsPage = () => {
   const [searchParams] = useSearchParams({ page: 1 });
@@ -14,8 +15,9 @@ const SongsPage = () => {
     isLoading,
     isError,
     error,
-  } = useGetAllSongsQuery({ page: page ?? 1, limit: 5 });
+  } = useGetAllSongsQuery({ page: page ?? 1, limit: 8 });
   const location = useLocation();
+  const { pathname } = location;
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -34,15 +36,21 @@ const SongsPage = () => {
       <p className="mb-8 text-gray-200">
         Browse amazing collection of songs on Jollify
       </p>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
+      >
         {songs.map((song) => (
           <SongCard key={song._id} song={song} />
         ))}
-      </div>
+      </motion.div>
       <div className="flex justify-end mt-8">
         <Pagination
+          path={pathname}
           currentPage={Number(page || 1)}
-          totalPages={Math.ceil(total / 5)}
+          totalPages={Math.ceil(total / 8)}
         />
       </div>
     </section>

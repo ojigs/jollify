@@ -11,6 +11,7 @@ import { useLogoutUserMutation } from "../Auth/authApiSlice";
 import EditUserModal from "./EditUserModal";
 import ErrorMsg from "../../components/ErrorMsg";
 import Loading from "../../components/Loading";
+import { toast } from "react-toastify";
 
 const MyProfilePage = () => {
   const selectedTheme = useSelector((state) => state.theme);
@@ -43,9 +44,13 @@ const MyProfilePage = () => {
     if (file) {
       const formData = new FormData();
       formData.append("image", file);
-      await uploadImage(formData);
+      await toast.promise(uploadImage(formData).unwrap(), {
+        pending: "Uploading...",
+        success: "Upload successful",
+        error: "An error occurred",
+      });
       if (isError) {
-        console.log(error);
+        console.error(error);
       }
     }
   };
@@ -116,7 +121,9 @@ const MyProfilePage = () => {
           </button>
         </EditUserModal>
         <button
-          className={`bg-transparent  border hover:bg-${selectedTheme} active:bg-opacity-80 font-bold py-1  px-2 sm:py-2 sm:px-4 rounded`}
+          className={`bg-transparent  border hover:bg-${selectedTheme} active:bg-opacity-80 font-bold py-1  px-2 sm:py-2 sm:px-4 rounded  ${
+            isLoading && "cursor-not-allowed"
+          }`}
           onClick={handleLogOut}
           disabled={isLoading}
         >

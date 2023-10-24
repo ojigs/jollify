@@ -121,7 +121,7 @@ const SignupPage = () => {
                   className={`bg-${selectedTheme} ${
                     !isLoading
                       ? `hover:bg-${selectedTheme}-50 active:translate-y-[1px]`
-                      : `bg-opacity-50`
+                      : `bg-opacity-50 cursor-not-allowed`
                   } w-full text-white font-bold py-2 px-4 rounded`}
                   disabled={isLoading}
                 >
@@ -144,7 +144,7 @@ const SignupPage = () => {
                     pathname: `/login`,
                     state: { from: location.pathname },
                   }}
-                  className="text-blue-300"
+                  className={`text-${selectedTheme}-50`}
                 >
                   Log in
                 </Link>

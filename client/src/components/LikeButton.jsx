@@ -12,10 +12,11 @@ import { setMessage, toggleLoginModal } from "../app/modalSlice";
 import { toast } from "react-toastify";
 
 const LikeButton = ({ songId, albumId, artisteId, playlistId, type }) => {
-  const { id: userId } = useSelector((state) => state.auth);
   const [liked, setLiked] = useState();
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const { data: user } = useGetCurrentUserQuery(userId);
+  const { data: user } = useGetCurrentUserQuery(undefined, {
+    skip: !isAuthenticated,
+  });
   const [likeSong] = useLikeSongMutation();
   const [likeAlbum] = useLikeAlbumMutation();
   const [likeArtiste] = useLikeArtisteMutation();
@@ -98,7 +99,7 @@ const LikeButton = ({ songId, albumId, artisteId, playlistId, type }) => {
 
     switch (true) {
       case isSong:
-        await likeSong({ songId, userId })
+        await likeSong({ songId, userId: user._id })
           .unwrap()
           .catch((error) => {
             toast.error("An error occured");
@@ -106,17 +107,17 @@ const LikeButton = ({ songId, albumId, artisteId, playlistId, type }) => {
           });
         break;
       case isAlbum:
-        await likeAlbum({ albumId, userId })
+        await likeAlbum({ albumId, userId: user._id })
           .unwrap()
           .catch((error) => console.error(error));
         break;
       case isArtiste:
-        await likeArtiste({ artisteId, userId })
+        await likeArtiste({ artisteId, userId: user._id })
           .unwrap()
           .catch((error) => console.error(error));
         break;
       case isPlaylist:
-        await likePlaylist({ playlistId, userId })
+        await likePlaylist({ playlistId, userId: user._id })
           .unwrap()
           .catch((error) => console.error(error));
         break;
