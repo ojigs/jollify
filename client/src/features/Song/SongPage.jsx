@@ -7,6 +7,8 @@ import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";
 import AddToPlaylistModal from "../Playlist/AddToPlaylistModal";
 import LoginModal from "../../components/LoginModal";
+import { formatDate } from "../../utils";
+import { Helmet } from "react-helmet-async";
 
 const SongPage = () => {
   const { id } = useParams();
@@ -30,6 +32,45 @@ const SongPage = () => {
     <>
       {isSuccess && (
         <section className=" text-gray-200">
+          <Helmet>
+            <title>{`${song.artiste.name} - ${song.title} MP3 Stream on Jollify`}</title>
+            <meta
+              name="description"
+              content={`Stream ${song.title} by ${
+                song.artiste.name
+              } on Jollify and enjoy other amazing music collections. Released ${formatDate(
+                song.releaseDate
+              )}`}
+            />
+            <meta
+              property="og:title"
+              content={`${song.artiste.name} - ${song.title} MP3 Stream on Jollify`}
+            />
+            <meta
+              property="og:description"
+              content={`Stream ${song.title} by ${
+                song.artiste.name
+              } on Jollify and enjoy other amazing music collections. Released ${formatDate(
+                song.releaseDate
+              )}`}
+            />
+            <meta property="og:image" content={song.coverImage || ""} />
+            <meta property="og:url" content="" />
+            <meta name="twitter:card" content="summary" />
+            <meta
+              name="twitter:title"
+              content={`${song.artiste.name} - ${song.title} MP3 Stream on Jollify`}
+            />
+            <meta
+              name="twitter:description"
+              content={`Stream ${song.title} by ${
+                song.artiste.name
+              } on Jollify and enjoy other amazing music collections. Released ${formatDate(
+                song.releaseDate
+              )}`}
+            />
+            <meta name="twitter:image" content={song.coverImage || ""} />
+          </Helmet>
           <SongDetail song={song} />
           <Lyrics lyrics={song.lyrics} />
           <CommentsSection comments={song.comments} songId={song._id} />

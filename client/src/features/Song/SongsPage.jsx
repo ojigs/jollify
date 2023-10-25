@@ -6,6 +6,7 @@ import Pagination from "../../components/Pagination";
 import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 
 const SongsPage = () => {
   const [searchParams] = useSearchParams({ page: 1 });
@@ -32,6 +33,23 @@ const SongsPage = () => {
 
   return (
     <section className="text-gray-100">
+      <Helmet>
+        <title>{`Explore - Jollify`}</title>
+        <meta
+          name="description"
+          content={`Browse amazing collection of songs on Jollify`}
+        />
+        <meta property="og:title" content="Explore - Jollify" />
+        <meta
+          property="og:description"
+          content={`Browse amazing collection of songs on Jollify`}
+        />
+        <meta name="twitter:title" content="Explore - Jollify" />
+        <meta
+          name="twitter:description"
+          content="Browse amazing collection of songs on Jollify"
+        />
+      </Helmet>
       <h1 className="text-xl md:text-3xl font-semibold mb-2">Explore</h1>
       <p className="mb-8 text-gray-200">
         Browse amazing collection of songs on Jollify

@@ -5,6 +5,7 @@ import { useLoginUserMutation } from "./authApiSlice";
 import { FaMusic, FaGoogle, FaFacebook, FaTwitter } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { loginSchema } from "../../utils/schema";
+import { Helmet } from "react-helmet-async";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -50,6 +51,23 @@ const LoginPage = () => {
 
   return (
     <section className=" text-gray-100 h-full">
+      <Helmet>
+        <title>{`Log in - Jollify`}</title>
+        <meta
+          name="description"
+          content="Log in to Jollify to enjoy exclusive content and features. Our secure login process ensures that your personal information is protected."
+        />
+        <meta property="og:title" content="Log in - Jollify" />
+        <meta
+          property="og:description"
+          content={`Log in to Jollify to enjoy exclusive content and features. Our secure login process ensures that your personal information is protected.`}
+        />
+        <meta name="twitter:title" content="Log in - Jollify" />
+        <meta
+          name="twitter:description"
+          content="Log in to Jollify to enjoy exclusive content and features. Our secure login process ensures that your personal information is protected."
+        />
+      </Helmet>
       <div className="flex flex-col justify-center h-full max-w-[768px] m-auto">
         <div className="mb-8">
           <span

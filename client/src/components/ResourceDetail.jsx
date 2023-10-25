@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import LikeButton from "./LikeButton";
 import { aggregateSongsDuration, formatDate } from "../utils/index";
 import { FaHeadphones, FaFolderOpen, FaUserAstronaut } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const ResourceDetail = ({ resource, resourceType }) => {
   const {
@@ -25,7 +26,10 @@ const ResourceDetail = ({ resource, resourceType }) => {
   const isAlbum = resourceType === "album";
 
   return (
-    <article
+    <motion.article
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
       className="relative bg-secondary-200 sm:h-[400px] rounded-md shadow-lg w-full bg-center bg-cover bg-no-repeat"
       style={{ backgroundImage: `url(${coverImage || image || ""})` }}
     >
@@ -127,7 +131,7 @@ const ResourceDetail = ({ resource, resourceType }) => {
           </div>
         </article>
       </div>
-    </article>
+    </motion.article>
   );
 };
 

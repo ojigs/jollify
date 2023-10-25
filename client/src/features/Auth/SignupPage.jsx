@@ -5,6 +5,7 @@ import { useRegisterUserMutation } from "./authApiSlice";
 import { FaMusic } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { signUpSchema } from "../../utils/schema";
+import { Helmet } from "react-helmet-async";
 
 const SignupPage = () => {
   const selectedTheme = useSelector((state) => state.theme);
@@ -49,6 +50,23 @@ const SignupPage = () => {
 
   return (
     <section className=" text-gray-100 h-full">
+      <Helmet>
+        <title>{`Sign up - Jollify`}</title>
+        <meta
+          name="description"
+          content={`Sign up to enjoy exclusive content and features on Jollify. Discover new music, create playlists, and connect with other music lovers. Our secure sign-up process ensures that your personal information is protected.`}
+        />
+        <meta property="og:title" content="Sign up - Jollify" />
+        <meta
+          property="og:description"
+          content={`Sign up to enjoy exclusive content and features on Jollify. Discover new music, create playlists, and connect with other music lovers. Our secure sign-up process ensures that your personal information is protected.`}
+        />
+        <meta name="twitter:title" content="Sign up - Jollify" />
+        <meta
+          name="twitter:description"
+          content="Sign up to enjoy exclusive content and features on Jollify. Discover new music, create playlists, and connect with other music lovers. Our secure sign-up process ensures that your personal information is protected."
+        />
+      </Helmet>
       <div className="flex flex-col justify-center h-full max-w-[450px] m-auto">
         <div className="mb-8">
           <span

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import FavoriteSongs from "./FavoriteSongs";
 import FavoriteAlbums from "./FavoriteAlbums";
 import FavoritePlaylists from "./FavoritePlaylists";
+import { Helmet } from "react-helmet-async";
 
 const FavoritesPage = () => {
   const selectedTheme = useSelector((state) => state.theme);
@@ -15,6 +16,9 @@ const FavoritesPage = () => {
 
   return (
     <section className="text-gray-100 h-full">
+      <Helmet>
+        <title>Favorites - Jollify</title>
+      </Helmet>
       <h1 className="text-xl md:text-3xl font-semibold mb-4">Favorites</h1>
 
       <nav className="flex justify-start gap-4 mb-8">

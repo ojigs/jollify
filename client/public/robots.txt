@@ -1,0 +1,6 @@
+User Agent *
+Disallow: /myProfile
+Disallow: /favorites
+Disallow: /myPlaylist
+
+Sitemap:

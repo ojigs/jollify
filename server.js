@@ -11,6 +11,7 @@ const songRoutes = require("./routes/songRoutes");
 const artisteRoutes = require("./routes/artisteRoutes");
 const albumRoutes = require("./routes/albumRoutes");
 const playlistRoutes = require("./routes/playlistRoutes");
+const sitemapRoutes = require("./routes/sitemapRoutes");
 const { errorHandler } = require("./middleware/errorHandler");
 
 connectDB();
@@ -30,6 +31,7 @@ app.use("/api/songs", songRoutes);
 app.use("/api/artistes", artisteRoutes);
 app.use("/api/albums", albumRoutes);
 app.use("/api/playlists", playlistRoutes);
+app.use("/api/sitemap.xml", sitemapRoutes);
 app.use(errorHandler);
 
 app.listen(PORT, () => {

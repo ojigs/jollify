@@ -87,12 +87,17 @@ const uploadImage = asyncHandler(async (req, res) => {
   }
   const publicId = user.image.split("/").pop().split(".")[0];
   if (!publicId) {
-    const result = await cloudinary.uploader.upload(req.file.path);
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      transformation: [{ quality: "auto", width: 200, height: 200 }],
+      folder: "jollify",
+    });
     await user.updateOne({ image: result.secure_url });
   } else {
     const result = await cloudinary.uploader.upload(req.file.path, {
       public_id: publicId,
       overwrite: true,
+      transformation: [{ quality: "auto", width: 200, height: 200 }],
+      folder: "jollify",
     });
     await user.updateOne({ image: result.secure_url });
   }

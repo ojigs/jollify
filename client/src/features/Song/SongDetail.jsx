@@ -4,6 +4,7 @@ import { FaCompactDisc } from "react-icons/fa";
 import LikeButton from "../../components/LikeButton";
 import AddToPlaylistButton from "../../components/AddToPlaylistButton";
 import { setPlaying, setQueue } from "../MusicPlayer/playerSlice";
+import { motion } from "framer-motion";
 
 const SongDetail = ({ song }) => {
   const { title, coverImage, artiste, album, genre, likes } = song;
@@ -16,7 +17,10 @@ const SongDetail = ({ song }) => {
   };
 
   return (
-    <article
+    <motion.article
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
       className="bg-secondary-200 sm:h-[400px] rounded-md shadow-lg w-full bg-center bg-cover bg-no-repeat"
       style={{ backgroundImage: `url(${coverImage || ""})` }}
     >
@@ -81,7 +85,7 @@ const SongDetail = ({ song }) => {
           </div>
         </article>
       </div>
-    </article>
+    </motion.article>
   );
 };
 

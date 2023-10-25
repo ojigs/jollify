@@ -6,6 +6,7 @@ import SongList from "../../components/SongList";
 import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";
 import AddToPlaylistModal from "../Playlist/AddToPlaylistModal";
+import { Helmet } from "react-helmet-async";
 
 const ArtistePage = () => {
   const { id } = useParams();
@@ -26,6 +27,33 @@ const ArtistePage = () => {
 
   return (
     <section className=" text-gray-200">
+      <Helmet>
+        <title>{`${data.artiste.name} songs Mp3. New Songs and Albums - Stream on Jollify`}</title>
+        <meta
+          name="description"
+          content={`Stream ${data.artiste.name}'s latest songs and albums on Jollify and enjoy other amazing music collections.`}
+        />
+        <meta
+          property="og:title"
+          content={`${data.artiste.name} songs Mp3. New Songs and Albums - Stream on Jollify`}
+        />
+        <meta
+          property="og:description"
+          content={`Stream ${data.artiste.name}'s latest songs and albums on Jollify and enjoy other amazing music collections.`}
+        />
+        <meta property="og:image" content={data.artiste.image || ""} />
+        <meta property="og:url" content="" />
+        <meta name="twitter:card" content="summary" />
+        <meta
+          name="twitter:title"
+          content={`${data.artiste.name} songs Mp3. New Songs and Albums - Stream on Jollify`}
+        />
+        <meta
+          name="twitter:description"
+          content={`Stream ${data.artiste.name}'s latest songs and albums on Jollify and enjoy other amazing music collections.`}
+        />
+        <meta name="twitter:image" content={data.artiste.image || ""} />
+      </Helmet>
       <ResourceDetail resource={data.artiste} resourceType={"artiste"} />
       <section className="mt-8">
         <h2 className="text-2xl font-semibold mb-4">Songs</h2>

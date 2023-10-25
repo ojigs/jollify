@@ -20,7 +20,6 @@ import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
-    // path: "/",
     element: <Layout />,
     errorElement: <ErrorPage />,
     children: [

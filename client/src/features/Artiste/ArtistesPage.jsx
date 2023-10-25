@@ -4,6 +4,7 @@ import ArtisteCard from "./ArtisteCard";
 import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 
 const ArtistesPage = () => {
   const {
@@ -28,6 +29,23 @@ const ArtistesPage = () => {
 
   return (
     <section className="text-gray-100">
+      <Helmet>
+        <title>{`Artistes - Jollify`}</title>
+        <meta
+          name="description"
+          content={`Connect with your favorite artistes and stay up-to-date with their latest releases`}
+        />
+        <meta property="og:title" content="Artistes - Jollify" />
+        <meta
+          property="og:description"
+          content={`Connect with your favorite artistes and stay up-to-date with their latest releases`}
+        />
+        <meta name="twitter:title" content="Artistes - Jollify" />
+        <meta
+          name="twitter:description"
+          content="Connect with your favorite artistes and stay up-to-date with their latest releases"
+        />
+      </Helmet>
       <div className="flex justify-between items-center">
         <h1 className="text-xl md:text-3xl font-semibold mb-2">Artistes</h1>
       </div>

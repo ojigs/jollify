@@ -12,6 +12,7 @@ import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";
 import LoginModal from "../../components/LoginModal";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 
 const PlaylistsPage = () => {
   const selectedTheme = useSelector((state) => state.theme);
@@ -42,6 +43,23 @@ const PlaylistsPage = () => {
 
   return (
     <section className="text-gray-100">
+      <Helmet>
+        <title>{`Playlists - Jollify`}</title>
+        <meta
+          name="description"
+          content={`Unleash your musical journey from our collection of playlists`}
+        />
+        <meta property="og:title" content="Playlists - Jollify" />
+        <meta
+          property="og:description"
+          content={`Unleash your musical journey from our collection of playlists`}
+        />
+        <meta name="twitter:title" content="Playlists - Jollify" />
+        <meta
+          name="twitter:description"
+          content="Unleash your musical journey from our collection of playlists"
+        />
+      </Helmet>
       <div className="flex justify-between items-center">
         <h1 className="text-xl md:text-3xl font-semibold mb-2">Playlists</h1>
         <CreatePlaylistModal>

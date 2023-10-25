@@ -161,7 +161,7 @@ const Player = () => {
           <div className="hidden sm:flex flex-col gap-2">
             <div className="flex justify-center items-center gap-4">
               <LikeButton songId={currentSong?._id ?? null} type={"song"} />
-              <button onClick={handleToggleRepeat}>
+              <button onClick={handleToggleRepeat} title="repeat">
                 {repeat === "off" ? (
                   <TbRepeatOff />
                 ) : repeat === "single" ? (

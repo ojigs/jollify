@@ -4,6 +4,7 @@ import AlbumCard from "./AlbumCard";
 import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
 
 const AlbumsPage = () => {
   const { data: albums, isLoading, isError, error } = useGetAllAlbumsQuery();
@@ -23,6 +24,23 @@ const AlbumsPage = () => {
 
   return (
     <section className="text-gray-100">
+      <Helmet>
+        <title>{`Albums - Jollify`}</title>
+        <meta
+          name="description"
+          content={`Indulge your passion for music with our handpicked selection of albums`}
+        />
+        <meta property="og:title" content="Albums - Jollify" />
+        <meta
+          property="og:description"
+          content={`Indulge your passion for music with our handpicked selection of albums`}
+        />
+        <meta name="twitter:title" content="Albums - Jollify" />
+        <meta
+          name="twitter:description"
+          content="Indulge your passion for music with our handpicked selection of albums"
+        />
+      </Helmet>
       <div className="flex justify-between items-center">
         <h1 className="text-xl md:text-3xl font-semibold mb-2">Albums</h1>
       </div>
