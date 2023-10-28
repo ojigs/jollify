@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import DOMPurify from "dompurify";
-import { useAddCommentMutation } from "../../app/apiSlice";
+import { useAddCommentMutation } from "./songApiSlice";
 import { toggleLoginModal, setMessage } from "../../app/modalSlice";
 import { FaUserCircle } from "react-icons/fa";
 import RelativeTime from "../../components/RelativeTime";

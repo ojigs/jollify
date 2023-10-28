@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useGetTopSongsQuery } from "../../app/apiSlice";
+import { useGetTopSongsQuery } from "../Song/songApiSlice";
 import { FaClock } from "react-icons/fa";
 import { BsSoundwave } from "react-icons/bs";
 import { BsPlay } from "react-icons/bs";

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useGetArtisteDetailsQuery } from "../../app/apiSlice";
+import { useGetArtisteDetailsQuery } from "./artisteApiSlice";
 import { useParams } from "react-router-dom";
 import ResourceDetail from "../../components/ResourceDetail";
 import SongList from "../../components/SongList";

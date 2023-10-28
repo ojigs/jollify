@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useGetCurrentUserQuery } from "../../../app/apiSlice";
+import { useGetCurrentUserQuery } from "../../Users/userApiSlice";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import AlbumCard from "../../Album/AlbumCard";
 import ErrorMsg from "../../../components/ErrorMsg";

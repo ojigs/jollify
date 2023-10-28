@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   FaPlay,
   FaPause,
@@ -130,12 +131,18 @@ const Player = () => {
               </div>
             )}
             <div className="w-20">
-              <p className="text-sm sm:text-base font-semibold truncate ...">
+              <Link
+                to={`/songs/${currentSong?._id}`}
+                className={`block text-sm sm:text-base font-semibold hover:underline hover:decoration-2  hover:decoration-${selectedTheme} truncate ...`}
+              >
                 {currentSong?.title}
-              </p>
-              <p className="text-sm sm:text-base truncate ...">
+              </Link>
+              <Link
+                to={`/artistes/${currentSong?.artiste?._id}`}
+                className={`block text-sm sm:text-base hover:underline hover:decoration-2 hover:decoration-${selectedTheme} truncate ...`}
+              >
                 {currentSong?.artiste?.name}
-              </p>
+              </Link>
             </div>
           </div>
 

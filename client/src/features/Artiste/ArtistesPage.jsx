@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useGetAllArtistesQuery } from "../../app/apiSlice";
+import { useGetAllArtistesQuery } from "./artisteApiSlice";
 import ArtisteCard from "./ArtisteCard";
 import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";

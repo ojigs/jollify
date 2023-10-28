@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import {
-  useGetCurrentUserQuery,
-  useLikeSongMutation,
-  useLikeAlbumMutation,
-  useLikePlaylistMutation,
-  useLikeArtisteMutation,
-} from "../app/apiSlice";
+import { useGetCurrentUserQuery } from "../features/Users/userApiSlice";
+import { useLikeSongMutation } from "../features/Song/songApiSlice";
+import { useLikeAlbumMutation } from "../features/Album/albumApiSlice";
+import { useLikePlaylistMutation } from "../features/Playlist/playlistApiSlice";
+import { useLikeArtisteMutation } from "../features/Artiste/artisteApiSlice";
 import { setMessage, toggleLoginModal } from "../app/modalSlice";
 import { toast } from "react-toastify";
 

@@ -5,7 +5,6 @@ import { FaPlay } from "react-icons/fa";
 import { BsSoundwave } from "react-icons/bs";
 import LikeButton from "./LikeButton";
 import AddToPlaylistButton from "./AddToPlaylistButton";
-// import { trimText } from "../utils";
 import { setPlaying, setQueue } from "../features/MusicPlayer/playerSlice";
 
 const SongList = ({ songs, listType }) => {

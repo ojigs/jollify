@@ -1,4 +1,4 @@
-import { useGetSongDetailsQuery } from "../../app/apiSlice";
+import { useGetSongDetailsQuery } from "./songApiSlice";
 import { useParams } from "react-router-dom";
 import SongDetail from "./SongDetail";
 import Lyrics from "./Lyrics";

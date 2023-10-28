@@ -3,10 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import {
-  useUploadImageMutation,
-  useGetCurrentUserQuery,
-} from "../../app/apiSlice";
+import { useUploadImageMutation, useGetCurrentUserQuery } from "./userApiSlice";
 import { useLogoutUserMutation } from "../Auth/authApiSlice";
 import EditUserModal from "./EditUserModal";
 import ErrorMsg from "../../components/ErrorMsg";

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useGetAllAlbumsQuery, useGetAllPlaylistsQuery } from "../app/apiSlice";
+import { useGetAllAlbumsQuery } from "../features/Album/albumApiSlice";
+import { useGetAllPlaylistsQuery } from "../features/Playlist/playlistApiSlice";
 import { AiOutlineLoading } from "react-icons/ai";
 import Card from "./Card";
 import ErrorMsg from "./ErrorMsg";

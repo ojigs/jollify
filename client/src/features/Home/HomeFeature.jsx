@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineLoading } from "react-icons/ai";
 import ErrorMsg from "../../components/ErrorMsg";
-import { useGetAnySongQuery } from "../../app/apiSlice";
+import { useGetAnySongQuery } from "../Song/songApiSlice";
 import LikeButton from "../../components/LikeButton";
 import { setQueue, setPlaying } from "../MusicPlayer/playerSlice";
 

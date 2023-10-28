@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { MdQueue } from "react-icons/md";
 import PlaylistCard from "../../Playlist/PlaylistCard";
 import CreatePlaylistModal from "./CreatePlaylistModal";
-import { useGetCurrentUserQuery } from "../../../app/apiSlice";
+import { useGetCurrentUserQuery } from "../../Users/userApiSlice";
 import Loading from "../../../components/Loading";
 import ErrorMsg from "../../../components/ErrorMsg";
 import { toggleCreatePlaylistModal } from "../../../app/modalSlice";

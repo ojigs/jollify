@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetPlaylistDetailsQuery } from "../../app/apiSlice";
+import { useGetPlaylistDetailsQuery } from "./playlistApiSlice";
 import ResourceDetail from "../../components/ResourceDetail";
 import SongList from "../../components/SongList";
 import Loading from "../../components/Loading";

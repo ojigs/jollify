@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useGetCurrentUserQuery } from "../../app/apiSlice";
-import { useAddSongToPlaylistMutation } from "../../app/apiSlice";
+import { useGetCurrentUserQuery } from "../Users/userApiSlice";
+import { useAddSongToPlaylistMutation } from "./playlistApiSlice";
 import { toggleAddToPlaylistModal } from "../../app/modalSlice";
 import { MdQueueMusic } from "react-icons/md";
 import { FaHeadphones } from "react-icons/fa";

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useGetCurrentUserQuery } from "../app/apiSlice";
+import { useGetCurrentUserQuery } from "../features/Users/userApiSlice";
 import {
   FaHome,
   FaCompactDisc,

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useGetAlbumDetailsQuery } from "../../app/apiSlice";
+import { useGetAlbumDetailsQuery } from "./albumApiSlice";
 import ResourceDetail from "../../components/ResourceDetail";
 import SongList from "../../components/SongList";
 import Loading from "../../components/Loading";

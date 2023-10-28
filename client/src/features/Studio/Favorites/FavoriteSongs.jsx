@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { useGetCurrentUserQuery } from "../../../app/apiSlice";
+import { useGetCurrentUserQuery } from "../../Users/userApiSlice";
 import SongCard from "../../Song/SongCard";
 import ErrorMsg from "../../../components/ErrorMsg";
 import { motion } from "framer-motion";

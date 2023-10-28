@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
-import { useGetAllSongsQuery } from "../../app/apiSlice";
+import { useGetAllSongsQuery } from "./songApiSlice";
 import SongCard from "./SongCard";
 import Pagination from "../../components/Pagination";
 import Loading from "../../components/Loading";

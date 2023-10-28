@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useGetAllAlbumsQuery } from "../../app/apiSlice";
+import { useGetAllAlbumsQuery } from "./albumApiSlice";
 import AlbumCard from "./AlbumCard";
 import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";

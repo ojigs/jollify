@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useGetAllPlaylistsQuery } from "../../app/apiSlice";
+import { useGetAllPlaylistsQuery } from "./playlistApiSlice";
 import {
   toggleCreatePlaylistModal,
   toggleLoginModal,

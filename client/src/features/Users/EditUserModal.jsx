@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useEditUserDetailsMutation } from "../../app/apiSlice";
+import { useEditUserDetailsMutation } from "./userApiSlice";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-// import { setUser } from "./userSlice";
 
 const EditUserModal = ({ closeModal, isModalOpen, user, children }) => {
   const selectedTheme = useSelector((state) => state.theme);
-  // const dispatch = useDispatch();
   const [updateUser, { isLoading, isError, error }] =
     useEditUserDetailsMutation();
   const [formData, setFormData] = useState({

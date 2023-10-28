@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DOMPurify from "dompurify";
-import { useCreatePlaylistMutation } from "../../../app/apiSlice";
+import { useCreatePlaylistMutation } from "../../Playlist/playlistApiSlice";
 import { MdQueueMusic } from "react-icons/md";
 import { toggleCreatePlaylistModal } from "../../../app/modalSlice";
 import { toast } from "react-toastify";

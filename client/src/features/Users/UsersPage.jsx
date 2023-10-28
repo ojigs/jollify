@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { FaUser } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-import { useGetUserDetailsQuery } from "../../app/apiSlice";
+import { useGetUserDetailsQuery } from "./userApiSlice";
 import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";
 import PlaylistCard from "../Playlist/PlaylistCard";
