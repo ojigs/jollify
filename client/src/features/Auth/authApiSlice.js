@@ -36,6 +36,18 @@ export const authApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    loginSuccess: builder.query({
+      query: () => "/auth/loginSuccess",
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(updateTheme("rock"));
+          dispatch(setUser(data.username));
+        } catch (err) {
+          console.error(err);
+        }
+      },
+    }),
     logoutUser: builder.mutation({
       query: () => ({
         url: "/auth/logout",
@@ -59,4 +71,5 @@ export const {
   useRegisterUserMutation,
   useLoginUserMutation,
   useLogoutUserMutation,
+  useLoginSuccessQuery,
 } = authApiSlice;

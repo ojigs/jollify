@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useLoginUserMutation } from "./authApiSlice";
@@ -6,6 +6,8 @@ import { FaMusic, FaGoogle, FaFacebook, FaTwitter } from "react-icons/fa";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { loginSchema } from "../../utils/schema";
 import { Helmet } from "react-helmet-async";
+import ReCAPTCHA from "react-google-recaptcha";
+const sitekey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ username: "", password: "" });
@@ -14,6 +16,7 @@ const LoginPage = () => {
   const [login, { isLoading, isError, error }] = useLoginUserMutation();
   const navigate = useNavigate();
   const location = useLocation();
+  const recaptchaRef = useRef();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -33,8 +36,11 @@ const LoginPage = () => {
       return;
     }
 
+    const recaptchaToken = await recaptchaRef.current.executeAsync();
+    recaptchaRef.current.reset();
+
     try {
-      const { error } = await login(formData);
+      const { error } = await login({ ...formData, recaptchaToken });
       if (error) {
         console.error(error);
       } else {
@@ -82,18 +88,27 @@ const LoginPage = () => {
         </div>
         <div className="flex flex-col sm:flex-row w-full gap-2 sm:gap-0 p-1">
           <div className="sm:w-[45%] sm:pr-[10%]">
-            <div className="provider flex items-center gap-4 rounded-md mb-2 p-2 bg-secondary-100 hover:bg-opacity-50 active:translate-y-[1px] transition-transform ease-in">
+            <a
+              href="/auth/google"
+              className="provider flex items-center gap-4 rounded-md mb-2 p-2 bg-secondary-100 hover:bg-opacity-50 active:translate-y-[1px] transition-transform ease-in w-full"
+            >
               <FaGoogle />
               <span>Log in with Google</span>
-            </div>
-            <div className="provider flex items-center gap-4 rounded-md mb-2 p-2 bg-secondary-100 hover:bg-opacity-50 active:translate-y-[1px] transition-transform ease-in">
+            </a>
+            <a
+              href="/auth/twitter"
+              className="provider flex items-center gap-4 rounded-md mb-2 p-2 bg-secondary-100 hover:bg-opacity-50 active:translate-y-[1px] transition-transform ease-in"
+            >
               <FaTwitter />
               <span>Log in with Twitter</span>
-            </div>
-            <div className="provider flex items-center gap-4 rounded-md mb-2 p-2 bg-secondary-100 hover:bg-opacity-50 active:translate-y-[1px] transition-transform ease-in">
+            </a>
+            <a
+              href="/auth/facebook"
+              className="provider flex items-center gap-4 rounded-md mb-2 p-2 bg-secondary-100 hover:bg-opacity-50 active:translate-y-[1px] transition-transform ease-in"
+            >
               <FaFacebook />
               <span>Log in with Facebook</span>
-            </div>
+            </a>
           </div>
           <div className="sm:w-[0%]">
             <div className="flex items-center sm:flex-col  h-full">
@@ -156,11 +171,37 @@ const LoginPage = () => {
                     `Log in`
                   )}
                 </button>
+                <div className="text-xs mt-2">
+                  This site is protected by reCAPTCHA and the Google{" "}
+                  <a
+                    href="https://policies.google.com/privacy"
+                    className="text-blue-300 hover:decoration-blue-300 hover:underline"
+                  >
+                    Privacy Policy
+                  </a>{" "}
+                  and{" "}
+                  <a
+                    href="https://policies.google.com/terms"
+                    className="text-blue-300 hover:decoration-blue-300 hover:underline"
+                  >
+                    Terms of Service
+                  </a>{" "}
+                  apply.
+                </div>
                 {isError && (
                   <span className="block text-sm mt-2 saturate-100 text-red-500">
-                    {error?.data?.message}
+                    {error?.data?.message ||
+                      error?.data?.error?.details[0].message}
                   </span>
                 )}
+                <div className="mt-2 text-xs">
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey={sitekey}
+                    size="invisible"
+                    theme="dark"
+                  />
+                </div>
               </div>
               <div className="text-center">
                 <span>New to Jollify?</span>{" "}

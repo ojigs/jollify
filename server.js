@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const passport = require("passport");
 require("dotenv").config({ path: "./config/.env" });
 const PORT = process.env.PORT;
 const connectDB = require("./config/database");
@@ -15,6 +16,8 @@ const sitemapRoutes = require("./routes/sitemapRoutes");
 const { errorHandler } = require("./middleware/errorHandler");
 
 connectDB();
+
+require("./config/passport")(passport);
 
 app.use(cors());
 app.use(cookieParser());

@@ -19,7 +19,7 @@ const HomeBanner = () => {
         transition={{ duration: 0.5 }}
         className={`relative bg-${selectedTheme}-50 bg-center bg-no-repeat h-[400px] rounded-md flex flex-col justify-center items-center text-white`}
         style={{
-          backgroundImage: `url("https://res.cloudinary.com/ojigs/image/upload/v1698165959/Jollify/jollify_bg_utfhmw.jpg")`,
+          backgroundImage: `url("https://res.cloudinary.com/ojigs/image/upload/v1698508697/Jollify/jollify_bg_o1mvww.webp")`,
         }}
       >
         <div className="absolute inset-0 rounded-md flex flex-col justify-center items-start p-6 text-white bg-primary bg-opacity-60">

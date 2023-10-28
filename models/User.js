@@ -15,13 +15,15 @@ const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
     },
     bio: String,
     country: String,
     image: {
       type: String,
     },
+    googleId: String,
+    facebookId: String,
+    twitterId: String,
     playlist: [
       {
         type: mongoose.Schema.Types.ObjectId,

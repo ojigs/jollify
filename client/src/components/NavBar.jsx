@@ -53,9 +53,9 @@ const NavContent = () => {
     <>
       {isAuthenticated ? (
         <div className="mt-4 mb-8">
-          <div className="flex justify-center items-center gap-2 m-auto">
+          <div className="flex w-1/2 justify-center items-center gap-2 m-auto">
             <div
-              className={`w-10 h-10  bg-${selectedTheme} rounded-full overflow-hidden`}
+              className={`w-10 h-10 flex-shrink-0  bg-${selectedTheme} rounded-full overflow-hidden`}
             >
               <Link to={`/myProfile`}>
                 {userImage ? (
@@ -69,7 +69,9 @@ const NavContent = () => {
                 )}
               </Link>
             </div>
-            <Link to={`/myProfile`}>{username}</Link>
+            <Link to={`/myProfile`} className="truncate ...">
+              {username}
+            </Link>
           </div>
         </div>
       ) : (

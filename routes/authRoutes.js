@@ -1,15 +1,21 @@
 const express = require("express");
 const router = express.Router();
+const passport = require("passport");
 const {
   registerUser,
   loginUser,
+  googleLogin,
   logOutUser,
   refresh,
+  twitterLogin,
+  facebookLogin,
+  loginSuccess,
 } = require("../controllers/authController");
 const { loginLimiter } = require("../middleware/loginLimiter");
 const { verifyToken } = require("../middleware/authMiddleware");
 const schemaValidator = require("../middleware/schemaValidator");
 
+router.get("/refresh", loginLimiter, refresh);
 router.post(
   "/register",
   schemaValidator("authRegister"),
@@ -17,7 +23,58 @@ router.post(
   registerUser
 );
 router.post("/login", schemaValidator("authLogin"), loginLimiter, loginUser);
+
+router.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    session: false,
+  })
+);
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/login",
+    session: false,
+  }),
+  googleLogin
+);
+
+router.get(
+  "/facebook",
+  passport.authenticate("facebook", {
+    scope: ["profile", "email"],
+    session: false,
+  })
+);
+router.get(
+  "/facebook/callback",
+  passport.authenticate("facebook", {
+    failureRedirect: "/login",
+    session: false,
+  }),
+  facebookLogin
+);
+
+router.get(
+  "/twitter",
+  passport.authenticate("twitter", {
+    scope: ["profile", "email"],
+    session: false,
+    failureRedirect: "/login",
+  })
+);
+router.get(
+  "/twitter/callback",
+  passport.authenticate("twitter", {
+    failureRedirect: "/login",
+    session: false,
+  }),
+  twitterLogin
+);
+
+router.get("/loginSuccess", verifyToken, loginSuccess);
+
 router.post("/logout", logOutUser);
-router.get("/refresh", loginLimiter, refresh);
 
 module.exports = router;

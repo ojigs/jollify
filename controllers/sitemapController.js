@@ -75,6 +75,7 @@ const getSitemap = asyncHandler(async (req, res) => {
     "/playlists",
     "/artistes",
     "/albums",
+    "/users",
     "/login",
     "/signup",
   ];

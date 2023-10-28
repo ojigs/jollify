@@ -85,7 +85,7 @@ const uploadImage = asyncHandler(async (req, res) => {
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
-  const publicId = user.image.split("/").pop().split(".")[0];
+  const publicId = user.image?.split("/").pop().split(".")[0];
   if (!publicId) {
     const result = await cloudinary.uploader.upload(req.file.path, {
       transformation: [{ quality: "auto", width: 200, height: 200 }],

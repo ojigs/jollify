@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useGetTopSongsQuery } from "../../app/apiSlice";
 import { FaClock } from "react-icons/fa";
 import { BsSoundwave } from "react-icons/bs";
-import { FiPlay } from "react-icons/fi";
+import { BsPlay } from "react-icons/bs";
 import ErrorMsg from "../../components/ErrorMsg";
 import LikeButton from "../../components/LikeButton";
 import { setQueue, setPlaying } from "../MusicPlayer/playerSlice";
@@ -14,9 +14,7 @@ const HomeFront = () => {
   const selectedTheme = useSelector((state) => state.theme);
   const songRefs = useRef([]);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
-  const { currentSong, isPlaying, queue } = useSelector(
-    (state) => state.player
-  );
+  const { currentSong, isPlaying } = useSelector((state) => state.player);
   const dispatch = useDispatch();
 
   // const generateKey = async () => {
@@ -47,7 +45,6 @@ const HomeFront = () => {
   const handlePlay = (index) => {
     dispatch(setQueue({ queue: songs, index }));
     dispatch(setPlaying(true));
-    console.log(queue);
   };
 
   useEffect(() => {
@@ -122,7 +119,7 @@ const HomeFront = () => {
                 {currentSong && currentSong._id === song._id && isPlaying ? (
                   <BsSoundwave className={`animate-pulse`} />
                 ) : index === highlightedIndex ? (
-                  <FiPlay />
+                  <BsPlay />
                 ) : (
                   <div>{index + 1}</div>
                 )}
