@@ -1,22 +1,28 @@
+import { Suspense, lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../components/Layout";
 import HomePage from "../features/Home/HomePage";
-import ErrorPage from "../components/ErrorPage";
-import SongsPage from "../features/Song/SongsPage";
-import SongPage from "../features/Song/SongPage";
-import PlaylistsPage from "../features/Playlist/PlaylistsPage";
-import PlaylistPage from "../features/Playlist/PlaylistPage";
-import AlbumsPage from "../features/Album/AlbumsPage";
-import AlbumPage from "../features/Album/AlbumPage";
-import ArtistesPage from "../features/Artiste/ArtistesPage";
-import ArtistePage from "../features/Artiste/ArtistePage";
-import FavoritesPage from "../features/Studio/Favorites/FavoritesPage";
-import MyPlaylistPage from "../features/Studio/MyPlaylists/MyPlaylistPage";
-import UsersPage from "../features/Users/UsersPage";
-import LoginPage from "../features/Auth/LoginPage";
-import SignupPage from "../features/Auth/SignupPage";
-import MyProfilePage from "../features/Users/MyProfilePage";
+const ErrorPage = lazy(() => import("../components/ErrorPage"));
+const SongsPage = lazy(() => import("../features/Song/SongsPage"));
+const SongPage = lazy(() => import("../features/Song/SongPage"));
+const PlaylistsPage = lazy(() => import("../features/Playlist/PlaylistsPage"));
+const PlaylistPage = lazy(() => import("../features/Playlist/PlaylistPage"));
+const AlbumsPage = lazy(() => import("../features/Album/AlbumsPage"));
+const AlbumPage = lazy(() => import("../features/Album/AlbumPage"));
+const ArtistesPage = lazy(() => import("../features/Artiste/ArtistesPage"));
+const ArtistePage = lazy(() => import("../features/Artiste/ArtistePage"));
+const FavoritesPage = lazy(() =>
+  import("../features/Studio/Favorites/FavoritesPage")
+);
+const MyPlaylistPage = lazy(() =>
+  import("../features/Studio/MyPlaylists/MyPlaylistPage")
+);
+const UsersPage = lazy(() => import("../features/Users/UsersPage"));
+const LoginPage = lazy(() => import("../features/Auth/LoginPage"));
+const SignupPage = lazy(() => import("../features/Auth/SignupPage"));
+const MyProfilePage = lazy(() => import("../features/Users/MyProfilePage"));
 import PrivateRoute from "./PrivateRoute";
+import { RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
@@ -54,4 +60,12 @@ const router = createBrowserRouter([
   },
 ]);
 
-export default router;
+const Router = () => {
+  return (
+    <Suspense fallback={<div className="text-gray-200">Loading...</div>}>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
+};
+
+export default Router;

@@ -10,7 +10,12 @@ import LikeButton from "../../components/LikeButton";
 import { setQueue, setPlaying } from "../MusicPlayer/playerSlice";
 
 const HomeFront = () => {
-  const { data: songs, isLoading, isError, error } = useGetTopSongsQuery(5);
+  const {
+    data: songs,
+    isLoading,
+    isError,
+    error,
+  } = useGetTopSongsQuery(5, { refetchOnReconnect: true });
   const selectedTheme = useSelector((state) => state.theme);
   const songRefs = useRef([]);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);

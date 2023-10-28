@@ -9,7 +9,12 @@ import { setQueue, setPlaying } from "../MusicPlayer/playerSlice";
 
 const HomeFeature = () => {
   const selectedTheme = useSelector((state) => state.theme);
-  const { data: song, isLoading, isError, error } = useGetAnySongQuery();
+  const {
+    data: song,
+    isLoading,
+    isError,
+    error,
+  } = useGetAnySongQuery(undefined, { refetchOnReconnect: true });
   const dispatch = useDispatch();
 
   const handlePlay = () => {
@@ -43,7 +48,7 @@ const HomeFeature = () => {
                 className={`absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-r from-${selectedTheme} to-transparent`}
               ></div>
             </div>
-            <div className="flex-grow flex flex-col justify-between p-12">
+            <div className="flex-grow flex flex-col justify-between p-6 md:p-12">
               <div>
                 <h2 className="text-2xl font-semibold mb-2">
                   <Link

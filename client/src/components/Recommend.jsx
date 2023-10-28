@@ -12,13 +12,19 @@ const Recommend = ({ type }) => {
     isLoading: isAlbumLoading,
     isError: isAlbumError,
     error: albumError,
-  } = useGetAllAlbumsQuery(10, { skip: type !== "albums" });
+  } = useGetAllAlbumsQuery(10, {
+    skip: type !== "albums",
+    refetchOnReconnect: true,
+  });
   const {
     data: playlists,
     isLoading: isPlaylistLoading,
     isError: isPlaylistError,
     error: playlistError,
-  } = useGetAllPlaylistsQuery(10, { skip: type !== "playlists" });
+  } = useGetAllPlaylistsQuery(10, {
+    skip: type !== "playlists",
+    refetchOnReconnect: true,
+  });
 
   const data = albums || playlists;
   const isLoading = isAlbumLoading || isPlaylistLoading;
