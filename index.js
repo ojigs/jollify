@@ -25,7 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
-  res.send("Welcome to Jollify");
+  res.send("Welcome to Jollify. Enjoy our rich collection of music");
 });
 
 app.use("/auth", authRoutes);
