@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Mutex } from "async-mutex";
 import { logoutUser } from "../features/Auth/authSlice";
-const baseUrl = import.meta.env.VITE_JOLLIFY_BACKEND;
+const baseURL = import.meta.env.VITE_JOLLIFY_BACKEND;
 
 const mutex = new Mutex();
 const baseQuery = fetchBaseQuery({
-  baseUrl: baseUrl,
+  baseUrl: baseURL,
   credentials: "include",
 });
 
