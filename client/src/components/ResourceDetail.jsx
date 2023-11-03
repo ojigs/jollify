@@ -1,5 +1,6 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { setQueue, setPlaying } from "../features/MusicPlayer/playerSlice";
 import LikeButton from "./LikeButton";
 import { aggregateSongsDuration, formatDate } from "../utils/index";
 import { FaHeadphones, FaFolderOpen, FaUserAstronaut } from "react-icons/fa";
@@ -20,10 +21,16 @@ const ResourceDetail = ({ resource, resourceType }) => {
     releaseDate,
   } = resource;
   const selectedTheme = useSelector((state) => state.theme);
+  const dispatch = useDispatch();
 
   const isArtiste = resourceType === "artiste";
   const isPlaylist = resourceType === "playlist";
   const isAlbum = resourceType === "album";
+
+  const handlePlay = () => {
+    dispatch(setQueue({ queue: songs }));
+    dispatch(setPlaying(true));
+  };
 
   return (
     <motion.article
@@ -101,12 +108,14 @@ const ResourceDetail = ({ resource, resourceType }) => {
               </span>
             </p>
           )}
-          <p className={` mt-2`}>
-            <span className="text-gray-400 mr-2">Genre:</span>{" "}
-            <span className="text-gray-200 hover:text-${selectedTheme}-50">
-              {genre}
-            </span>
-          </p>
+          {!isArtiste && (
+            <p className={` mt-2`}>
+              <span className="text-gray-400 mr-2">Genre:</span>{" "}
+              <span className="text-gray-200 hover:text-${selectedTheme}-50">
+                {genre}
+              </span>
+            </p>
+          )}
           {!isAlbum && songs && (
             <p className={`text-gray-200 hover:text-${selectedTheme}-50 mt-2`}>
               {aggregateSongsDuration(songs)}
@@ -115,6 +124,7 @@ const ResourceDetail = ({ resource, resourceType }) => {
           <div className="flex flex-row gap-4 mt-6 h-10 items-stretch">
             {!isArtiste && (
               <button
+                onClick={handlePlay}
                 className={`inset-0 flex items-center justify-center bg-${selectedTheme}-50 bg-opacity-80 active:bg-opacity-100 rounded-lg transition duration-300 ease-in-out py-1 px-2 md:px-4`}
               >
                 <span className="mr-2 text-xl">Play</span>

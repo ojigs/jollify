@@ -1,14 +1,15 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Card = ({ resource, type }) => {
   const selectedTheme = useSelector((state) => state.theme);
-  const { coverImage, title, artiste, createdBy } = resource;
+  const { _id, coverImage, title, artiste, createdBy } = resource;
   const creator = {
     id: artiste?._id || createdBy._id,
-    name: artiste?.name || createdBy.user,
+    name: artiste?.name,
     type: type === "albums" ? "artistes" : "users",
   };
+  const navigate = useNavigate();
 
   const backgroundColors = [
     "bg-yellow-400",
@@ -26,12 +27,17 @@ const Card = ({ resource, type }) => {
 
   return (
     <article className="relative w-36 md:w-40 shrink-0 group cursor-pointer shadow-lg hover:shadow-xl transition duration-300 ease-in-out">
-      <div className={`relative rounded-lg ${selectedBackgroundColor}`}>
-        <img
-          src={coverImage}
-          alt={title}
-          className="w-full h-36 md:h-40 object-cover"
-        />
+      <div
+        onClick={() => navigate(`/${type}/${_id}`)}
+        className={`relative rounded-lg ${selectedBackgroundColor} w-full h-36 md:h-40`}
+      >
+        {coverImage && (
+          <img
+            src={coverImage}
+            alt={title}
+            className="w-full h-36 md:h-40 object-cover rounded-lg"
+          />
+        )}
         <div className="absolute rounded-lg inset-0 bg-gradient-to-t from-secondary-200 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"></div>
       </div>
       <div className="p-2 pt-3">

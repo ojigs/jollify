@@ -7,6 +7,7 @@ import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";
 import AddToPlaylistModal from "../Playlist/AddToPlaylistModal";
 import { Helmet } from "react-helmet-async";
+import CreatePlaylistModal from "../Studio/MyPlaylists/CreatePlaylistModal";
 
 const ArtistePage = () => {
   const { id } = useParams();
@@ -60,6 +61,7 @@ const ArtistePage = () => {
         <SongList songs={data.songs} listType={"artiste"} />
       </section>
       <AddToPlaylistModal />
+      <CreatePlaylistModal />
     </section>
   );
 };

@@ -9,8 +9,8 @@ const { createGzip } = require("zlib");
 
 let sitemap;
 
-// @desc  Get all Playlists
-// @route GET api/playlists
+// @desc  Get Sitemap
+// @route GET api/sitemap.xml
 // @access Public / Private
 const getSitemap = asyncHandler(async (req, res) => {
   res.header("Content-Type", "application/xml");

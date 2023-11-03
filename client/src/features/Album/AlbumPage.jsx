@@ -8,6 +8,7 @@ import ErrorMsg from "../../components/ErrorMsg";
 import AddToPlaylistModal from "../Playlist/AddToPlaylistModal";
 import { Helmet } from "react-helmet-async";
 import { formatDate } from "../../utils";
+import CreatePlaylistModal from "../Studio/MyPlaylists/CreatePlaylistModal";
 
 const AlbumPage = () => {
   const { id } = useParams();
@@ -76,8 +77,9 @@ const AlbumPage = () => {
       <section className="mt-8">
         <h2 className="text-2xl font-semibold mb-4">Songs</h2>
         <SongList songs={album.songs} listType={"album"} />
-        <AddToPlaylistModal />
       </section>
+      <AddToPlaylistModal />
+      <CreatePlaylistModal />
     </section>
   );
 };

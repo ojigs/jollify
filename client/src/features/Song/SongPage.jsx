@@ -6,9 +6,9 @@ import CommentsSection from "./CommentsSection";
 import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";
 import AddToPlaylistModal from "../Playlist/AddToPlaylistModal";
-import LoginModal from "../../components/LoginModal";
 import { formatDate } from "../../utils";
 import { Helmet } from "react-helmet-async";
+import CreatePlaylistModal from "../Studio/MyPlaylists/CreatePlaylistModal";
 
 const SongPage = () => {
   const { id } = useParams();
@@ -75,7 +75,7 @@ const SongPage = () => {
           <Lyrics lyrics={song.lyrics} />
           <CommentsSection comments={song.comments} songId={song._id} />
           <AddToPlaylistModal />
-          <LoginModal />
+          <CreatePlaylistModal />
         </section>
       )}
     </>

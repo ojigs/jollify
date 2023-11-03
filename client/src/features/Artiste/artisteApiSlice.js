@@ -22,11 +22,13 @@ const artisteApiSlice = apiSlice.injectEndpoints({
             "getArtisteDetails",
             artisteId,
             (draft) => {
-              const liked = draft.likes.includes(userId);
+              const liked = draft.artiste.likes?.includes(userId);
               if (!liked) {
-                draft.likes = [...draft.likes, userId];
+                draft.artiste.likes = [...draft.artiste.likes, userId];
               } else {
-                draft.likes = draft.likes.filter((e) => !(e === userId));
+                draft.artiste.likes = draft.artiste.likes.filter(
+                  (e) => !(e === userId)
+                );
               }
             }
           )

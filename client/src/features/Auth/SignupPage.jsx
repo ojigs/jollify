@@ -37,12 +37,12 @@ const SignupPage = () => {
         (detail) => (errors[detail.path[0]] = detail.message)
       );
       setValidationErrors(errors);
+      return;
     }
 
-    const recaptchaToken = await recaptchaRef.current.executeAsync();
-    recaptchaRef.current.reset();
-
     try {
+      const recaptchaToken = await recaptchaRef.current.executeAsync();
+      recaptchaRef.current.reset();
       const { error } = await signUp({ ...formData, recaptchaToken });
       if (error) {
         console.error(error);

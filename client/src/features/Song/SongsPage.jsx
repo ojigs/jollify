@@ -60,7 +60,7 @@ const SongsPage = () => {
         transition={{ duration: 0.5 }}
         className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
       >
-        {songs.map((song) => (
+        {songs?.map((song) => (
           <SongCard key={song._id} song={song} />
         ))}
       </motion.div>

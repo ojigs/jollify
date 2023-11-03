@@ -28,7 +28,7 @@ const getUserDetails = asyncHandler(async (req, res) => {
 const getCurrentUser = asyncHandler(async (req, res) => {
   const userId = req.user.id;
   const user = await User.findById(userId)
-    .select("username bio country image playlist")
+    .select("username bio country image playlist, favoriteArtistes")
     .populate({
       path: "playlist",
       select: "title coverImage",
@@ -36,7 +36,7 @@ const getCurrentUser = asyncHandler(async (req, res) => {
     })
     .populate({
       path: "favoriteSongs",
-      select: "title audioUrl",
+      select: "title audioUrl coverImage",
       populate: { path: "artiste", select: "name" },
     })
     .populate({

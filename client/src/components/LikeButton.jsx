@@ -39,9 +39,7 @@ const LikeButton = ({ songId, albumId, artisteId, playlistId, type }) => {
         }
         break;
       case isArtiste:
-        if (
-          user?.favoriteArtistes?.find((artiste) => artiste._id === artisteId)
-        ) {
+        if (user?.favoriteArtistes?.find((id) => id === artisteId)) {
           setLiked(true);
         }
         break;

@@ -7,10 +7,8 @@ import {
 } from "../../app/modalSlice";
 import { FaPlus } from "react-icons/fa";
 import PlaylistCard from "./PlaylistCard";
-import CreatePlaylistModal from "../Studio/MyPlaylists/CreatePlaylistModal";
 import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";
-import LoginModal from "../../components/LoginModal";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 
@@ -62,15 +60,13 @@ const PlaylistsPage = () => {
       </Helmet>
       <div className="flex justify-between items-center">
         <h1 className="text-xl md:text-3xl font-semibold mb-2">Playlists</h1>
-        <CreatePlaylistModal>
-          <button
-            className={`bg-${selectedTheme} flex justify-center items-center mb-2 hover:bg-${selectedTheme}-50 active:bg-opacity-90 py-2 px-4 rounded-lg`}
-            onClick={openModal}
-          >
-            <FaPlus className="text-xs mr-2" />
-            <span>Create Playlist</span>
-          </button>
-        </CreatePlaylistModal>
+        <button
+          className={`bg-${selectedTheme} flex justify-center items-center mb-2 hover:bg-${selectedTheme}-50 active:bg-opacity-90 py-2 px-4 rounded-lg`}
+          onClick={openModal}
+        >
+          <FaPlus className="text-xs mr-2" />
+          <span>Create Playlist</span>
+        </button>
       </div>
       <p className="mb-8 text-gray-200">
         Unleash your musical journey from our collection of playlists
@@ -85,7 +81,6 @@ const PlaylistsPage = () => {
           <PlaylistCard key={playlist._id} playlist={playlist} />
         ))}
       </motion.div>
-      <LoginModal />
     </section>
   );
 };

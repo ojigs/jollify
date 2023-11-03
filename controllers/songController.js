@@ -109,7 +109,6 @@ const getAnySong = asyncHandler(async (req, res) => {
     },
     { $unwind: "$artiste" },
     { $match: { "artiste.image": { $ne: "" } } },
-    { $sample: { size: 1 } },
     {
       $lookup: {
         from: "albums",
@@ -123,6 +122,7 @@ const getAnySong = asyncHandler(async (req, res) => {
       $project: {
         _id: 1,
         title: 1,
+        coverImage: 1,
         audioURL: 1,
         artiste: {
           _id: "$artiste._id",
@@ -132,9 +132,10 @@ const getAnySong = asyncHandler(async (req, res) => {
         album: { _id: "$album._id", title: "$album.title" },
       },
     },
+    { $sample: { size: 1 } },
   ]);
   if (!randomSong || randomSong.length === 0) {
-    return res.status(404).json({ message: "No song with cover image found" });
+    return res.status(404).json({ message: "No featured song available" });
   }
   res.status(200).json(randomSong[0]);
 });

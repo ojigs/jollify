@@ -4,18 +4,27 @@ import Recommend from "../../components/Recommend";
 import HomeFeature from "./HomeFeature";
 import Search from "../../components/Search";
 import HomeFront from "./HomeFront";
-import LoginModal from "../../components/LoginModal";
 import { Helmet } from "react-helmet-async";
 import { useLoginSuccessQuery } from "../Auth/authApiSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setProvider } from "../Auth/authSlice";
 
 const HomePage = () => {
-  const { isSuccess } = useLoginSuccessQuery();
+  const { provider } = useSelector((state) => state.auth);
+  const { isSuccess, isError } = useLoginSuccessQuery(undefined, {
+    skip: !provider,
+  });
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isSuccess) {
       console.log("✅ Success: Login successful");
+      dispatch(setProvider(null));
+    } else if (isError) {
+      dispatch(setProvider(null));
     }
-  }, [isSuccess]);
+  }, [isSuccess, isError, dispatch]);
+
   return (
     <>
       <Helmet>
@@ -27,7 +36,6 @@ const HomePage = () => {
       <HomeFeature />
       <Recommend type={"albums"} />
       <Recommend type={"playlists"} />
-      <LoginModal />
     </>
   );
 };

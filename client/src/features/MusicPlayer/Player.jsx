@@ -6,7 +6,6 @@ import {
   FaPause,
   FaStepForward,
   FaStepBackward,
-  FaListUl,
   FaCompactDisc,
   FaVolumeMute,
   FaVolumeUp,
@@ -27,7 +26,7 @@ import {
 import { convertSecondsToTime } from "../../utils";
 import AudioPlayer from "./AudioPlayer";
 import LikeButton from "../../components/LikeButton";
-import LoginModal from "../../components/LoginModal";
+import AddToPlaylistButton from "../../components/AddToPlaylistButton";
 const key = import.meta.env.VITE_JOLLIFY_KEY;
 
 const Player = () => {
@@ -177,7 +176,7 @@ const Player = () => {
                   <TbRepeat />
                 )}
               </button>
-              <FaListUl className="cursor-pointer" />
+              <AddToPlaylistButton songId={currentSong?._id ?? null} />
             </div>
             {/* Volume Controls */}
             <div className="flex items-center gap-2">
@@ -245,7 +244,6 @@ const Player = () => {
           setIsLoading={setIsLoading}
         />
       </article>
-      <LoginModal />
     </>
   );
 };

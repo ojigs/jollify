@@ -1,9 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useGetCurrentUserQuery } from "../Users/userApiSlice";
 import { useAddSongToPlaylistMutation } from "./playlistApiSlice";
-import { toggleAddToPlaylistModal } from "../../app/modalSlice";
+import {
+  toggleAddToPlaylistModal,
+  toggleCreatePlaylistModal,
+} from "../../app/modalSlice";
 import { MdQueueMusic } from "react-icons/md";
-import { FaHeadphones } from "react-icons/fa";
+import { FaHeadphones, FaPlus } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 const emptyArray = [];
@@ -48,6 +51,10 @@ const AddToPlaylistModal = ({ children }) => {
       console.error(addError);
     }
     closeModal();
+  };
+
+  const openModal = () => {
+    dispatch(toggleCreatePlaylistModal());
   };
 
   if (isError) {
@@ -97,12 +104,24 @@ const AddToPlaylistModal = ({ children }) => {
                 </div>
                 <div className="text-gray-700 mt-8">
                   <ul className="flex flex-col gap-2">
+                    <li
+                      key={"createPlaylist"}
+                      onClick={openModal}
+                      className="flex flex-row gap-3 items-center cursor-pointer hover:text-gray-950"
+                    >
+                      <button
+                        className={`bg-${selectedTheme} flex justify-center items-center mb-2 hover:bg-${selectedTheme}-50 active:bg-opacity-90 w-20 h-20 rounded-md`}
+                      >
+                        <FaPlus className="text-gray-200 text-lg" />
+                      </button>
+                      <span>Create playlist</span>
+                    </li>
                     {playlists &&
                       playlists.map((playlist) => (
                         <li
                           key={playlist._id}
                           onClick={() => handleAddSong(playlist._id)}
-                          className="flex flex-row gap-3 items-center cursor-pointer"
+                          className="flex flex-row gap-3 items-center cursor-pointer hover:text-gray-950"
                         >
                           <div className="w-20 h-20 bg-gray-400 rounded-md">
                             <span>

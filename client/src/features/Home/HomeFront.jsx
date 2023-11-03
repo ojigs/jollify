@@ -63,7 +63,7 @@ const HomeFront = () => {
   return (
     <section className="relative mt-8 text-gray-200">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg md:text-2xl font-bold">Billboard Top 50</h2>
+        <h2 className="text-lg md:text-2xl font-bold">Jollify Top 50</h2>
         <Link
           to={`/songs`}
           className={`text-base text-${selectedTheme} hover:text-${selectedTheme}-50 active:text-opacity-75 font-bold`}

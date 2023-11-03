@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useLoginUserMutation } from "./authApiSlice";
 import { FaMusic, FaGoogle, FaFacebook, FaTwitter } from "react-icons/fa";
@@ -7,6 +7,7 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { loginSchema } from "../../utils/schema";
 import { Helmet } from "react-helmet-async";
 import ReCAPTCHA from "react-google-recaptcha";
+import { setProvider } from "./authSlice";
 const sitekey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
 const LoginPage = () => {
@@ -17,6 +18,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const recaptchaRef = useRef();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -36,10 +38,9 @@ const LoginPage = () => {
       return;
     }
 
-    const recaptchaToken = await recaptchaRef.current.executeAsync();
-    recaptchaRef.current.reset();
-
     try {
+      const recaptchaToken = await recaptchaRef.current.executeAsync();
+      recaptchaRef.current.reset();
       const { error } = await login({ ...formData, recaptchaToken });
       if (error) {
         console.error(error);
@@ -53,6 +54,10 @@ const LoginPage = () => {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const handleClick = (provider) => {
+    dispatch(setProvider(provider));
   };
 
   return (
@@ -90,6 +95,7 @@ const LoginPage = () => {
           <div className="sm:w-[45%] sm:pr-[10%]">
             <a
               href="/auth/google"
+              onClick={() => handleClick("google")}
               className="provider flex items-center gap-4 rounded-md mb-2 p-2 bg-secondary-100 hover:bg-opacity-50 active:translate-y-[1px] transition-transform ease-in w-full"
             >
               <FaGoogle />
@@ -97,6 +103,7 @@ const LoginPage = () => {
             </a>
             <a
               href="/auth/twitter"
+              onClick={() => handleClick("twitter")}
               className="provider flex items-center gap-4 rounded-md mb-2 p-2 bg-secondary-100 hover:bg-opacity-50 active:translate-y-[1px] transition-transform ease-in"
             >
               <FaTwitter />
@@ -104,6 +111,7 @@ const LoginPage = () => {
             </a>
             <a
               href="/auth/facebook"
+              onClick={() => handleClick("facebook")}
               className="provider flex items-center gap-4 rounded-md mb-2 p-2 bg-secondary-100 hover:bg-opacity-50 active:translate-y-[1px] transition-transform ease-in"
             >
               <FaFacebook />

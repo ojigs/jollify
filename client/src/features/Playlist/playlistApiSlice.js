@@ -48,7 +48,7 @@ const playlistApiSlice = apiSlice.injectEndpoints({
             "getPlaylistDetails",
             playlistId,
             (draft) => {
-              const liked = draft.likes.includes(userId);
+              const liked = draft.likes?.includes(userId);
               if (!liked) {
                 draft.likes = [...draft.likes, userId];
               } else {

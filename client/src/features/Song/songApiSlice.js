@@ -23,7 +23,7 @@ export const songApiSlice = apiSlice.injectEndpoints({
       async onQueryStarted({ songId, userId }, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           apiSlice.util.updateQueryData("getSongDetails", songId, (draft) => {
-            const liked = draft.likes.includes(userId);
+            const liked = draft.likes?.includes(userId);
             if (!liked) {
               draft.likes = [...draft.likes, userId];
             } else {

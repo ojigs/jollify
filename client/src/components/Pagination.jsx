@@ -14,7 +14,7 @@ const Pagination = ({ path, currentPage, totalPages }) => {
             to={getPageLink(pageNumber)}
             className={`text-gray-200 ${
               pageNumber !== currentPage && ` bg-${selectedTheme}`
-            } px-2 py-1 mr-4 rounded-md`}
+            } px-2 py-1 text-sm mr-2 md:text-base md:mr-4 rounded-md`}
           >
             {pageNumber}
           </Link>

@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux";
 import { MdQueue } from "react-icons/md";
 import PlaylistCard from "../../Playlist/PlaylistCard";
-import CreatePlaylistModal from "./CreatePlaylistModal";
 import { useGetCurrentUserQuery } from "../../Users/userApiSlice";
 import Loading from "../../../components/Loading";
 import ErrorMsg from "../../../components/ErrorMsg";
@@ -51,15 +50,13 @@ const MyPlaylistPage = () => {
         transition={{ duration: 0.5 }}
         className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4"
       >
-        <CreatePlaylistModal>
-          <button
-            onClick={openModal}
-            className="w-full h-full min-h[120px] sm:min-h-[185px] lg:min-h-[256px] flex flex-col gap-2 justify-center items-center rounded-lg shadow-lg bg-secondary-100 hover:text-gray-400 active:text-opacity-80 cursor-pointer"
-          >
-            <MdQueue className="text-3xl" />
-            <span>Create Playlist</span>
-          </button>
-        </CreatePlaylistModal>
+        <button
+          onClick={openModal}
+          className="w-full h-full min-h[120px] sm:min-h-[185px] lg:min-h-[256px] flex flex-col gap-2 justify-center items-center rounded-lg shadow-lg bg-secondary-100 hover:text-gray-400 active:text-opacity-80 cursor-pointer"
+        >
+          <MdQueue className="text-3xl" />
+          <span>Create Playlist</span>
+        </button>
         {playlists &&
           playlists.map((playlist) => (
             <PlaylistCard

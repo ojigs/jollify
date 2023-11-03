@@ -1,13 +1,23 @@
-import { Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Player from "../features/MusicPlayer/Player";
+import AddToPlaylistModal from "../features/Playlist/AddToPlaylistModal";
+import LoginModal from "./LoginModal";
+import CreatePlaylistModal from "../features/Studio/MyPlaylists/CreatePlaylistModal";
 
 const Layout = () => {
   const { currentSong } = useSelector((state) => state.player);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <div className="bg-primary">
@@ -42,6 +52,9 @@ const Layout = () => {
       >
         <Player />
       </div>
+      <AddToPlaylistModal />
+      <LoginModal />
+      <CreatePlaylistModal />
     </div>
   );
 };

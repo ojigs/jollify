@@ -1,5 +1,5 @@
 import { Suspense, lazy } from "react";
-import { createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import Layout from "../components/Layout";
 import HomePage from "../features/Home/HomePage";
 const ErrorPage = lazy(() => import("../components/ErrorPage"));
@@ -23,44 +23,60 @@ const SignupPage = lazy(() => import("../features/Auth/SignupPage"));
 const MyProfilePage = lazy(() => import("../features/Users/MyProfilePage"));
 import PrivateRoute from "./PrivateRoute";
 import { RouterProvider } from "react-router-dom";
-
-const router = createBrowserRouter([
-  {
-    element: <Layout />,
-    errorElement: <ErrorPage />,
-    children: [
-      { index: true, element: <HomePage /> },
-      { path: "explore", element: <SongsPage /> },
-      { path: "songs/:id", element: <SongPage /> },
-      { path: "playlists", element: <PlaylistsPage /> },
-      { path: "playlists/:id", element: <PlaylistPage /> },
-      { path: "albums", element: <AlbumsPage /> },
-      { path: "albums/:id", element: <AlbumPage /> },
-      { path: "artistes", element: <ArtistesPage /> },
-      { path: "artistes/:id", element: <ArtistePage /> },
-      {
-        path: "myProfile",
-        element: <PrivateRoute component={MyProfilePage} />,
-      },
-      {
-        path: "favorites",
-        element: <PrivateRoute component={FavoritesPage} />,
-      },
-      {
-        path: "myPlaylist",
-        element: <PrivateRoute component={MyPlaylistPage} />,
-      },
-      {
-        path: "users/:id",
-        element: <PrivateRoute component={UsersPage} />,
-      },
-      { path: "login", element: <LoginPage /> },
-      { path: "signup", element: <SignupPage /> },
-    ],
-  },
-]);
+import { useSelector } from "react-redux";
 
 const Router = () => {
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const router = createBrowserRouter([
+    {
+      element: <Layout />,
+      errorElement: <ErrorPage />,
+      children: [
+        { index: true, element: <HomePage /> },
+        { path: "explore", element: <SongsPage /> },
+        { path: "songs/:id", element: <SongPage /> },
+        { path: "playlists", element: <PlaylistsPage /> },
+        { path: "playlists/:id", element: <PlaylistPage /> },
+        { path: "albums", element: <AlbumsPage /> },
+        { path: "albums/:id", element: <AlbumPage /> },
+        { path: "artistes", element: <ArtistesPage /> },
+        { path: "artistes/:id", element: <ArtistePage /> },
+        {
+          path: "myProfile",
+          element: <PrivateRoute component={MyProfilePage} />,
+        },
+        {
+          path: "favorites",
+          element: <PrivateRoute component={FavoritesPage} />,
+        },
+        {
+          path: "myPlaylist",
+          element: <PrivateRoute component={MyPlaylistPage} />,
+        },
+        {
+          path: "users/:id",
+          element: <PrivateRoute component={UsersPage} />,
+        },
+        {
+          path: "login",
+          element: !isAuthenticated ? (
+            <LoginPage />
+          ) : (
+            <Navigate to="/" replace />
+          ),
+        },
+        {
+          path: "signup",
+          element: !isAuthenticated ? (
+            <SignupPage />
+          ) : (
+            <Navigate to="/" replace />
+          ),
+        },
+      ],
+    },
+  ]);
+
   return (
     <Suspense
       fallback={<div className="text-gray-200 text-center">Loading...</div>}
