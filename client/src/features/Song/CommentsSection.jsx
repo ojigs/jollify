@@ -21,6 +21,7 @@ const CommentsSection = ({ comments, songId }) => {
     if (!isAuthenticated) {
       dispatch(setMessage("add a comment"));
       dispatch(toggleLoginModal());
+      return;
     }
     if (!newComment) {
       setValidationErrors("Please write a comment");

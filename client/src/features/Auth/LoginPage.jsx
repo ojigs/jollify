@@ -98,7 +98,7 @@ const LoginPage = () => {
         <div className="flex flex-col sm:flex-row w-full gap-2 sm:gap-0 p-1">
           <div className="sm:w-[45%] sm:pr-[10%]">
             <a
-              href="/auth/google"
+              href="https://jollify-server.vercel.app/auth/google"
               onClick={() => handleClick("google")}
               className="provider flex items-center gap-4 rounded-md mb-2 p-2 bg-secondary-100 hover:bg-opacity-50 active:translate-y-[1px] transition-transform ease-in w-full"
             >
@@ -106,7 +106,7 @@ const LoginPage = () => {
               <span>Log in with Google</span>
             </a>
             <a
-              href="/auth/twitter"
+              href="https://jollify-server.vercel.app/auth/twitter"
               onClick={() => handleClick("twitter")}
               className="provider flex items-center gap-4 rounded-md mb-2 p-2 bg-secondary-100 hover:bg-opacity-50 active:translate-y-[1px] transition-transform ease-in"
             >
@@ -114,7 +114,7 @@ const LoginPage = () => {
               <span>Log in with Twitter</span>
             </a>
             <a
-              href="/auth/facebook"
+              href="https://jollify-server.vercel.app/auth/facebook"
               onClick={() => handleClick("facebook")}
               className="provider flex items-center gap-4 rounded-md mb-2 p-2 bg-secondary-100 hover:bg-opacity-50 active:translate-y-[1px] transition-transform ease-in"
             >

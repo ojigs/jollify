@@ -36,7 +36,7 @@ const getCurrentUser = asyncHandler(async (req, res) => {
     })
     .populate({
       path: "favoriteSongs",
-      select: "title audioUrl coverImage",
+      select: "title audioURL coverImage",
       populate: { path: "artiste", select: "name" },
     })
     .populate({
