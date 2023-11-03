@@ -55,7 +55,7 @@ const Router = () => {
         },
         {
           path: "users/:id",
-          element: <PrivateRoute component={UsersPage} />,
+          element: <UsersPage />,
         },
         {
           path: "login",
