@@ -43,7 +43,10 @@ const ArtistePage = () => {
           content={`Stream ${data.artiste.name}'s latest songs and albums on Jollify and enjoy other amazing music collections.`}
         />
         <meta property="og:image" content={data.artiste.image || ""} />
-        <meta property="og:url" content="" />
+        <meta
+          property="og:url"
+          content={`https://jollify-server.vercel.app/artistes/${data.artiste._id}`}
+        />
         <meta name="twitter:card" content="summary" />
         <meta
           name="twitter:title"

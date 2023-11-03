@@ -21,7 +21,9 @@ const getSitemap = asyncHandler(async (req, res) => {
     return;
   }
 
-  const smStream = new SitemapStream({ hostname: "http://localhost:5173/" });
+  const smStream = new SitemapStream({
+    hostname: "https://jollify.vercel.app/",
+  });
   const pipeline = smStream.pipe(createGzip());
 
   const songs = await Song.find().lean();

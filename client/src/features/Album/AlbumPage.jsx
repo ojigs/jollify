@@ -57,7 +57,10 @@ const AlbumPage = () => {
           )}`}
         />
         <meta property="og:image" content={album.coverImage || ""} />
-        <meta property="og:url" content="" />
+        <meta
+          property="og:url"
+          content={`https://jollify-server.vercel.app/albums/${album._id}`}
+        />
         <meta name="twitter:card" content="summary" />
         <meta
           name="twitter:title"

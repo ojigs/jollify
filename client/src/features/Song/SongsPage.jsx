@@ -41,6 +41,10 @@ const SongsPage = () => {
         />
         <meta property="og:title" content="Explore - Jollify" />
         <meta
+          property="og:url"
+          content={`https://jollify-server.vercel.app/songs`}
+        />
+        <meta
           property="og:description"
           content={`Browse amazing collection of songs on Jollify`}
         />

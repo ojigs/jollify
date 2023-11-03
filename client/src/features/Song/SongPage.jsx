@@ -5,10 +5,8 @@ import Lyrics from "./Lyrics";
 import CommentsSection from "./CommentsSection";
 import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";
-import AddToPlaylistModal from "../Playlist/AddToPlaylistModal";
 import { formatDate } from "../../utils";
 import { Helmet } from "react-helmet-async";
-import CreatePlaylistModal from "../Studio/MyPlaylists/CreatePlaylistModal";
 
 const SongPage = () => {
   const { id } = useParams();
@@ -55,7 +53,10 @@ const SongPage = () => {
               )}`}
             />
             <meta property="og:image" content={song.coverImage || ""} />
-            <meta property="og:url" content="" />
+            <meta
+              property="og:url"
+              content={`https://jollify-server.vercel.app/songs/${song._id}`}
+            />
             <meta name="twitter:card" content="summary" />
             <meta
               name="twitter:title"
@@ -74,8 +75,6 @@ const SongPage = () => {
           <SongDetail song={song} />
           <Lyrics lyrics={song.lyrics} />
           <CommentsSection comments={song.comments} songId={song._id} />
-          <AddToPlaylistModal />
-          <CreatePlaylistModal />
         </section>
       )}
     </>

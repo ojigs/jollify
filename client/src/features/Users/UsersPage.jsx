@@ -5,6 +5,7 @@ import { useGetUserDetailsQuery } from "./userApiSlice";
 import Loading from "../../components/Loading";
 import ErrorMsg from "../../components/ErrorMsg";
 import PlaylistCard from "../Playlist/PlaylistCard";
+import { Helmet } from "react-helmet-async";
 
 const UsersPage = () => {
   const selectedTheme = useSelector((state) => state.theme);
@@ -21,6 +22,27 @@ const UsersPage = () => {
 
   return (
     <section className=" text-gray-100">
+      <Helmet>
+        <title>{`Users - Jollify`}</title>
+        <meta
+          name="description"
+          content={`Connect with music lovers on Jollify`}
+        />
+        <meta property="og:title" content="Users - Jollify" />
+        <meta
+          property="og:url"
+          content={`https://jollify-server.vercel.app/users/${user._id}`}
+        />
+        <meta
+          property="og:description"
+          content={`Connect with music lovers on Jollify`}
+        />
+        <meta name="twitter:title" content="Users - Jollify" />
+        <meta
+          name="twitter:description"
+          content="Connect with music lovers on Jollify"
+        />
+      </Helmet>
       <div
         className={`w-full h-28 md:h-48  bg-gradient-to-r from-transparent via-${selectedTheme} to-transparent relative`}
       ></div>

@@ -49,6 +49,10 @@ const PlaylistsPage = () => {
         />
         <meta property="og:title" content="Playlists - Jollify" />
         <meta
+          property="og:url"
+          content={`https://jollify-server.vercel.app/playlists`}
+        />
+        <meta
           property="og:description"
           content={`Unleash your musical journey from our collection of playlists`}
         />

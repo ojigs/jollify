@@ -37,6 +37,10 @@ const ArtistesPage = () => {
         />
         <meta property="og:title" content="Artistes - Jollify" />
         <meta
+          property="og:url"
+          content={`https://jollify-server.vercel.app/artistes`}
+        />
+        <meta
           property="og:description"
           content={`Connect with your favorite artistes and stay up-to-date with their latest releases`}
         />

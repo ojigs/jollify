@@ -64,6 +64,10 @@ const SignupPage = () => {
         />
         <meta property="og:title" content="Sign up - Jollify" />
         <meta
+          property="og:url"
+          content={`https://jollify-server.vercel.app/signup`}
+        />
+        <meta
           property="og:description"
           content={`Sign up to enjoy exclusive content and features on Jollify. Discover new music, create playlists, and connect with other music lovers. Our secure sign-up process ensures that your personal information is protected.`}
         />

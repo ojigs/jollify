@@ -70,6 +70,10 @@ const LoginPage = () => {
         />
         <meta property="og:title" content="Log in - Jollify" />
         <meta
+          property="og:url"
+          content={`https://jollify-server.vercel.app/login`}
+        />
+        <meta
           property="og:description"
           content={`Log in to Jollify to enjoy exclusive content and features. Our secure login process ensures that your personal information is protected.`}
         />
