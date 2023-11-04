@@ -36,26 +36,59 @@ Follow these steps to set up and run the Jollify Music App locally on your machi
 Node and npm installed
 
 ### Clone the Repository
-```bash git clone https://github.com/ojigs/jollify.git cd jollify```
+```bash 
+git clone https://github.com/ojigs/jollify.git
+cd jollify
+```
 
 ### Install Dependencies
 #### Frontend
-```bash cd client npm install```
+```bash
+cd client
+npm install
+```
 #### Backend 
-```bash cd server npm install```
+```bash
+cd server
+npm install
+```
 
 ### Environment Variables
 Create a `.env` file in the config subdirectory of the server directory and set the following variables
-```env PORT = 4000 DB_STRING = your_mongodb_connection_string JWT_SECRET = your_JWT_secret CLOUD_NAME = your_cloudinary_cloudname API_KEY = your_cloudinary_api_key API_SECRET = your_cloudinary_api_secret GOOGLE_CLIENT_ID = your_google_client_id GOOGLE_CLIENT_SECRET = your_google_client_secret TWITTER_CONSUMER_KEY = your_twitter_consumer_key TWITTER_CONSUMER_SECRET = your_twitter_consumer_secret FACEBOOK_APP_ID = your_facebook_app_id FACEBOOK_APP_SECRET = your_facebook_app_secret RECAPTCHA_SECRET_KEY = your_recaptcha_secret_key```
+```env 
+PORT = 4000
+DB_STRING = your_mongodb_connection_string
+JWT_SECRET = your_JWT_secret
+CLOUD_NAME = your_cloudinary_cloudname
+API_KEY = your_cloudinary_api_key
+API_SECRET = your_cloudinary_api_secret
+GOOGLE_CLIENT_ID = your_google_client_id
+GOOGLE_CLIENT_SECRET = your_google_client_secret
+TWITTER_CONSUMER_KEY = your_twitter_consumer_key
+TWITTER_CONSUMER_SECRET = your_twitter_consumer_secret
+FACEBOOK_APP_ID = your_facebook_app_id
+FACEBOOK_APP_SECRET = your_facebook_app_secret
+RECAPTCHA_SECRET_KEY = your_recaptcha_secret_key
+```
 
 Create a `.env` file in the client directory and set the following variables
-```env VITE_JOLLIFY_KEY = your_aws_s3_bucket_public_url VITE_RECAPTCHA_SITE_KEY = your_recaptcha_key VITE_JOLLIFY_BACKEND = your_server_locahost_or_production_url```
+```env
+VITE_JOLLIFY_KEY = your_aws_s3_bucket_public_url
+VITE_RECAPTCHA_SITE_KEY = your_recaptcha_key
+VITE_JOLLIFY_BACKEND = your_server_locahost (e.g http://localhost:4000)
+```
 
 ### Run the Application
 #### Frontend  
-```bash cd client npm run dev```
+```bash 
+cd client
+npm run dev
+```
 #### Backend
-```bash cd server npm run dev```
+```bash 
+cd server
+npm run dev
+```
 
 Visit `http://localhost:5173` in your browser to access Jollify.
 
@@ -86,16 +119,25 @@ Visit `http://localhost:5173` in your browser to access Jollify.
 Contributions are welcome! Here's how you can contribute to the Jollify project:
 
 1. **Fork the Repository**: Click the "Fork" button on the top right corner of this repository.
-2. **Clone Your Fork**: Open a terminal and run the following command to clone your fork to your local machine. ```bash git clone https://github.com/ojigs/jollify.git```
-3. **Create a New Branch**: Move into the project's directory and create a new branch for your contribution. ```bash cd jollify-music-app git checkout -b feature/your-feature-name```
+2. **Clone Your Fork**: Open a terminal and run the following command to clone your fork to your local machine. `git clone https://github.com/ojigs/jollify.git`
+3. **Create a New Branch**: Move into the project's directory and create a new branch for your contribution.
+   ```bash
+   cd jollify
+   git checkout -b feature/your-feature-name
+   ```
 4. **Make Changes**: Make your desired changes to the codebase.
-5. **Commit Changes**: After making your changes, commit them with a descriptive commit message. ```bash git add . git commit -m "Add your descriptive message here"```
-6. **Push Changes**: Push your changes to your forked repository. ```bash git push origin feature/your-feature-name```
+5. **Commit Changes**: After making your changes, commit them with a descriptive commit message.
+   ```bash
+   git add .
+   git commit -m "Add your descriptive message here"
+   ```
+6. **Push Changes**: Push your changes to your forked repository. `git push origin feature/your-feature-name`
 7. **Create a Pull Request**: Visit your fork on GitHub and create a new pull request from your branch to the main branch of the original repository.
 8. **Discuss and Improve**: Participate in discussions and address feedback if needed. Work with the maintainers to get your changes merged.
 
 ## Snapshots
 ![Home](./jollify_2.jpg)
+
 ![Home](./jollify_3.jpg)
 
 ## Author
