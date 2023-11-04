@@ -150,7 +150,7 @@ const googleLogin = asyncHandler(async (req, res) => {
     maxAge: 30 * 24 * 60 * 60 * 1000, //30 days (match refreshToken expiration)
   });
 
-  res.status(200).redirect("/");
+  res.status(200).redirect("https://jollify.vercel.app");
 });
 
 // @desc  Facebook login
@@ -179,7 +179,7 @@ const facebookLogin = asyncHandler(async (req, res) => {
     maxAge: 30 * 24 * 60 * 60 * 1000, //30 days (match refreshToken expiration)
   });
 
-  res.status(200).redirect("/");
+  res.status(200).redirect("https://jollify.vercel.app");
 });
 
 // @desc  Twitter login
@@ -208,7 +208,7 @@ const twitterLogin = asyncHandler(async (req, res) => {
     maxAge: 30 * 24 * 60 * 60 * 1000, //30 days (match refreshToken expiration)
   });
 
-  res.status(200).redirect("/");
+  res.status(200).redirect("https://jollify.vercel.app");
 });
 
 // @desc Get Login state for third party OAuth
