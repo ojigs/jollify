@@ -178,4 +178,4 @@ Emmanuel Ojighoro <a href="https://www.twitter.com/emmaojigs">@emmaojigs</a>
 https://ojigs.netlify.app
 
 ## License
-Jollify is licensed under the ISC License. See [LICENSE] file for more details.
+Jollify is licensed under the ISC License. See [LICENSE](LICENSE) file for more details.
