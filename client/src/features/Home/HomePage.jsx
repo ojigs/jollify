@@ -28,6 +28,7 @@ const HomePage = () => {
   return (
     <>
       <Helmet>
+        <link rel="canonical" href="https://jollify.vercel.app" />
         <meta
           name="description"
           content="Your one-stop-shop for all things music. Discover new artists, create playlists, and enjoy your favorite tunes on the go."
