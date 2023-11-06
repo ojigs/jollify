@@ -173,7 +173,7 @@ Contributions are welcome! Here's how you can contribute to the Jollify project:
 ![Home](./jollify_3.jpg)
 
 ## Author
-Emmanuel Ojighoro <a href="https://www.twitter.com/emmaojigs">@emmaojigs</a> 
+Emmanuel Ojighoro <a href="https://www.twitter.com/emmaojigs" target="_blank">@emmaojigs</a> 
 
 https://ojigs.netlify.app
 
