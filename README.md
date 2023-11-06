@@ -1,6 +1,6 @@
 # Jollify
 
-Jollify is a full-stack MERN (MongoDB, Express.js, React, Node.js) music streaming application. This project aims to create an immersive music listening experience with features like song streaming, playlist creation, artist exploration, and more. <a href="https://jollify.vercel.app">See it here</a>
+Jollify is a full-stack MERN (MongoDB, Express.js, React, Node.js) music streaming application. This project aims to create an immersive music listening experience with features like song streaming, playlist creation, artist exploration, and more. <a href="https://jollify.vercel.app" target="_blank">See it here</a>
 
 ![Home](./jollify_1.jpg)
 
