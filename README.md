@@ -1,6 +1,6 @@
 # Jollify
 
-Jollify is a full-stack MERN (MongoDB, Express.js, React, Node.js) music streaming application. This project aims to create an immersive music listening experience with features like song streaming, playlist creation, artist exploration, and more. <a https://jollify.vercel.app>See it here</a>
+Jollify is a full-stack MERN (MongoDB, Express.js, React, Node.js) music streaming application. This project aims to create an immersive music listening experience with features like song streaming, playlist creation, artist exploration, and more. <a href="https://jollify.vercel.app">See it here</a>
 
 ![Home](./jollify_1.jpg)
 
@@ -140,28 +140,32 @@ Contributions are welcome! Here's how you can contribute to the Jollify project:
 
 1. **Fork the Repository**: Click the "Fork" button on the top right corner of this repository.
 2. **Clone Your Fork**: Open a terminal and run the following command to clone your fork to your local machine.
+
    ```bash
    git clone https://github.com/your-username/jollify.git
    ```
-3. **Create a New Branch**: Move into the project's directory and create a new branch for your contribution.
+4. **Create a New Branch**: Move into the project's directory and create a new branch for your contribution.
+
    ```bash
    cd jollify
    
    git checkout -b feature/your-feature-name
    ```
-4. **Make Changes**: Make your desired changes to the codebase.
-5. **Commit Changes**: After making your changes, commit them with a descriptive commit message.
+6. **Make Changes**: Make your desired changes to the codebase.
+7. **Commit Changes**: After making your changes, commit them with a descriptive commit message.
+
    ```bash
    git add .
    
    git commit -m "Add your descriptive message here"
    ```
-6. **Push Changes**: Push your changes to your forked repository.
+9. **Push Changes**: Push your changes to your forked repository.
+
    ```bash
    git push origin feature/your-feature-name
    ```
-7. **Create a Pull Request**: Visit your fork on GitHub and create a new pull request from your branch to the main branch of the original repository.
-8. **Discuss and Improve**: Participate in discussions and address feedback if needed. Work with the maintainers to get your changes merged.
+11. **Create a Pull Request**: Visit your fork on GitHub and create a new pull request from your branch to the main branch of the original repository.
+12. **Discuss and Improve**: Participate in discussions and address feedback if needed. Work with the maintainers to get your changes merged.
 
 ## Snapshots
 ![Home](./jollify_2.jpg)
@@ -170,6 +174,7 @@ Contributions are welcome! Here's how you can contribute to the Jollify project:
 
 ## Author
 Emmanuel Ojighoro <a href="https://www.twitter.com/emmaojigs">@emmaojigs</a> 
+
 https://ojigs.netlify.app
 
 ## License
