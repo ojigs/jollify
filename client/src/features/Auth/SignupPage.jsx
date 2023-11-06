@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useRegisterUserMutation } from "./authApiSlice";
 import { FaMusic } from "react-icons/fa";
+import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { signUpSchema } from "../../utils/schema";
 import { Helmet } from "react-helmet-async";
@@ -20,6 +21,7 @@ const SignupPage = () => {
     password: "",
   });
   const [validationErrors, setValidationErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const recaptchaRef = useRef();
 
   const handleSubmit = async (event) => {
@@ -129,15 +131,27 @@ const SignupPage = () => {
               </div>
               <div className="mb-4">
                 <label className="block mb-1">Password</label>
-                <input
-                  type="password"
-                  name="password"
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
-                  className="w-full bg-gray-200 rounded-md focus:outline-none focus:outline-gray-600 focus:-outline-offset-1 p-2  text-primary"
-                  required
-                />
+                <div className="relative w-full rounded-md">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
+                    className="w-full bg-gray-200 rounded-md focus:outline-none focus:outline-gray-600 focus:-outline-offset-1 p-2  text-primary"
+                    required
+                  />
+                  <div
+                    className="absolute right-2 top-1/3 text-black text-xl"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <AiOutlineEye className="text-gray-900" />
+                    ) : (
+                      <AiOutlineEyeInvisible className="text-gray-500" />
+                    )}
+                  </div>
+                </div>
                 {validationErrors.password && (
                   <span className="block text-sm mt-2 saturate-100 text-red-500">
                     {validationErrors.password}
