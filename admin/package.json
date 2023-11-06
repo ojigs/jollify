@@ -1,0 +1,30 @@
+{
+  "name": "jollify-admin-dashboard",
+  "version": "1.0.0",
+  "description": "Admin dashboard for jollify music app",
+  "main": "index.js",
+  "author": "Emmanuel Ojighoro",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "type": "module",
+  "license": "MIT",
+  "dependencies": {
+    "@adminjs/design-system": "^4.0.2",
+    "@adminjs/express": "^6.0.0",
+    "@adminjs/mongoose": "^4.0.0",
+    "@adminjs/upload": "^4.0.1",
+    "adminjs": "^7.2.1",
+    "aws-sdk": "^2.1450.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-formidable": "^1.2.0",
+    "express-session": "^1.17.3",
+    "mongoose": "^7.5.0",
+    "tslib": "^2.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
