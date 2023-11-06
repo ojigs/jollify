@@ -1,4 +1,4 @@
-User Agent *
+User-agent: *
 Disallow: /myProfile
 Disallow: /favorites
 Disallow: /myPlaylist
