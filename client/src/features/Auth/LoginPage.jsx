@@ -64,6 +64,7 @@ const LoginPage = () => {
     <section className=" text-gray-100 h-full">
       <Helmet>
         <title>{`Log in - Jollify`}</title>
+        <link rel="canonical" href={`https://jollify.vercel.app/login`} />
         <meta
           name="description"
           content="Log in to Jollify to enjoy exclusive content and features. Our secure login process ensures that your personal information is protected."

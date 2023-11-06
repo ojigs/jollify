@@ -30,6 +30,10 @@ const ArtistePage = () => {
     <section className=" text-gray-200">
       <Helmet>
         <title>{`${data.artiste.name} songs Mp3. New Songs and Albums - Stream on Jollify`}</title>
+        <link
+          rel="canonical"
+          href={`https://jollify.vercel.app/artistes/${data.artiste._id}`}
+        />
         <meta
           name="description"
           content={`Stream ${data.artiste.name}'s latest songs and albums on Jollify and enjoy other amazing music collections.`}

@@ -24,6 +24,10 @@ const UsersPage = () => {
     <section className=" text-gray-100">
       <Helmet>
         <title>{`Users - Jollify`}</title>
+        <link
+          rel="canonical"
+          href={`https://jollify.vercel.app/users/${user._id}`}
+        />
         <meta
           name="description"
           content={`Connect with music lovers on Jollify`}

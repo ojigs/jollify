@@ -58,6 +58,7 @@ const SignupPage = () => {
     <section className=" text-gray-100 h-full">
       <Helmet>
         <title>{`Sign up - Jollify`}</title>
+        <link rel="canonical" href={`https://jollify.vercel.app/signup`} />
         <meta
           name="description"
           content={`Sign up to enjoy exclusive content and features on Jollify. Discover new music, create playlists, and connect with other music lovers. Our secure sign-up process ensures that your personal information is protected.`}

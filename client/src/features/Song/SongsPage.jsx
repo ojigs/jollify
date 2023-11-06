@@ -35,6 +35,7 @@ const SongsPage = () => {
     <section className="text-gray-100">
       <Helmet>
         <title>{`Explore - Jollify`}</title>
+        <link rel="canonical" href={`https://jollify.vercel.app/explore`} />
         <meta
           name="description"
           content={`Browse amazing collection of songs on Jollify`}

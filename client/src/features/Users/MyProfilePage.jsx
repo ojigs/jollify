@@ -73,7 +73,7 @@ const MyProfilePage = () => {
   return (
     <section className=" text-gray-100">
       <Helmet>
-        <title>My Profile</title>
+        <title>My Profile - Jollify</title>
       </Helmet>
       <div
         className={`w-full h-28 md:h-48  bg-gradient-to-r from-transparent via-${selectedTheme} to-transparent relative`}

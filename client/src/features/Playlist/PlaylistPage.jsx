@@ -31,6 +31,10 @@ const PlaylistPage = () => {
     <section className=" text-gray-200">
       <Helmet>
         <title>{`${playlist.title} - Stream on Jollify`}</title>
+        <link
+          rel="canonical"
+          href={`https://jollify.vercel.app/playlists/${playlist._id}`}
+        />
         <meta
           name="description"
           content={`Stream ${playlist.title} on Jollify and enjoy other amazing music collections.`}
