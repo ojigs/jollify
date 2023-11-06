@@ -28,7 +28,7 @@ const ArtistePage = () => {
 
   return (
     <section className=" text-gray-200">
-      <Helmet>
+      <Helmet prioritizeSeoTags>
         <title>{`${data.artiste.name} songs Mp3. New Songs and Albums - Stream on Jollify`}</title>
         <link
           rel="canonical"

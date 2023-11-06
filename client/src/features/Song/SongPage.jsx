@@ -30,7 +30,7 @@ const SongPage = () => {
     <>
       {isSuccess && (
         <section className=" text-gray-200">
-          <Helmet>
+          <Helmet prioritizeSeoTags>
             <title>{`${song.artiste.name} - ${song.title} MP3 Stream on Jollify`}</title>
             <link
               rel="canonical"

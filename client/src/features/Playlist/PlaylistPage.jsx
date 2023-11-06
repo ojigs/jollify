@@ -29,7 +29,7 @@ const PlaylistPage = () => {
 
   return (
     <section className=" text-gray-200">
-      <Helmet>
+      <Helmet prioritizeSeoTags>
         <title>{`${playlist.title} - Stream on Jollify`}</title>
         <link
           rel="canonical"

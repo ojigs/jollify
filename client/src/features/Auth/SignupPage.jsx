@@ -56,7 +56,7 @@ const SignupPage = () => {
 
   return (
     <section className=" text-gray-100 h-full">
-      <Helmet>
+      <Helmet prioritizeSeoTags>
         <title>{`Sign up - Jollify`}</title>
         <link rel="canonical" href={`https://jollify.vercel.app/signup`} />
         <meta

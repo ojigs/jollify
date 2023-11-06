@@ -22,7 +22,7 @@ const UsersPage = () => {
 
   return (
     <section className=" text-gray-100">
-      <Helmet>
+      <Helmet prioritizeSeoTags>
         <title>{`Users - Jollify`}</title>
         <link
           rel="canonical"

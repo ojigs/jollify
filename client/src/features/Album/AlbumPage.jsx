@@ -34,7 +34,7 @@ const AlbumPage = () => {
 
   return (
     <section className=" text-gray-200">
-      <Helmet>
+      <Helmet prioritizeSeoTags>
         <title>{`${album.artiste.name} - ${album.title} MP3 Stream on Jollify`}</title>
         <link
           rel="canonical"
