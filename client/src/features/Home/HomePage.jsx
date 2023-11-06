@@ -28,32 +28,6 @@ const HomePage = () => {
   return (
     <>
       <Helmet>
-        <link rel="canonical" href="https://jollify.vercel.app" />
-        <meta
-          name="description"
-          content="Your one-stop-shop for all things music. Discover new artists, create playlists, and enjoy your favorite tunes on the go."
-        />
-        <meta property="og:title" content="Jollify" />
-        <meta
-          property="og:description"
-          content="Your one-stop-shop for all things music. Discover new artists, create playlists, and enjoy your favorite tunes on the go."
-        />
-        <meta property="og:url" content="https://jollify.vercel.app/" />
-        <meta
-          property="og:image"
-          content="https://res.cloudinary.com/ojigs/image/upload/v1698244556/Jollify/jollify_ngrhlr.jpg"
-        />
-        <meta property="og:site_name" content="Jollify" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Jollify" />
-        <meta
-          name="twitter:description"
-          content="Your one-stop-shop for all things music. Discover new artists, create playlists, and enjoy your favorite tunes on the go."
-        />
-        <meta
-          name="twitter:image"
-          content="https://res.cloudinary.com/ojigs/image/upload/v1698244556/Jollify/jollify_ngrhlr.jpg"
-        />
         <title>Jollify</title>
       </Helmet>
       <Search />
