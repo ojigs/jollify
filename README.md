@@ -1,13 +1,13 @@
 # Jollify
 
-Jollify is a full-stack MERN (MongoDB, Express.js, React, Node.js) music streaming application. This project aims to create an immersive music listening experience with features like song streaming, playlist creation, artist exploration, and more. <a href="https://jollify.vercel.app" target="_blank">See it here</a>
+Jollify is a full-stack MERN (MongoDB, Express.js, React, Node.js) music streaming application. This project aims to create an immersive music listening experience with features like song streaming, playlist creation, artiste exploration, and more. <a href="https://jollify.vercel.app" target="_blank">See it here</a>
 
 ![Home](./jollify_1.jpg)
 
 ## Features
 - **Song Streaming**: Enjoy a seamless streaming experience with the ability to listen to your favorite songs anytime, anywhere.
 - **Playlist Creation**: Create and manage personal playlists by curating a collection of your preferred songs. Organize your music in a way that suits your mood or activity.
-- **Artiste Exploration**: Discover new music by exploring artist profiles. Gain insights into artist backgrounds, view cover images, and explore their discography to find hidden gems.
+- **Artiste Exploration**: Discover new music by exploring artiste profiles. Gain insights into artiste backgrounds, view cover images, and explore their discography to find hidden gems.
 - **Album Details**: Access detailed information about albums, including tracklists and cover art. Dive deep into the world of your favorite albums and explore the richness of each musical collection.
 - **Secure Authentication**: Jollify prioritizes user security by providing a secure authentication system. Users can create accounts, log in securely, and enjoy a personalized music experience.
 - **Third-Party Authentication**: Choose from a variety of authentication options, including Google, Facebook, and Twitter. The app allows users the flexibility to authenticate using their preferred third-party providers.
@@ -115,7 +115,7 @@ Visit `http://localhost:5173` in your browser to access Jollify.
 ## Usage
 ### User Authentication
 - Register a new account on the app
-- Login with you credentials
+- Login with your credentials
 ### Explore Songs
 - Browse the Explore page to discover a variety of songs.
 - Play songs directly from the Explore page.
