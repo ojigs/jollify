@@ -78,6 +78,7 @@ const HomeFeature = () => {
                 <button
                   onClick={handlePlay}
                   className="text-outline-gray hover:text-secondary-500"
+                  title="Play"
                 >
                   <FaPlay className="text-base md:text-2xl" />
                 </button>

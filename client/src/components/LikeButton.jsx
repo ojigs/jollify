@@ -125,7 +125,11 @@ const LikeButton = ({ songId, albumId, artisteId, playlistId, type }) => {
 
   return (
     <>
-      <button className={``} onClick={handleLikeClick}>
+      <button
+        className={``}
+        onClick={handleLikeClick}
+        title={isArtiste ? "Follow" : "Add to favorite"}
+      >
         {liked ? (
           <FaHeart className="text-red-500" />
         ) : (
