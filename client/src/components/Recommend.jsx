@@ -40,7 +40,8 @@ const Recommend = ({ type }) => {
         </h2>
         <Link
           to={`/${type}`}
-          className={`text-base text-${selectedTheme} hover:text-${selectedTheme}-50 active:text-opacity-75 font-bold`}
+          className={`text-base text-${selectedTheme} hover:text-${selectedTheme}-50 active:text-opacity-75 font-bold `}
+          title={`${type}`}
         >
           See more
         </Link>

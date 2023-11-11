@@ -54,12 +54,12 @@ const MyProfilePage = () => {
   };
 
   const handleLogOut = async () => {
-    const { error } = await logOut();
+    const { error } = await logOut().unwrap();
     if (error) {
-      console.log(error);
-    } else {
-      navigate("/");
+      console.error(error);
+      return;
     }
+    navigate("/");
   };
 
   const openModal = () => {

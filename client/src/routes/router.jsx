@@ -24,9 +24,11 @@ const MyProfilePage = lazy(() => import("../features/Users/MyProfilePage"));
 import PrivateRoute from "./PrivateRoute";
 import { RouterProvider } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Router = () => {
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const selectedTheme = useSelector((state) => state.theme);
   const router = createBrowserRouter([
     {
       element: <Layout />,
@@ -79,7 +81,13 @@ const Router = () => {
 
   return (
     <Suspense
-      fallback={<div className="text-gray-200 text-center">Loading...</div>}
+      fallback={
+        <div className="p-4 md:text-xl">
+          <AiOutlineLoading3Quarters
+            className={`animate-spin m-auto text-${selectedTheme}-50`}
+          />
+        </div>
+      }
     >
       <RouterProvider router={router} />
     </Suspense>

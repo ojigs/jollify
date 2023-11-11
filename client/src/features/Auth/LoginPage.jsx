@@ -106,22 +106,14 @@ const LoginPage = () => {
               <FaGoogle />
               <span>Log in with Google</span>
             </a>
-            <a
-              href="https://jollify-server.vercel.app/auth/twitter"
-              onClick={() => handleClick("twitter")}
-              className="provider flex items-center gap-4 rounded-md mb-2 p-2 bg-secondary-100 hover:bg-opacity-50 active:translate-y-[1px] transition-transform ease-in"
-            >
+            <button className="provider flex items-center gap-4 rounded-md mb-2 p-2 bg-secondary-100 hover:bg-opacity-50 active:translate-y-[1px] transition-transform ease-in w-full">
               <FaTwitter />
               <span>Log in with Twitter</span>
-            </a>
-            <a
-              href="https://jollify-server.vercel.app/auth/facebook"
-              onClick={() => handleClick("facebook")}
-              className="provider flex items-center gap-4 rounded-md mb-2 p-2 bg-secondary-100 hover:bg-opacity-50 active:translate-y-[1px] transition-transform ease-in"
-            >
+            </button>
+            <button className="provider flex items-center gap-4 rounded-md mb-2 p-2 bg-secondary-100 hover:bg-opacity-50 active:translate-y-[1px] transition-transform ease-in w-full">
               <FaFacebook />
               <span>Log in with Facebook</span>
-            </a>
+            </button>
           </div>
           <div className="sm:w-[0%]">
             <div className="flex items-center sm:flex-col  h-full">

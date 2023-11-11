@@ -274,7 +274,9 @@ const MobileNav = () => {
             <span className=" filter-none">
               <FaMusic className={`text-${selectedTheme} `} />
             </span>
-            <span className="saturate-200">Jollify</span>
+            <Link to={`/`} className="saturate-200">
+              Jollify
+            </Link>
           </h1>
         </div>
         <div>
@@ -328,7 +330,9 @@ const DesktopNav = () => {
         <span className=" filter-none">
           <FaMusic className={`text-${selectedTheme} `} />
         </span>
-        <span className="saturate-200">Jollify</span>
+        <Link to={`/`} className="saturate-200">
+          Jollify
+        </Link>
       </h1>
       <NavContent />
     </div>

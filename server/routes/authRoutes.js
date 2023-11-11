@@ -34,7 +34,7 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "/login",
+    failureRedirect: "https://jollify.vercel.app/login",
     session: false,
   }),
   googleLogin
@@ -50,7 +50,7 @@ router.get(
 router.get(
   "/facebook/callback",
   passport.authenticate("facebook", {
-    failureRedirect: "/login",
+    failureRedirect: "https://jollify.vercel.app/login",
     session: false,
   }),
   facebookLogin
@@ -61,13 +61,13 @@ router.get(
   passport.authenticate("twitter", {
     scope: ["profile", "email"],
     session: false,
-    failureRedirect: "/login",
+    failureRedirect: "https://jollify.vercel.app/login",
   })
 );
 router.get(
   "/twitter/callback",
   passport.authenticate("twitter", {
-    failureRedirect: "/login",
+    failureRedirect: "https://jollify.vercel.app/login",
     session: false,
   }),
   twitterLogin

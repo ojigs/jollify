@@ -19,9 +19,7 @@ const Footer = () => {
           >
             Contact
           </a>
-          <a href="" className={`hover:text-${selectedTheme}-50`}>
-            Privacy
-          </a>
+          <span className={`hover:text-${selectedTheme}-50`}>Privacy</span>
         </nav>
         <p className="text-gray-400">© 2023 Jollify. All rights reserved.</p>
       </footer>
