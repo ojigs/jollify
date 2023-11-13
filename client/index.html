@@ -6,6 +6,7 @@
   <link rel="icon" type="image/png" href="/jollify_logo.png" />
   <link rel="preconnect" href="https://jollify-server.vercel.app" />
   <link rel="dns-prefetch" href="https://jollify-server.vercel.app" />
+  <link rel="manifest" href="/manifest.json">
   <meta property="fb:app_id" content="1027589418463610" />
   <meta name="google-site-verification" content="V9qUOeLKbdRdMc_HlEtwoxpo67N_yNNXz2Zc4AbPL6k" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -36,8 +37,24 @@
 </head>
 
 <body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root" class="bg-secondary-200 min-h-screen"></div>
   <script type="module" src="/src/main.jsx"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('/worker.js').then(function (registration) {
+          console.log('Worker registration successful', registration.scope);
+        }, function (err) {
+          console.log('Worker registration failed', err);
+        }).catch(function (err) {
+          console.log(err);
+        });
+      });
+    } else {
+      console.log('Service Worker is not supported by browser.');
+    }
+  </script>
 </body>
 
 </html>

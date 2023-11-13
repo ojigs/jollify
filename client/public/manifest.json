@@ -1,0 +1,18 @@
+{
+    "name": "Jollify",
+    "short_name": "Jollify",
+    "description": "Your one-stop-shop for all things music. Discover new artists, create playlists, and enjoy your favorite tunes on the go.",
+    "start_url": "./",
+    "display": "standalone",
+    "background_color": "#262626",
+    "theme_color": "#a631ff",
+    "icons": [
+      {
+        "src": "jollify_icon.png",
+        "sizes": "650x650",
+        "type": "image/png",
+        "purpose": "any maskable"
+      }
+    ]
+  }
+  
