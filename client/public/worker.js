@@ -1,5 +1,5 @@
 const CACHE_NAME = "jollify";
-const urlsToCache = ["/"];
+const urlsToCache = ["/", "/explore", "/playlists", "/artistes", "/albums"];
 
 // Install a service worker
 self.addEventListener("install", (event) => {
@@ -27,7 +27,7 @@ self.addEventListener("fetch", (event) => {
 
 // Update a service worker
 self.addEventListener("activate", (event) => {
-  const cacheWhitelist = ["jollify-task-manager"];
+  const cacheWhitelist = ["jollify"];
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
