@@ -9,7 +9,13 @@ const Loading = () => {
 
   return (
     <div className="h-full flex justify-center items-center">
-      <img src={image} alt="" width={`210px`} height={`100px`} />
+      <img
+        src={image}
+        alt=""
+        className="w-24 h-12 md:w-52 md:h-24"
+        width={`210px`}
+        height={`100px`}
+      />
     </div>
   );
 };

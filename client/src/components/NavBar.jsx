@@ -265,7 +265,7 @@ const MobileNav = () => {
     <div className="fixed top-0 left-0 p-3 z-50 w-full bg-primary">
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-4">
-          <button onClick={handleToggleNav}>
+          <button onClick={handleToggleNav} title="Menu">
             <BiMenuAltLeft className="text-2xl" />
           </button>
           <h1

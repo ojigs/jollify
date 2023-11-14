@@ -9,13 +9,9 @@ import Player from "../features/MusicPlayer/Player";
 import AddToPlaylistModal from "../features/Playlist/AddToPlaylistModal";
 import LoginModal from "./LoginModal";
 import CreatePlaylistModal from "../features/Studio/MyPlaylists/CreatePlaylistModal";
-import { Helmet } from "react-helmet-async";
 
 const Layout = () => {
   const { currentSong } = useSelector((state) => state.player);
-  const selectedTheme = useSelector((state) => state.theme);
-
-  const isRock = selectedTheme === "rock";
 
   const location = useLocation();
 
@@ -25,13 +21,6 @@ const Layout = () => {
 
   return (
     <div className="bg-primary">
-      <Helmet>
-        {isRock ? (
-          <meta name="theme-color" content="#0d9488" />
-        ) : (
-          <meta name="theme-color" content="#a631ff" />
-        )}
-      </Helmet>
       <div className="grid grid-cols-5 grid-rows-[1fr,auto,88]">
         <aside
           className={`col-span-5 md:col-span-1 md:sticky md:top-0 md:h-screen overflow-y-auto bg-primary text-white ${

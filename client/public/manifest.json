@@ -5,7 +5,7 @@
     "start_url": "./",
     "display": "standalone",
     "background_color": "#262626",
-    "theme_color": "#a631ff",
+    "theme_color": "#0d0d0d",
     "icons": [
       {
         "src": "jollify_icon.png",
